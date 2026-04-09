@@ -1,14 +1,14 @@
 export const NAV_ITEMS = [
-  { label: "Committees", href: "#committees" },
-  { label: "Initiatives", href: "#initiatives" },
-  { label: "ICPC", href: "#icpc" },
-  { label: "About", href: "#about" },
-  { label: "Events", href: "#events" },
+  { label: "Committees", href: "/committees" },
+  { label: "Initiatives", href: "/initiatives" },
+  { label: "ICPC", href: "/icpc" },
+  { label: "About", href: "/about" },
+  { label: "Events", href: "/events" },
 ];
 
 export const FOOTER_ITEMS = [
-  { label: "Initiatives", href: "#initiatives" },
-  { label: "Committees", href: "#committees" },
+  { label: "Initiatives", href: "/initiatives" },
+  { label: "Committees", href: "/committees" },
 ];
 
 export const HERO_TITLE = "Excellence in Computing, Together.";
