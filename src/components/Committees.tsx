@@ -9,7 +9,7 @@ export function Committees() {
         <h2 className="mb-8 text-center text-2xl font-semibold tracking-tight text-slate-950 sm:text-3xl">
           Committees
         </h2>
-        <div className="grid grid-cols-2 gap-x-4 gap-y-6 md:grid-cols-3 xl:grid-cols-5">
+        <div className="grid grid-cols-2 gap-x-4 gap-y-6 sm:grid-cols-3 lg:grid-cols-6">
           {COMMITTEES.map((committee) => (
             <div
               key={committee.name}

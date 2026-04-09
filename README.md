@@ -1,11 +1,21 @@
 <div align="center">
 
-<img src="public/logos/acm.png" alt="ACM Logo" width="220" />
+<img src="public/logos/acm.png" alt="ACM Logo" width="180" />
 
-Official website for the Association for Computing Machinery at Penn State University
+# ACM at Penn State
 
-Stay connected and learn more about our events and opportunities through our platforms
+Student community for computing, collaboration, and growth
 
-Instagram: [@pennstateacm](https://www.instagram.com/pennstateacm/) · Website: [psuacm.com](https://www.psuacm.com/) · LinkedIn: [ACM PSU](https://www.linkedin.com/company/acmpsu) · Org Page: [Association for Computing Machinery](https://discover.psu.edu/organization/association-for-computing-machinery) · Discord: [Join our Discord](https://discord.gg/zkqYjGxVsh) · GroupMe: [Join our GroupMe](https://groupme.com/join_group/113864937/hfRpqc64)
+<p>
+	<a href="https://www.psuacm.com/">Website</a> •
+	<a href="https://www.instagram.com/pennstateacm/">Instagram</a> •
+	<a href="https://www.linkedin.com/company/acmpsu">LinkedIn</a>
+</p>
+
+<p>
+	<a href="https://discover.psu.edu/organization/association-for-computing-machinery">Org Page</a> •
+	<a href="https://discord.gg/zkqYjGxVsh">Discord</a> •
+	<a href="https://groupme.com/join_group/113864937/hfRpqc64">GroupMe</a>
+</p>
 
 </div>
