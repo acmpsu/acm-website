@@ -1,7 +1,10 @@
+import Image from "next/image";
+
 type TeamMember = {
   name: string;
   role: string;
   linkedin: string;
+  image?: string;
 };
 
 function LinkedInIcon({ className }: { className?: string }) {
@@ -30,6 +33,7 @@ const TEAM_MEMBERS: TeamMember[] = [
     name: "Team Member Name",
     role: "Dev Team Executive",
     linkedin: "https://www.linkedin.com/",
+    image: "/team/khai.png",
   },
   {
     name: "Team Member Name",
@@ -91,10 +95,24 @@ export default function DevTeamPage() {
               key={`${member.name}-${index}`}
               className="group overflow-hidden rounded border border-gray-200 bg-white shadow-sm transition hover:-translate-y-0.5 hover:border-gray-300 hover:shadow-md"
             >
-              <div className="relative aspect-[5/4] w-full overflow-hidden bg-gradient-to-br from-gray-200 via-gray-100 to-gray-300" aria-hidden="true">
-                <div className="absolute left-4 top-4 h-12 w-12 rounded-full border border-white/70 bg-white/60 backdrop-blur" />
-                <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-black/10 to-transparent" />
-              </div>
+              {member.image ? (
+                <div className="relative aspect-[5/4] w-full overflow-hidden bg-gray-200">
+                  <Image
+                    src={member.image}
+                    alt={`${member.name} profile photo`}
+                    fill
+                    className="object-cover object-center"
+                  />
+                </div>
+              ) : (
+                <div
+                  className="relative aspect-[5/4] w-full overflow-hidden bg-gradient-to-br from-gray-200 via-gray-100 to-gray-300"
+                  aria-hidden="true"
+                >
+                  <div className="absolute left-4 top-4 h-12 w-12 rounded-full border border-white/70 bg-white/60 backdrop-blur" />
+                  <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-black/10 to-transparent" />
+                </div>
+              )}
               <div className="space-y-2 p-4">
                 <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">{member.role}</p>
                 <h3 className="text-lg font-semibold text-gray-900">{member.name}</h3>
