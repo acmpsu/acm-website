@@ -1,6 +1,9 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import { NAV_ITEMS } from "@/lib/constants";
+import { ShiftingDropDown } from "@/components/ui/shifting-dropdown";
 
 export function Header() {
   return (
@@ -12,9 +15,13 @@ export function Header() {
         <div className="flex items-center gap-8">
           <nav className="hidden lg:flex gap-8 text-sm font-medium text-gray-800">
             {NAV_ITEMS.map((item) => (
-              <a key={item.href} href={item.href} className="hover:text-gray-600">
-                {item.label}
-              </a>
+              item.label === "Initiatives" ? (
+                <ShiftingDropDown key={item.label} />
+              ) : (
+                <Link key={item.href} href={item.href} className="hover:text-gray-600">
+                  {item.label}
+                </Link>
+              )
             ))}
           </nav>
           <button className="bg-blue-900 text-white px-6 py-2 rounded-full text-sm font-semibold hover:bg-blue-950 transition whitespace-nowrap">

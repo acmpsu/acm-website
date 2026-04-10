@@ -1,13 +1,13 @@
 export const NAV_ITEMS = [
   { label: "Committees", href: "/committees" },
-  { label: "Initiatives", href: "/initiatives" },
+  { label: "Initiatives", href: "/dev-team" },
   { label: "ICPC", href: "/icpc" },
   { label: "About", href: "/about" },
   { label: "Events", href: "/events" },
 ];
 
 export const FOOTER_ITEMS = [
-  { label: "Initiatives", href: "/initiatives" },
+  { label: "Dev Team", href: "/dev-team" },
   { label: "Committees", href: "/committees" },
 ];
 
