@@ -72,7 +72,7 @@ export default function DevTeamPage() {
 
       <section>
         <p className="text-sm font-semibold uppercase tracking-wide text-gray-500">Team Photo</p>
-        <div className="mt-3 overflow-hidden rounded-2xl border border-gray-200 bg-gray-100">
+        <div className="mt-3 overflow-hidden rounded border border-gray-200 bg-gray-100">
           <div className="flex h-64 items-center justify-center text-sm text-gray-500 sm:h-80 lg:h-96">
             Photo Placeholder
           </div>
@@ -89,7 +89,7 @@ export default function DevTeamPage() {
           {TEAM_MEMBERS.map((member, index) => (
             <article
               key={`${member.name}-${index}`}
-              className="group overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm transition hover:-translate-y-0.5 hover:border-gray-300 hover:shadow-md"
+              className="group overflow-hidden rounded border border-gray-200 bg-white shadow-sm transition hover:-translate-y-0.5 hover:border-gray-300 hover:shadow-md"
             >
               <div className="relative aspect-[5/4] w-full overflow-hidden bg-gradient-to-br from-gray-200 via-gray-100 to-gray-300" aria-hidden="true">
                 <div className="absolute left-4 top-4 h-12 w-12 rounded-full border border-white/70 bg-white/60 backdrop-blur" />
