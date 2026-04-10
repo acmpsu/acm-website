@@ -81,6 +81,7 @@ export function News() {
               </div>
             </div>
             <div>
+              <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">{activeItem.date}</p>
               <h3 className="text-xl font-semibold text-gray-900">{activeItem.title}</h3>
               <p className="mt-3 text-gray-600 leading-relaxed">{activeItem.description}</p>
             </div>
