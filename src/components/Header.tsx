@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { NAV_ITEMS } from "@/lib/constants";
+import { ShiftingDropDown } from "@/components/ui/shifting-dropdown";
 
 export function Header() {
   return (
@@ -11,10 +12,14 @@ export function Header() {
         </Link>
         <div className="flex items-center gap-8">
           <nav className="hidden lg:flex gap-8 text-sm font-medium text-gray-800">
-            {NAV_ITEMS.map((item) => (
-              <a key={item.href} href={item.href} className="hover:text-gray-600">
+            <Link href={NAV_ITEMS[0].href} className="hover:text-gray-600">
+              {NAV_ITEMS[0].label}
+            </Link>
+            <ShiftingDropDown />
+            {NAV_ITEMS.slice(1).map((item) => (
+              <Link key={item.href} href={item.href} className="hover:text-gray-600">
                 {item.label}
-              </a>
+              </Link>
             ))}
           </nav>
           <button className="bg-blue-900 text-white px-6 py-2 rounded-full text-sm font-semibold hover:bg-blue-950 transition whitespace-nowrap">
