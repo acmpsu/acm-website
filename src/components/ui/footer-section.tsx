@@ -11,6 +11,11 @@ interface SocialLink {
   icon: React.ComponentType<{ className?: string }>;
 }
 
+interface TextLink {
+  title: string;
+  href: string;
+}
+
 function InstagramIcon({ className }: { className?: string }) {
   return (
     <svg
@@ -64,34 +69,58 @@ const socialLinks: SocialLink[] = [
   },
 ];
 
+const officialLinks: TextLink[] = [
+  { title: 'Org Page', href: 'https://discover.psu.edu/organization/association-for-computing-machinery' },
+  { title: 'Discord', href: 'https://discord.gg/zkqYjGxVsh' },
+  { title: 'GroupMe', href: 'https://groupme.com/join_group/113864937/hfRpqc64' },
+];
+
 export function FooterSection() {
   return (
     <footer className="relative w-full border-t border-gray-200 bg-gradient-to-b from-white to-gray-100 px-6 py-5 lg:py-6">
-      <div className="mx-auto flex w-full max-w-6xl flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-        <AnimatedContainer className="-ml-1 sm:-ml-2 flex items-center gap-3">
-          <Image src="/logos/acm.png" alt="ACM" width={40} height={40} />
-          <div>
-            <p className="text-xs font-semibold tracking-wide text-gray-900">Penn State ACM</p>
-            <p className="text-xs text-gray-600">© {new Date().getFullYear()} All rights reserved.</p>
-          </div>
+      <div className="mx-auto flex w-full max-w-6xl flex-col items-center gap-4 text-center">
+        <AnimatedContainer className="flex flex-col items-center gap-3">
+            <Image src="/logos/acm.png" alt="ACM" width={40} height={40} />
+            <div>
+              <p className="text-sm font-semibold tracking-wide text-gray-900">Penn State ACM</p>
+              <p className="mt-1 text-xs text-gray-500">© {new Date().getFullYear()} All rights reserved.</p>
+            </div>
         </AnimatedContainer>
 
-        <AnimatedContainer delay={0.2} className="flex flex-col items-start gap-1">
-          <p className="text-[11px] font-semibold uppercase tracking-wide text-gray-500">Social Links</p>
-          <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5">
+        <AnimatedContainer delay={0.15} className="flex flex-col items-center gap-2">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-gray-500">Links</p>
+          <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-xs font-medium text-gray-700">
             {socialLinks.map((link) => (
               <Link
                 key={link.title}
                 href={link.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 text-xs font-medium text-gray-700 transition hover:text-gray-900"
+                className="inline-flex items-center gap-1.5 transition hover:text-gray-900"
               >
                 <link.icon className="h-3.5 w-3.5" />
-                {link.title}
+                <span>{link.title}</span>
               </Link>
             ))}
+            <span className="text-gray-300">|</span>
+            {officialLinks.map((link, index) => (
+              <span key={link.title} className="inline-flex items-center gap-2">
+                <Link
+                  href={link.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="transition hover:text-gray-900"
+                >
+                  {link.title}
+                </Link>
+                {index < officialLinks.length - 1 ? <span className="text-gray-300">|</span> : null}
+              </span>
+            ))}
           </div>
+        </AnimatedContainer>
+
+        <AnimatedContainer delay={0.25} className="w-full border-t border-gray-200 pt-2 text-center">
+          <p className="text-xs text-gray-600">Created by Dev Team</p>
         </AnimatedContainer>
       </div>
     </footer>
