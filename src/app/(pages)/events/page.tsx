@@ -95,7 +95,7 @@ function ArrowIcon() {
   );
 }
 
-function EventCard({ event }: { event: Event }) {
+function EventCard({ event, index }: { event: Event; index: number }) {
   const config = categoryConfig[event.category];
   const [hovered, setHovered] = useState(false);
 
@@ -104,12 +104,9 @@ function EventCard({ event }: { event: Event }) {
       className={`glass-card ${hovered ? "glass-card--hovered" : ""}`}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
+      style={{ animationDelay: `${index * 0.1}s` }}
     >
       <div className="specular" />
-      <div className={`badge ${config.badgeClass}`}>
-        <span className="badge-dot" />
-        {config.label}
-      </div>
       <h3 className="card-title">{event.title}</h3>
       <div className="meta-list">
         <div className="meta-row">
@@ -161,23 +158,50 @@ export default function EventsPage() {
           border-radius: 50%;
           filter: blur(80px);
           pointer-events: none;
+          animation: float 20s ease-in-out infinite;
         }
         .events-content {
           max-width: 1120px;
           width: 100%;
           margin: 0 auto;
           padding: 0 32px;
+          position: relative;
         }
-        .orb1 { width: 600px; height: 600px; background: rgba(30,58,138,0.25); top: -200px; left: -100px; }
-        .orb2 { width: 500px; height: 500px; background: rgba(59,130,246,0.2); top: 100px; right: -150px; }
-        .orb3 { width: 400px; height: 400px; background: rgba(14,165,233,0.18); bottom: 0; left: 30%; }
-        .orb4 { width: 350px; height: 350px; background: rgba(56,189,248,0.15); bottom: 100px; right: 10%; }
+        .events-content::before {
+          content: '';
+          position: absolute;
+          top: -50px;
+          left: -100px;
+          width: 200px;
+          height: 200px;
+          background: radial-gradient(circle, rgba(59,130,246,0.1) 0%, transparent 70%);
+          border-radius: 50%;
+          animation: particleFloat 15s ease-in-out infinite;
+          pointer-events: none;
+        }
+        .events-content::after {
+          content: '';
+          position: absolute;
+          bottom: -80px;
+          right: -120px;
+          width: 180px;
+          height: 180px;
+          background: radial-gradient(circle, rgba(14,165,233,0.08) 0%, transparent 70%);
+          border-radius: 50%;
+          animation: particleFloat 18s ease-in-out infinite reverse;
+          pointer-events: none;
+        }
+        .orb1 { width: 600px; height: 600px; background: rgba(30,58,138,0.25); top: -200px; left: -100px; animation-delay: 0s; }
+        .orb2 { width: 500px; height: 500px; background: rgba(59,130,246,0.2); top: 100px; right: -150px; animation-delay: -5s; }
+        .orb3 { width: 400px; height: 400px; background: rgba(14,165,233,0.18); bottom: 0; left: 30%; animation-delay: -10s; }
+        .orb4 { width: 350px; height: 350px; background: rgba(56,189,248,0.15); bottom: 100px; right: 10%; animation-delay: -15s; }
 
         .hero {
           position: relative;
           padding: 64px 0 48px;
           max-width: 700px;
           margin: 0 auto 24px;
+          animation: heroFloat 12s ease-in-out infinite;
         }
         .hero-eyebrow {
           font-size: 12px;
@@ -201,6 +225,7 @@ export default function EventsPage() {
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
           background-clip: text;
+          animation: textGlow 4s ease-in-out infinite;
         }
         .hero-sub {
           font-size: 16px;
@@ -233,17 +258,24 @@ export default function EventsPage() {
             0 2px 8px rgba(60,80,180,0.06),
             inset 0 1px 0 rgba(255,255,255,0.9),
             inset 0 -1px 0 rgba(200,210,255,0.2);
-          transition: transform 0.3s ease, box-shadow 0.3s ease;
+          transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
           overflow: hidden;
           cursor: default;
+          transform: translateZ(0);
+          animation:
+            cardEntrance 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards,
+            cardFloat 8s ease-in-out infinite 1s,
+            cardGlow 6s ease-in-out infinite 2s;
+          opacity: 0;
         }
         .glass-card::before {
           content: '';
           position: absolute;
           inset: 0;
-          border-radius: 24px;
+          border-radius: 22px;
           background: linear-gradient(135deg, rgba(255,255,255,0.6) 0%, rgba(255,255,255,0) 50%, rgba(200,220,255,0.15) 100%);
           pointer-events: none;
+          transition: opacity 0.4s ease;
         }
         .glass-card::after {
           content: '';
@@ -251,15 +283,22 @@ export default function EventsPage() {
           top: 0; left: 0; right: 0;
           height: 1px;
           background: linear-gradient(90deg, transparent, rgba(255,255,255,0.95), transparent);
-          border-radius: 24px 24px 0 0;
+          border-radius: 22px 22px 0 0;
+          transition: opacity 0.4s ease;
         }
         .glass-card--hovered {
-          transform: translateY(-4px) scale(1.01);
+          transform: translateY(-8px) scale(1.02) rotateX(2deg);
           box-shadow:
-            0 20px 60px rgba(60,80,180,0.16),
-            0 6px 20px rgba(60,80,180,0.1),
-            inset 0 1px 0 rgba(255,255,255,0.95),
-            inset 0 -1px 0 rgba(200,210,255,0.3);
+            0 25px 80px rgba(60,80,180,0.2),
+            0 8px 25px rgba(60,80,180,0.15),
+            inset 0 1px 0 rgba(255,255,255,1),
+            inset 0 -1px 0 rgba(180,200,255,0.4);
+        }
+        .glass-card--hovered::before {
+          opacity: 0.8;
+        }
+        .glass-card--hovered::after {
+          opacity: 0.9;
         }
 
         .specular {
@@ -269,6 +308,80 @@ export default function EventsPage() {
           border-radius: 50%;
           background: radial-gradient(circle at 40% 35%, rgba(255,255,255,0.5), transparent 70%);
           pointer-events: none;
+          animation: shimmer 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+          0%, 100% { transform: translateY(0px) translateX(0px) scale(1) rotate(0deg); }
+          25% { transform: translateY(-30px) translateX(20px) scale(1.08) rotate(2deg); }
+          50% { transform: translateY(-15px) translateX(-25px) scale(0.92) rotate(-1deg); }
+          75% { transform: translateY(-35px) translateX(10px) scale(1.05) rotate(1.5deg); }
+        }
+
+        @keyframes shimmer {
+          0%, 100% { opacity: 0.3; transform: scale(1) rotate(0deg); }
+          50% { opacity: 0.8; transform: scale(1.2) rotate(180deg); }
+        }
+
+        @keyframes cardEntrance {
+          0% {
+            opacity: 0;
+            transform: translateY(30px) scale(0.95);
+          }
+          100% {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+          }
+        }
+
+        @keyframes cardFloat {
+          0%, 100% { transform: translateY(0px) rotateX(0deg) rotateY(0deg); }
+          33% { transform: translateY(-3px) rotateX(0.5deg) rotateY(0.3deg); }
+          66% { transform: translateY(2px) rotateX(-0.3deg) rotateY(-0.2deg); }
+        }
+
+        @keyframes cardGlow {
+          0%, 100% {
+            box-shadow:
+              0 8px 32px rgba(60,80,180,0.1),
+              0 2px 8px rgba(60,80,180,0.06),
+              inset 0 1px 0 rgba(255,255,255,0.9),
+              inset 0 -1px 0 rgba(200,210,255,0.2);
+          }
+          50% {
+            box-shadow:
+              0 12px 40px rgba(60,80,180,0.15),
+              0 4px 12px rgba(60,80,180,0.1),
+              inset 0 1px 0 rgba(255,255,255,0.95),
+              inset 0 -1px 0 rgba(200,210,255,0.3);
+          }
+        }
+
+        @keyframes particleFloat {
+          0%, 100% { transform: translateY(0px) translateX(0px) scale(1) rotate(0deg); }
+          25% { transform: translateY(-20px) translateX(15px) scale(1.1) rotate(90deg); }
+          50% { transform: translateY(-10px) translateX(-20px) scale(0.9) rotate(180deg); }
+          75% { transform: translateY(-25px) translateX(10px) scale(1.05) rotate(270deg); }
+        }
+
+        @keyframes textGlow {
+          0%, 100% {
+            background: linear-gradient(135deg, #1e3a8a, #3b82f6, #06b6d4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+          }
+          50% {
+            background: linear-gradient(135deg, #3b82f6, #06b6d4, #1e3a8a);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+          }
+        }
+
+        @keyframes heroFloat {
+          0%, 100% { transform: translateY(0px) scale(1); }
+          50% { transform: translateY(-5px) scale(1.01); }
         }
 
         .badge {
@@ -410,8 +523,8 @@ export default function EventsPage() {
           </section>
 
           <section className="events-grid">
-            {upcomingEvents.map((event) => (
-              <EventCard key={event.id} event={event} />
+            {upcomingEvents.map((event, index) => (
+              <EventCard key={event.id} event={event} index={index} />
             ))}
           </section>
         </div>
