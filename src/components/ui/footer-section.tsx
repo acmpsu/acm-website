@@ -77,50 +77,50 @@ const officialLinks: TextLink[] = [
 
 export function FooterSection() {
   return (
-    <footer className="relative w-full border-t border-gray-200 bg-gradient-to-b from-white to-gray-100 px-6 py-5 lg:py-6">
+    <footer className="relative w-full border-t border-slate-200 bg-white px-6 py-5 lg:py-6">
       <div className="mx-auto flex w-full max-w-6xl flex-col items-center gap-4 text-center">
         <AnimatedContainer className="flex flex-col items-center gap-3">
             <Image src="/logos/acm.png" alt="ACM" width={40} height={40} />
             <div>
-              <p className="text-sm font-semibold tracking-wide text-gray-900">Penn State ACM</p>
-              <p className="mt-1 text-xs text-gray-500">© {new Date().getFullYear()} All rights reserved.</p>
+              <p className="text-sm font-semibold tracking-wide text-slate-900">Penn State ACM</p>
+              <p className="mt-1 text-xs text-slate-500">© {new Date().getFullYear()} All rights reserved.</p>
             </div>
         </AnimatedContainer>
 
         <AnimatedContainer delay={0.15} className="flex flex-col items-center gap-2">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-gray-500">Links</p>
-          <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-xs font-medium text-gray-700">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-slate-500">Links</p>
+          <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-xs font-medium text-slate-700">
             {socialLinks.map((link) => (
               <Link
                 key={link.title}
                 href={link.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 transition hover:text-gray-900"
+                className="inline-flex items-center gap-1.5 transition hover:text-blue-800"
               >
                 <link.icon className="h-3.5 w-3.5" />
                 <span>{link.title}</span>
               </Link>
             ))}
-            <span className="text-gray-300">|</span>
+            <span className="text-slate-300">|</span>
             {officialLinks.map((link, index) => (
               <span key={link.title} className="inline-flex items-center gap-2">
                 <Link
                   href={link.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="transition hover:text-gray-900"
+                  className="transition hover:text-blue-800"
                 >
                   {link.title}
                 </Link>
-                {index < officialLinks.length - 1 ? <span className="text-gray-300">|</span> : null}
+                {index < officialLinks.length - 1 ? <span className="text-slate-300">|</span> : null}
               </span>
             ))}
           </div>
         </AnimatedContainer>
 
-        <AnimatedContainer delay={0.25} className="w-full border-t border-gray-200 pt-2 text-center">
-          <p className="text-xs text-gray-600">Created by Dev Team</p>
+        <AnimatedContainer delay={0.25} className="w-full border-t border-slate-200 pt-2 text-center">
+          <p className="text-xs text-slate-600">Created by Dev Team</p>
         </AnimatedContainer>
       </div>
     </footer>

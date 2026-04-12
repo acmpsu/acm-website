@@ -11,15 +11,15 @@ export function Partners() {
   ];
 
   return (
-    <section className="bg-white py-12 px-6 border-t border-gray-200" id="partners">
+    <section className="border-t border-slate-200 bg-white px-6 py-12" id="partners">
       <Reveal>
-        <div className="max-w-6xl mx-auto text-center">
-          <p className="text-black mb-4">Working with the best.</p>
+        <div className="mx-auto max-w-6xl text-center">
+          <p className="mb-5 text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">Working with the best</p>
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
             {sponsorPlaceholders.map((sponsor) => (
               <div
                 key={sponsor}
-                className="flex h-20 items-center justify-center rounded border border-gray-200 bg-gradient-to-b from-gray-50 to-gray-100 text-xs font-medium text-gray-600 transition hover:shadow-sm"
+                className="flex h-20 items-center justify-center rounded-lg border border-slate-200 bg-white text-xs font-semibold tracking-wide text-slate-600 transition hover:border-slate-300"
               >
                 {sponsor}
               </div>
