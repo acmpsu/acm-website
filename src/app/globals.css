@@ -23,3 +23,58 @@ body {
   background: #bfdbfe;
   color: #0f172a;
 }
+
+@keyframes committee-spin-3d-forward {
+  from {
+    transform: rotateX(14deg) rotateY(0deg) scale(1);
+  }
+
+  to {
+    transform: rotateX(14deg) rotateY(180deg) scale(1.04);
+  }
+}
+
+@keyframes committee-spin-3d-backward {
+  from {
+    transform: rotateX(14deg) rotateY(180deg) scale(1.04);
+  }
+
+  to {
+    transform: rotateX(14deg) rotateY(0deg) scale(1);
+  }
+}
+
+.committee-3d-wrap {
+  perspective: 700px;
+}
+
+.committee-spin-3d {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.committee-spin-3d-forward {
+  animation: none;
+}
+
+.committee-spin-3d-backward {
+  animation: none;
+}
+
+.committee-3d-wrap:hover .committee-spin-3d-forward {
+  animation: committee-spin-3d-forward 1.7s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+.committee-3d-wrap:hover .committee-spin-3d-backward {
+  animation: committee-spin-3d-backward 1.7s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .committee-spin-3d-forward,
+  .committee-spin-3d-backward {
+    animation: none;
+  }
+}
