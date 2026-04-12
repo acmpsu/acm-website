@@ -2,14 +2,10 @@ import Image from "next/image";
 
 import { COMMITTEES } from "@/lib/constants";
 import { Reveal } from "@/components/ui/reveal";
-import { SectionAccent3D } from "@/components/SectionAccent3D";
 
 export function Committees() {
   return (
-    <section className="relative overflow-hidden bg-white px-6 py-14" id="committees">
-      <div className="absolute -right-12 top-2 h-36 w-56 opacity-35 sm:h-44 sm:w-64">
-        <SectionAccent3D variant="committees" />
-      </div>
+    <section className="snap-section relative overflow-hidden bg-white px-6 py-14" id="committees">
       <Reveal>
         <div className="relative mx-auto max-w-6xl p-2 sm:p-0">
           <h2 className="mb-2 text-center text-2xl font-semibold tracking-tight text-slate-950 sm:text-3xl">
@@ -19,19 +15,30 @@ export function Committees() {
             {COMMITTEES.map((committee, index) => (
               <div
                 key={committee.name}
-                className="flex flex-col items-center justify-center gap-2 px-3 py-2 text-center"
+                className="committee-item flex flex-col items-center justify-center gap-2 px-3 py-2 text-center"
               >
                 <div className="committee-3d-wrap relative h-14 w-14 sm:h-16 sm:w-16">
                   <div
                     className={`committee-spin-3d ${index % 2 === 0 ? "committee-spin-3d-forward" : "committee-spin-3d-backward"}`}
                   >
-                    <Image
-                      src={committee.logo}
-                      alt={committee.name}
-                      fill
-                      sizes="64px"
-                      className="object-contain"
-                    />
+                    <div className="committee-face committee-face-front">
+                      <Image
+                        src={committee.logo}
+                        alt={committee.name}
+                        fill
+                        sizes="64px"
+                        className="committee-logo-img object-contain"
+                      />
+                    </div>
+                    <div className="committee-face committee-face-back" aria-hidden="true">
+                      <Image
+                        src={committee.logo}
+                        alt=""
+                        fill
+                        sizes="64px"
+                        className="committee-logo-img object-contain"
+                      />
+                    </div>
                   </div>
                 </div>
                 <span className="text-sm font-semibold tracking-wide text-slate-700 sm:text-[0.95rem]">

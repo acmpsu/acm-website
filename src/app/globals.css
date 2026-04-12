@@ -24,26 +24,6 @@ body {
   color: #0f172a;
 }
 
-@keyframes committee-spin-3d-forward {
-  from {
-    transform: rotateX(14deg) rotateY(0deg) scale(1);
-  }
-
-  to {
-    transform: rotateX(14deg) rotateY(180deg) scale(1.04);
-  }
-}
-
-@keyframes committee-spin-3d-backward {
-  from {
-    transform: rotateX(14deg) rotateY(180deg) scale(1.04);
-  }
-
-  to {
-    transform: rotateX(14deg) rotateY(0deg) scale(1);
-  }
-}
-
 .committee-3d-wrap {
   perspective: 700px;
 }
@@ -53,28 +33,68 @@ body {
   height: 100%;
   width: 100%;
   transform-style: preserve-3d;
+  transform-origin: center;
+  transition: transform 1.55s cubic-bezier(0.22, 0.61, 0.36, 1);
   will-change: transform;
 }
 
+.committee-face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+}
+
+.committee-face-back {
+  transform: rotateY(180deg);
+}
+
+.committee-logo-img {
+  backface-visibility: hidden;
+  transform: translateZ(0.5px);
+}
+
 .committee-spin-3d-forward {
-  animation: none;
+  transform: rotateX(14deg) rotateY(0deg) scale(1);
 }
 
 .committee-spin-3d-backward {
-  animation: none;
+  transform: rotateX(14deg) rotateY(180deg) scale(1.04);
 }
 
-.committee-3d-wrap:hover .committee-spin-3d-forward {
-  animation: committee-spin-3d-forward 1.7s cubic-bezier(0.22, 0.61, 0.36, 1);
+.committee-item:hover .committee-spin-3d-forward,
+.committee-item:focus-within .committee-spin-3d-forward {
+  transform: rotateX(14deg) rotateY(180deg) scale(1.04);
 }
 
-.committee-3d-wrap:hover .committee-spin-3d-backward {
-  animation: committee-spin-3d-backward 1.7s cubic-bezier(0.22, 0.61, 0.36, 1);
+.committee-item:hover .committee-spin-3d-backward,
+.committee-item:focus-within .committee-spin-3d-backward {
+  transform: rotateX(14deg) rotateY(0deg) scale(1);
+}
+
+html:has(.home-snap) {
+  scroll-behavior: smooth;
+}
+
+body:has(.home-snap) {
+  scroll-snap-type: y proximity;
+}
+
+.home-snap .snap-section {
+  scroll-snap-align: start;
+  scroll-snap-stop: normal;
+  scroll-margin-top: 92px;
+}
+
+.home-snap .snap-section > * {
+  transition: transform 420ms cubic-bezier(0.22, 0.61, 0.36, 1), opacity 420ms cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .committee-spin-3d-forward,
-  .committee-spin-3d-backward {
-    animation: none;
+  html:has(.home-snap) {
+    scroll-behavior: auto;
+  }
+
+  .home-snap .snap-section > * {
+    transition: none;
   }
 }

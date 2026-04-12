@@ -5,7 +5,7 @@ import { ThreeHeroScene } from "@/components/ThreeHeroScene";
 
 export function Hero() {
   return (
-    <section className="relative overflow-hidden bg-white px-6 pb-12 pt-10 sm:pt-14">
+    <section className="snap-section relative overflow-hidden bg-white px-6 pb-12 pt-10 sm:pt-14">
       <div className="mx-auto grid max-w-6xl items-center gap-10 lg:grid-cols-[1.05fr_0.95fr]">
         <Reveal className="relative z-10">
           <div className="max-w-2xl">

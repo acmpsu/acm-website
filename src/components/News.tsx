@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { Reveal } from "@/components/ui/reveal";
-import { SectionAccent3D } from "@/components/SectionAccent3D";
 
 type NewsItem = {
   title: string;
@@ -51,10 +50,7 @@ export function News() {
   const activeItem = NEWS_ITEMS[activeIndex];
 
   return (
-    <section className="relative overflow-hidden bg-slate-50 px-6 py-16" id="events">
-      <div className="absolute -left-10 top-2 h-36 w-52 opacity-30 sm:h-44 sm:w-60">
-        <SectionAccent3D variant="events" />
-      </div>
+    <section className="snap-section relative overflow-hidden bg-slate-50 px-6 py-16" id="events">
       <Reveal>
         <div className="relative mx-auto max-w-6xl rounded-2xl border border-slate-200 bg-white p-6 sm:p-8">
           <div className="mb-8 flex items-center justify-between">

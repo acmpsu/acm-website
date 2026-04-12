@@ -1,14 +1,70 @@
 'use client';
 
-import { Canvas, useFrame } from '@react-three/fiber';
+import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import {
   Float,
   MeshDistortMaterial,
-  OrbitControls,
   Sparkles,
 } from '@react-three/drei';
 import { useEffect, useRef } from 'react';
 import type { Group } from 'three';
+
+function clamp(value: number, min: number, max: number) {
+  return Math.min(max, Math.max(min, value));
+}
+
+function lerp(start: number, end: number, alpha: number) {
+  return start + (end - start) * alpha;
+}
+
+function ScrollCameraRig() {
+  const { camera } = useThree();
+  const scrollProgress = useRef(0);
+  const pointerX = useRef(0);
+  const pointerY = useRef(0);
+
+  useEffect(() => {
+    const onScroll = () => {
+      const maxScroll = Math.max(1, document.body.scrollHeight - window.innerHeight);
+      scrollProgress.current = window.scrollY / maxScroll;
+    };
+
+    const onPointerMove = (event: PointerEvent) => {
+      const x = event.clientX / window.innerWidth;
+      const y = event.clientY / window.innerHeight;
+      pointerX.current = (x - 0.5) * 2;
+      pointerY.current = (y - 0.5) * -2;
+    };
+
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('pointermove', onPointerMove, { passive: true });
+
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('pointermove', onPointerMove);
+    };
+  }, []);
+
+  useFrame((_, delta) => {
+    const introProgress = clamp(scrollProgress.current / 0.22, 0, 1);
+
+    const targetZ = lerp(5.6, 4.35, introProgress);
+    const targetY = lerp(0.45, 0.08, introProgress) + pointerY.current * 0.06;
+    const targetX = pointerX.current * 0.08;
+    const targetFov = lerp(58, 49, introProgress);
+
+    const smoothing = Math.min(1, delta * 2.2);
+    camera.position.x += (targetX - camera.position.x) * smoothing;
+    camera.position.y += (targetY - camera.position.y) * smoothing;
+    camera.position.z += (targetZ - camera.position.z) * smoothing;
+    camera.fov += (targetFov - camera.fov) * smoothing;
+    camera.lookAt(0, 0, 0);
+    camera.updateProjectionMatrix();
+  });
+
+  return null;
+}
 
 function AnimatedCluster() {
   const root = useRef<Group>(null);
@@ -98,17 +154,9 @@ export function ThreeHeroScene() {
         <pointLight position={[-2.4, -1.8, 2.8]} intensity={0.7} color="#1d4ed8" />
         <pointLight position={[2.5, 1.1, 1.6]} intensity={0.55} color="#22d3ee" />
 
+        <ScrollCameraRig />
         <AnimatedCluster />
         <Sparkles count={10} scale={[4.8, 2.8, 4.2]} speed={0.2} size={1.2} />
-
-        <OrbitControls
-          enablePan={false}
-          enableZoom={false}
-          autoRotate
-          autoRotateSpeed={0.4}
-          maxPolarAngle={Math.PI * 0.62}
-          minPolarAngle={Math.PI * 0.38}
-        />
       </Canvas>
     </div>
   );
