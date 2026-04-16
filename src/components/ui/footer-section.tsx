@@ -77,19 +77,18 @@ const officialLinks: TextLink[] = [
 
 export function FooterSection() {
   return (
-    <footer className="relative w-full border-t border-slate-200 bg-white px-6 py-5 lg:py-6">
-      <div className="mx-auto flex w-full max-w-6xl flex-col items-center gap-4 text-center">
-        <AnimatedContainer className="flex flex-col items-center gap-3">
-            <Image src="/logos/acm.png" alt="ACM" width={40} height={40} />
-            <div>
-              <p className="text-sm font-semibold tracking-wide text-slate-900">Penn State ACM</p>
-              <p className="mt-1 text-xs text-slate-500">© {new Date().getFullYear()} All rights reserved.</p>
-            </div>
+    <footer className="relative w-full border-t border-slate-200 bg-white px-6 py-8 md:py-10 lg:py-12">
+      <div className="mx-auto flex w-full max-w-6xl flex-col gap-8 text-center md:flex-row md:items-center md:justify-between md:text-left">
+        <AnimatedContainer className="flex flex-col items-center gap-4 md:flex-row md:items-center md:gap-5">
+          <Image src="/logos/acm.png" alt="ACM" width={40} height={40} />
+          <div>
+            <p className="text-sm font-semibold tracking-wide text-slate-900">Penn State ACM</p>
+            <p className="mt-1 text-xs text-slate-500">© {new Date().getFullYear()} All rights reserved.</p>
+          </div>
         </AnimatedContainer>
 
-        <AnimatedContainer delay={0.15} className="flex flex-col items-center gap-2">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-slate-500">Links</p>
-          <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-xs font-medium text-slate-700">
+        <AnimatedContainer delay={0.15} className="flex flex-col items-center gap-4 md:items-end">
+          <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-3 text-xs font-medium text-slate-700 md:justify-end">
             {socialLinks.map((link) => (
               <Link
                 key={link.title}
@@ -102,7 +101,9 @@ export function FooterSection() {
                 <span>{link.title}</span>
               </Link>
             ))}
-            <span className="text-slate-300">|</span>
+          </div>
+
+          <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-3 text-xs font-medium text-slate-700 md:justify-end">
             {officialLinks.map((link, index) => (
               <span key={link.title} className="inline-flex items-center gap-2">
                 <Link
@@ -117,10 +118,6 @@ export function FooterSection() {
               </span>
             ))}
           </div>
-        </AnimatedContainer>
-
-        <AnimatedContainer delay={0.25} className="w-full border-t border-slate-200 pt-2 text-center">
-          <p className="text-xs text-slate-600">Created by Dev Team</p>
         </AnimatedContainer>
       </div>
     </footer>

@@ -8,7 +8,7 @@ export function Header() {
     <header className="sticky top-0 z-50 border-b border-slate-200 bg-white px-6 py-3">
       <div className="mx-auto flex w-full max-w-6xl items-center justify-between">
         <Link href="/" className="flex items-center gap-3">
-          <Image src="/logos/acm.png" alt="ACM" width={46} height={46} />
+          <Image src="/logos/acm.png" alt="ACM" width={46} height={46} loading="eager" />
           <p className="hidden text-sm font-semibold tracking-wide text-slate-900 sm:block">Penn State ACM</p>
         </Link>
         <div className="flex items-center gap-6">
