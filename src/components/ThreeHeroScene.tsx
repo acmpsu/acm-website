@@ -7,7 +7,7 @@ import {
   Sparkles,
 } from '@react-three/drei';
 import { useEffect, useRef } from 'react';
-import type { Group } from 'three';
+import type { Group, PerspectiveCamera } from 'three';
 
 function clamp(value: number, min: number, max: number) {
   return Math.min(max, Math.max(min, value));
@@ -47,6 +47,11 @@ function ScrollCameraRig() {
   }, []);
 
   useFrame((_, delta) => {
+    if (!("fov" in camera)) {
+      return;
+    }
+
+    const perspectiveCamera = camera as PerspectiveCamera;
     const introProgress = clamp(scrollProgress.current / 0.22, 0, 1);
 
     const targetZ = lerp(5.6, 4.35, introProgress);
@@ -55,12 +60,12 @@ function ScrollCameraRig() {
     const targetFov = lerp(58, 49, introProgress);
 
     const smoothing = Math.min(1, delta * 2.2);
-    camera.position.x += (targetX - camera.position.x) * smoothing;
-    camera.position.y += (targetY - camera.position.y) * smoothing;
-    camera.position.z += (targetZ - camera.position.z) * smoothing;
-    camera.fov += (targetFov - camera.fov) * smoothing;
-    camera.lookAt(0, 0, 0);
-    camera.updateProjectionMatrix();
+    perspectiveCamera.position.x += (targetX - perspectiveCamera.position.x) * smoothing;
+    perspectiveCamera.position.y += (targetY - perspectiveCamera.position.y) * smoothing;
+    perspectiveCamera.position.z += (targetZ - perspectiveCamera.position.z) * smoothing;
+    perspectiveCamera.fov += (targetFov - perspectiveCamera.fov) * smoothing;
+    perspectiveCamera.lookAt(0, 0, 0);
+    perspectiveCamera.updateProjectionMatrix();
   });
 
   return null;
