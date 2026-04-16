@@ -30,35 +30,34 @@ function LinkedInIcon({ className }: { className?: string }) {
 
 const TEAM_MEMBERS: TeamMember[] = [
   {
-    name: "Team Member Name",
+    name: "Khai Ta",
     role: "Dev Team Executive",
-    linkedin: "https://www.linkedin.com/",
-    image: "/team/khai.png",
+    linkedin: "https://www.linkedin.com/in/khai-ta-6b4951316/",
+    image: "/resources/dev-team/khai.png",
   },
   {
-    name: "Team Member Name",
+    name: "Kyle Chiem",
     role: "Dev Team",
-    linkedin: "https://www.linkedin.com/",
+    linkedin: "https://www.linkedin.com/in/kyle-chiem/",
+    image: "/resources/dev-team/kyle.png",
   },
   {
-    name: "Team Member Name",
+    name: "Prakhar Singh",
     role: "Dev Team",
-    linkedin: "https://www.linkedin.com/",
+    linkedin: "https://www.linkedin.com/in/prakhar-singh-a390581a8/",
+    image: "/resources/dev-team/prakhar.png",
   },
   {
-    name: "Team Member Name",
+    name: "Leo Lu",
     role: "Dev Team",
-    linkedin: "https://www.linkedin.com/",
+    linkedin: "https://www.linkedin.com/in/leohaozhelu/",
+    image: "/resources/dev-team/leo.png",
   },
   {
-    name: "Team Member Name",
-    role: "Dev Intern",
-    linkedin: "https://www.linkedin.com/",
-  },
-  {
-    name: "Team Member Name",
-    role: "Dev Intern",
-    linkedin: "https://www.linkedin.com/",
+    name: "Nikhil Kotikalapudi",
+    role: "Dev Team",
+    linkedin: "https://www.linkedin.com/in/nikhil-kotikalapudi/",
+    image: "/resources/dev-team/nikhil.png",
   },
 ];
 
@@ -76,9 +75,15 @@ export default function DevTeamPage() {
 
       <section>
         <p className="text-sm font-semibold uppercase tracking-wide text-gray-500">Team Photo</p>
-        <div className="mt-3 overflow-hidden rounded border border-gray-200 bg-gray-100">
-          <div className="flex h-64 items-center justify-center text-sm text-gray-500 sm:h-80 lg:h-96">
-            Photo Placeholder
+        <div className="mt-3 overflow-hidden rounded border border-gray-200 bg-gray-100 shadow-sm">
+          <div className="relative aspect-[16/9] w-full">
+            <Image
+              src="/resources/dev-team/devteam.png"
+              alt="Dev Team group photo"
+              fill
+              priority
+              className="object-cover object-center"
+            />
           </div>
         </div>
       </section>

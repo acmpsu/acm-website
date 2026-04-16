@@ -1,0 +1,39 @@
+diff --git a/node_modules/@react-three/fiber/dist/events-11ca7a92.cjs.prod.js b/node_modules/@react-three/fiber/dist/events-11ca7a92.cjs.prod.js
+index 7ee6974..654f239 100644
+--- a/node_modules/@react-three/fiber/dist/events-11ca7a92.cjs.prod.js
++++ b/node_modules/@react-three/fiber/dist/events-11ca7a92.cjs.prod.js
+@@ -1007,7 +1007,7 @@ const createStore = (invalidate, advance) => {
+       linear: false,
+       flat: false,
+       controls: null,
+-      clock: new THREE__namespace.Clock(),
++      clock: new THREE__namespace.Timer(),
+       pointer,
+       mouse: pointer,
+       frameloop: 'always',
+diff --git a/node_modules/@react-three/fiber/dist/events-508aad4b.cjs.dev.js b/node_modules/@react-three/fiber/dist/events-508aad4b.cjs.dev.js
+index c46d5e6..4ccb37e 100644
+--- a/node_modules/@react-three/fiber/dist/events-508aad4b.cjs.dev.js
++++ b/node_modules/@react-three/fiber/dist/events-508aad4b.cjs.dev.js
+@@ -1007,7 +1007,7 @@ const createStore = (invalidate, advance) => {
+       linear: false,
+       flat: false,
+       controls: null,
+-      clock: new THREE__namespace.Clock(),
++      clock: new THREE__namespace.Timer(),
+       pointer,
+       mouse: pointer,
+       frameloop: 'always',
+diff --git a/node_modules/@react-three/fiber/dist/events-760a1017.esm.js b/node_modules/@react-three/fiber/dist/events-760a1017.esm.js
+index f4e89a7..ccf8e9d 100644
+--- a/node_modules/@react-three/fiber/dist/events-760a1017.esm.js
++++ b/node_modules/@react-three/fiber/dist/events-760a1017.esm.js
+@@ -982,7 +982,7 @@ const createStore = (invalidate, advance) => {
+       linear: false,
+       flat: false,
+       controls: null,
+-      clock: new THREE.Clock(),
++      clock: new THREE.Timer(),
+       pointer,
+       mouse: pointer,
+       frameloop: 'always',
