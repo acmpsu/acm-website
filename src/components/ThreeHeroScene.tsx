@@ -150,7 +150,7 @@ function AnimatedCluster() {
 export function ThreeHeroScene() {
   return (
     <div className="h-full w-full rounded-3xl">
-      <Canvas camera={{ position: [0, 0.1, 4.5], fov: 50 }} shadows dpr={[1, 2]}>
+      <Canvas camera={{ position: [0, 0.1, 4.5], fov: 50 }} shadows="percentage" dpr={[1, 2]}>
         <color attach="background" args={['#030712']} />
         <fog attach="fog" args={['#030712', 4, 12]} />
 
