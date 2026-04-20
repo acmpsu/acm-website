@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { NAV_ITEMS } from "@/lib/constants";
+import { COMMITTEES, committeePageFragmentId, NAV_ITEMS } from "@/lib/constants";
 import { ShiftingDropDown } from "@/components/ui/shifting-dropdown";
 
 export function Header() {
@@ -13,11 +13,21 @@ export function Header() {
         </Link>
         <div className="flex items-center gap-6">
           <nav className="hidden items-center gap-7 text-sm font-medium text-slate-700 lg:flex">
-            <Link href={NAV_ITEMS[0].href} className="transition hover:text-blue-700">
-              {NAV_ITEMS[0].label}
-            </Link>
-            <ShiftingDropDown />
-            {NAV_ITEMS.slice(1).map((item) => (
+            <ShiftingDropDown
+              label="Committees"
+              labelHref="/committees"
+              labelLinkClassName="text-sm font-medium text-slate-700 transition hover:text-blue-700"
+              items={COMMITTEES.map((committee) => ({
+                id: committee.name,
+                label: committee.name,
+                href: `/committees#${committeePageFragmentId(committee.name)}`,
+              }))}
+            />
+            <ShiftingDropDown
+              label="Initiatives"
+              items={[{ label: "Dev Team", href: "/dev-team" }]}
+            />
+            {NAV_ITEMS.map((item) => (
               <Link key={item.href} href={item.href} className="transition hover:text-blue-700">
                 {item.label}
               </Link>

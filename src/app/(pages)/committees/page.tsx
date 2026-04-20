@@ -1,5 +1,7 @@
 import Image from "next/image";
 
+import { committeePageFragmentId } from "@/lib/constants";
+
 type Committee = {
   name: string;
   logo: string;
@@ -29,7 +31,7 @@ const COMMITTEES: Committee[] = [
     name: "acm.hack",
     logo: "/logos/hack.png",
     description:
-      "Hackathons are where we build, learn, and grow together. From small projects to large-scale competitions, we work on real-world problems and push our limits.",
+      "Builds full-stack web skills from accessible front ends to APIs and deployment, emphasizing real projects, modern frameworks, and clean engineering habits.",
   },
   {
     name: "acm.icpc",
@@ -54,7 +56,7 @@ const COMMITTEES: Committee[] = [
 export default function CommitteesPage() {
   return (
     <div>
-      <section>
+      <section id="committees-intro">
         <h1 className="text-4xl font-bold text-gray-900">Committees</h1>
         <p className="mt-6 text-sm font-semibold uppercase tracking-wide text-gray-500">Our tracks</p>
         <p className="mt-2 max-w-3xl text-gray-600">
@@ -65,10 +67,11 @@ export default function CommitteesPage() {
 
       <hr className="mt-10 border-0 border-t-2 border-gray-300" aria-hidden="true" />
 
-      <section className="divide-y divide-gray-200">
+      <section id="committee-list" className="divide-y divide-gray-200">
         {COMMITTEES.map((committee) => (
           <article
             key={committee.logo}
+            id={committeePageFragmentId(committee.name)}
             className="flex flex-col gap-5 py-8 sm:flex-row sm:items-start sm:gap-8"
           >
             <div className="flex shrink-0 justify-center sm:justify-start">
