@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { COMMITTEES, committeePageFragmentId, NAV_ITEMS } from "@/lib/constants";
+import { HeaderMobileMenu } from "@/components/HeaderMobileMenu";
 import { ShiftingDropDown } from "@/components/ui/shifting-dropdown";
 
 export function Header() {
@@ -33,6 +34,7 @@ export function Header() {
               </Link>
             ))}
           </nav>
+          <HeaderMobileMenu />
           <button className="whitespace-nowrap rounded-full bg-blue-900 px-5 py-2 text-sm font-semibold text-white transition hover:-translate-y-0.5 hover:bg-blue-950">
             Login
           </button>
