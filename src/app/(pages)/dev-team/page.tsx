@@ -59,9 +59,96 @@ const TEAM_MEMBERS: TeamMember[] = [
     linkedin: "https://www.linkedin.com/in/nikhil-kotikalapudi/",
     image: "/resources/dev-team/nikhil.png",
   },
+  
 ];
 
 export default function DevTeamPage() {
+  const executiveMembers = TEAM_MEMBERS.filter((member) => member.role.includes("Executive"));
+  const coreMembers = TEAM_MEMBERS.filter((member) => !member.role.includes("Executive"));
+
+  const renderMemberCard = (member: TeamMember, index: number) => {
+    const tapeVariants = [
+      {
+        left: "-top-2 left-5 h-5 w-16 rotate-[-8deg] border-sky-200/70 bg-sky-100/70",
+        right: "-top-2 right-6 h-5 w-14 rotate-[7deg] border-rose-200/70 bg-rose-100/70",
+        confettiA: "left-3 top-16 h-2.5 w-2.5 rounded-full bg-sky-300/55",
+        confettiB: "right-4 top-24 h-2 w-4 rotate-12 bg-rose-300/45",
+      },
+      {
+        left: "-top-1 left-7 h-4 w-14 rotate-[6deg] border-fuchsia-200/70 bg-fuchsia-100/65",
+        right: "-top-2 right-5 h-5 w-16 rotate-[-9deg] border-cyan-200/70 bg-cyan-100/70",
+        confettiA: "left-4 top-20 h-2 w-5 -rotate-12 bg-cyan-300/45",
+        confettiB: "right-5 top-14 h-2.5 w-2.5 rounded-full bg-fuchsia-300/55",
+      },
+      {
+        left: "-top-2 left-6 h-5 w-15 rotate-[-4deg] border-blue-200/70 bg-blue-100/70",
+        right: "-top-1 right-7 h-4 w-14 rotate-[11deg] border-pink-200/70 bg-pink-100/70",
+        confettiA: "left-5 top-12 h-2.5 w-2.5 rounded-full bg-pink-300/55",
+        confettiB: "right-3 top-22 h-2 w-4 rotate-[20deg] bg-blue-300/45",
+      },
+    ];
+    const tapeVariant = tapeVariants[index % tapeVariants.length];
+
+    return (
+      <article
+        key={`${member.name}-${index}`}
+        className="group relative isolate overflow-hidden border border-amber-200/90 bg-gradient-to-br from-amber-50 via-yellow-50 to-amber-100 shadow-[0_10px_20px_-12px_rgba(120,53,15,0.55)] transition duration-200 hover:-translate-y-1 hover:rotate-0 hover:shadow-[0_14px_24px_-12px_rgba(120,53,15,0.65)]"
+        style={{ transform: index % 2 === 0 ? "rotate(-0.9deg)" : "rotate(0.9deg)" }}
+      >
+        <div
+          className={`pointer-events-none absolute border shadow-sm ${tapeVariant.left}`}
+          aria-hidden="true"
+        />
+        <div
+          className={`pointer-events-none absolute border shadow-sm ${tapeVariant.right}`}
+          aria-hidden="true"
+        />
+        <div className={`pointer-events-none absolute ${tapeVariant.confettiA}`} aria-hidden="true" />
+        <div className={`pointer-events-none absolute ${tapeVariant.confettiB}`} aria-hidden="true" />
+      {member.image ? (
+        <div className="p-3 pb-0">
+          <div className="relative aspect-[4/3] w-full overflow-hidden border-4 border-amber-50 bg-amber-100 shadow-[0_6px_10px_-8px_rgba(120,53,15,0.8)]">
+            <Image
+              src={member.image}
+              alt={`${member.name} profile photo`}
+              fill
+              className="object-cover object-center saturate-[0.92] sepia-[0.08] transition duration-300 group-hover:scale-[1.03]"
+            />
+            <div className="pointer-events-none absolute inset-0 bg-[repeating-linear-gradient(0deg,rgba(120,53,15,0.08),rgba(120,53,15,0.08)_1px,transparent_1px,transparent_7px)] opacity-30" />
+            <div className="pointer-events-none absolute inset-x-0 bottom-0 h-14 bg-gradient-to-t from-amber-900/20 to-transparent" />
+          </div>
+        </div>
+      ) : (
+        <div className="p-3 pb-0">
+          <div
+            className="relative aspect-[4/3] w-full overflow-hidden border-4 border-amber-50 bg-gradient-to-br from-amber-100 via-yellow-50 to-amber-200 shadow-[0_6px_10px_-8px_rgba(120,53,15,0.8)]"
+            aria-hidden="true"
+          >
+            <div className="absolute inset-0 bg-[repeating-linear-gradient(0deg,rgba(120,53,15,0.08),rgba(120,53,15,0.08)_1px,transparent_1px,transparent_7px)] opacity-30" />
+            <div className="absolute left-4 top-4 h-10 w-10 rotate-[-10deg] border border-amber-300/80 bg-amber-50/70" />
+            <div className="absolute bottom-0 left-0 right-0 h-14 bg-gradient-to-t from-amber-900/15 to-transparent" />
+          </div>
+        </div>
+      )}
+      <div className="relative space-y-1.5 p-3.5 pt-3">
+        <p className="text-xs italic tracking-wide text-amber-900/80">
+          {member.role}
+        </p>
+        <h3 className="text-base font-semibold text-amber-950">{member.name}</h3>
+        <a
+          href={member.linkedin}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-1.5 text-xs font-medium text-amber-800 underline decoration-amber-500/60 underline-offset-2 transition hover:text-amber-950"
+        >
+          <LinkedInIcon className="h-3.5 w-3.5" />
+          LinkedIn
+        </a>
+      </div>
+      </article>
+    );
+  };
+
   return (
     <div className="space-y-12">
       <section>
@@ -94,46 +181,25 @@ export default function DevTeamPage() {
           Add each member&apos;s real photo, name, and LinkedIn profile below.
         </p>
 
-        <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {TEAM_MEMBERS.map((member, index) => (
-            <article
-              key={`${member.name}-${index}`}
-              className="group overflow-hidden rounded border border-gray-200 bg-white shadow-sm transition hover:-translate-y-0.5 hover:border-gray-300 hover:shadow-md"
-            >
-              {member.image ? (
-                <div className="relative aspect-[5/4] w-full overflow-hidden bg-gray-200">
-                  <Image
-                    src={member.image}
-                    alt={`${member.name} profile photo`}
-                    fill
-                    className="object-cover object-center"
-                  />
-                </div>
-              ) : (
-                <div
-                  className="relative aspect-[5/4] w-full overflow-hidden bg-gradient-to-br from-gray-200 via-gray-100 to-gray-300"
-                  aria-hidden="true"
-                >
-                  <div className="absolute left-4 top-4 h-12 w-12 rounded-full border border-white/70 bg-white/60 backdrop-blur" />
-                  <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-black/10 to-transparent" />
-                </div>
-              )}
-              <div className="space-y-2 p-4">
-                <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">{member.role}</p>
-                <h3 className="text-lg font-semibold text-gray-900">{member.name}</h3>
-                <a
-                  href={member.linkedin}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 text-sm font-medium text-blue-700 hover:text-blue-900"
-                >
-                  <LinkedInIcon className="h-4 w-4" />
-                  LinkedIn
-                </a>
+        {executiveMembers.length > 0 && (
+          <div className="mt-8">
+            <p className="text-sm font-semibold uppercase tracking-wide text-slate-500">Dev Team Executive</p>
+            <div className="mt-4 flex justify-center">
+              <div className="grid w-full gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                {executiveMembers.map((member, index) => renderMemberCard(member, index))}
               </div>
-            </article>
-          ))}
-        </div>
+            </div>
+          </div>
+        )}
+
+        {coreMembers.length > 0 && (
+          <div className="mt-8">
+            <p className="text-sm font-semibold uppercase tracking-wide text-slate-500">Dev Team Members</p>
+            <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+              {coreMembers.map((member, index) => renderMemberCard(member, index))}
+            </div>
+          </div>
+        )}
       </section>
     </div>
   );
