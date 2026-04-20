@@ -4,6 +4,12 @@
   color-scheme: light;
   --background: #f8fafc;
   --foreground: #0f172a;
+  /* Sticky header clearance — hash links & snap sections use the same offset */
+  --header-sticky-offset: 92px;
+}
+
+html {
+  scroll-padding-top: var(--header-sticky-offset);
 }
 
 @theme inline {
@@ -82,7 +88,7 @@ body:has(.home-snap) {
 .home-snap .snap-section {
   scroll-snap-align: start;
   scroll-snap-stop: normal;
-  scroll-margin-top: 92px;
+  scroll-margin-top: var(--header-sticky-offset);
 }
 
 .home-snap .snap-section > * {
