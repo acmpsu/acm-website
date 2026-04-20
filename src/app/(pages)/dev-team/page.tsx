@@ -270,10 +270,6 @@ export default function DevTeamPage() {
 
       <section>
         <h2 className="text-2xl font-semibold text-gray-900">Roster</h2>
-        <p className="mt-2 text-gray-600">
-          Add each member&apos;s real photo, name, and LinkedIn profile below.
-        </p>
-
         {executiveMembers.length > 0 && (
           <div className="mt-8">
             <p className="text-sm font-semibold uppercase tracking-wide text-slate-500">Dev Team Directors</p>
