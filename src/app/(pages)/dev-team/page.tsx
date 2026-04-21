@@ -183,7 +183,7 @@ export default function DevTeamPage() {
   };
 
   return (
-    <div className="space-y-12">
+    <div className="space-y-14">
       {/* Paper curl animation styles */}
       <style>{`
         .paper-curl {
@@ -243,18 +243,17 @@ export default function DevTeamPage() {
         }
       `}</style>
 
-      <section>
-        <h1 className="text-4xl font-bold text-gray-900">Dev Team</h1>
-        <p className="mt-6 text-sm font-semibold uppercase tracking-wide text-gray-500">About</p>
-        <p className="mt-2 max-w-3xl text-gray-600">
-          We are a student-led team that designs, builds, and maintains ACM digital projects. Add
-          your team mission, current focus, and how members can get involved.
-        </p>
-      </section>
+      <section className="grid min-h-[calc(100vh-10rem)] content-center gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
+        <div className="max-w-2xl">
+          <h1 className="text-4xl font-bold leading-tight text-slate-950 sm:text-5xl md:text-6xl">Dev Team</h1>
+          <p className="mt-6 text-sm font-semibold uppercase tracking-wide text-slate-500">About</p>
+          <p className="mt-2 max-w-xl text-lg leading-relaxed text-slate-700">
+            We are a student-led team that designs, builds, and maintains ACM digital projects.
+            Add your team mission, current focus, and how members can get involved.
+          </p>
+        </div>
 
-      <section>
-        <p className="text-sm font-semibold uppercase tracking-wide text-gray-500">Team Photo</p>
-        <div className="mt-3 overflow-hidden rounded border border-gray-200 bg-gray-100 shadow-sm">
+        <div className="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-[0_24px_45px_-30px_rgba(15,23,42,0.35)]">
           <div className="relative aspect-[16/9] w-full">
             <Image
               src="/resources/dev-team/devteam.png"
@@ -268,27 +267,35 @@ export default function DevTeamPage() {
         </div>
       </section>
 
+      <div className="px-1" aria-hidden="true">
+        <div className="h-px w-full bg-gradient-to-r from-transparent via-slate-300 to-transparent" />
+      </div>
+
       <section>
-        <h2 className="text-2xl font-semibold text-gray-900">Roster</h2>
-        {executiveMembers.length > 0 && (
-          <div className="mt-8">
-            <p className="text-sm font-semibold uppercase tracking-wide text-slate-500">Dev Team Directors</p>
-            <div className="mt-4 flex justify-center">
-              <div className="grid w-full gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                {executiveMembers.map((member, index) => renderMemberCard(member, index))}
+        <p className="text-sm font-semibold uppercase tracking-wide text-gray-500">Team Roster</p>
+        <h2 className="mt-1 text-2xl font-semibold text-gray-900">Roster</h2>
+
+        <div className="mt-6 space-y-8">
+          {executiveMembers.length > 0 && (
+            <div>
+              <p className="text-sm font-semibold uppercase tracking-wide text-slate-500">Dev Team Directors</p>
+              <div className="mt-4 flex justify-center">
+                <div className="grid w-full gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                  {executiveMembers.map((member, index) => renderMemberCard(member, index))}
+                </div>
               </div>
             </div>
-          </div>
-        )}
+          )}
 
-        {coreMembers.length > 0 && (
-          <div className="mt-8">
-            <p className="text-sm font-semibold uppercase tracking-wide text-slate-500">Dev Team Officers</p>
-            <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-              {coreMembers.map((member, index) => renderMemberCard(member, index))}
+          {coreMembers.length > 0 && (
+            <div>
+              <p className="text-sm font-semibold uppercase tracking-wide text-slate-500">Dev Team Officers</p>
+              <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                {coreMembers.map((member, index) => renderMemberCard(member, index))}
+              </div>
             </div>
-          </div>
-        )}
+          )}
+        </div>
       </section>
     </div>
   );
