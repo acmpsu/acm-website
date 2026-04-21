@@ -7,8 +7,8 @@ import { MobileMenu } from "@/components/ui/mobile-menu";
 
 export function Header() {
   return (
-    <header className="sticky top-0 z-50 border-b border-[var(--border)] bg-white/95 backdrop-blur-md">
-      <div className="mx-auto flex w-full max-w-[1160px] items-center justify-between px-8 h-[60px]">
+    <header className="sticky top-0 z-50 border-b border-[var(--border)] bg-white/95 backdrop-blur-md px-8">
+      <div className="mx-auto flex w-full max-w-[1160px] items-center justify-between h-[60px]">
         <Link href="/" className="flex items-center gap-2.5 text-inherit no-underline">
           <Image src="/logos/acm.png" alt="ACM" width={34} height={34} loading="eager" />
           <span className="hidden text-[13px] font-bold tracking-[0.01em] text-[var(--navy-dk)] sm:block">
@@ -22,7 +22,7 @@ export function Header() {
               <Link
                 key={item.href}
                 href={item.href}
-                className="text-[13px] font-medium text-[var(--slate)] transition hover:text-[var(--navy-dk)]"
+                className="text-[13px] font-medium text-[var(--navy-dk)] transition hover:text-[var(--navy)]"
               >
                 {item.label}
               </Link>
@@ -33,7 +33,7 @@ export function Header() {
               <Link
                 key={item.href}
                 href={item.href}
-                className="text-[13px] font-medium text-[var(--slate)] transition hover:text-[var(--navy-dk)]"
+                className="text-[13px] font-medium text-[var(--navy-dk)] transition hover:text-[var(--navy)]"
               >
                 {item.label}
               </Link>

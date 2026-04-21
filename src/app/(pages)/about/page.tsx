@@ -6,7 +6,7 @@ const OFFICIAL_LINKS = [
   {
     label: "Org Page",
     display: "Penn State Discover",
-    href: "https://discover.psu.edu/organization/association-for-computing-machinery",
+    href: "https://discover.psu.edu/organization/acmpsu",
   },
   { label: "Discord", display: "Join the server", href: "https://discord.gg/zkqYjGxVsh" },
   { label: "GroupMe", display: "Join the group", href: "https://groupme.com/join_group/113864937/hfRpqc64" },

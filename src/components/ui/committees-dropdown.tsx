@@ -44,7 +44,7 @@ export function CommitteesDropDown() {
       <div className="flex items-center gap-1">
         <Link
           href="/committees"
-          className="text-sm font-medium text-gray-800 hover:text-gray-600 transition"
+          className="text-[13px] font-medium text-[var(--navy-dk)] hover:text-[var(--navy)] transition"
         >
           Committees
         </Link>
@@ -55,7 +55,7 @@ export function CommitteesDropDown() {
           onFocus={openDropdown}
           onBlur={closeDropdownWithDelay}
           onClick={() => setOpen((prev) => !prev)}
-          className="p-1"
+          className="p-1 text-[var(--navy-dk)]"
         >
           <ChevronDown
             size={16}

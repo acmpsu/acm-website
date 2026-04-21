@@ -66,7 +66,7 @@ const socialLinks: SocialLink[] = [
 ];
 
 const officialLinks: TextLink[] = [
-  { title: 'Org Page', href: 'https://discover.psu.edu/organization/association-for-computing-machinery' },
+  { title: 'Org Page', href: 'https://discover.psu.edu/organization/acmpsu' },
   { title: 'Discord', href: 'https://discord.gg/zkqYjGxVsh' },
   { title: 'GroupMe', href: 'https://groupme.com/join_group/113864937/hfRpqc64' },
 ];

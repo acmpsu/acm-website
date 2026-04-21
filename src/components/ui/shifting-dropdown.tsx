@@ -47,7 +47,7 @@ export function ShiftingDropDown() {
         onFocus={openDropdown}
         onBlur={closeDropdownWithDelay}
         onClick={() => setOpen((prev) => !prev)}
-        className="flex items-center gap-1 text-sm font-medium text-gray-800 hover:text-gray-600"
+        className="flex items-center gap-1 text-[13px] font-medium text-[var(--navy-dk)] hover:text-[var(--navy)]"
       >
         <span>Initiatives</span>
         <ChevronDown
