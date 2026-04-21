@@ -46,12 +46,12 @@ export function CountdownTimer() {
       ).map((item) => (
         <div
           key={item.label}
-          className="glass-card px-4 py-5 sm:px-6 sm:py-6 min-w-[72px] sm:min-w-[96px] text-center"
+          className="rounded border border-gray-200 bg-white px-4 py-5 sm:px-6 sm:py-6 min-w-[72px] sm:min-w-[96px] text-center shadow-sm"
         >
-          <div className="text-2xl sm:text-4xl font-extrabold font-mono bg-gradient-to-b from-blue-700 to-blue-500 bg-clip-text text-transparent drop-shadow-sm">
+          <div className="text-2xl sm:text-4xl font-bold text-gray-900 font-mono">
             {String(item.value).padStart(2, "0")}
           </div>
-          <div className="text-[10px] sm:text-xs uppercase tracking-[0.2em] mt-1.5 text-gray-400 font-medium">
+          <div className="text-[10px] sm:text-xs uppercase tracking-[0.2em] mt-1.5 text-gray-600 font-medium">
             {item.label}
           </div>
         </div>
