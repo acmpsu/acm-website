@@ -31,17 +31,9 @@ export function Hero() {
           </div>
         </div>
 
-        {/* Right — image placeholder */}
-        <div className="overflow-hidden rounded-xl border border-[var(--border)] bg-[#f1f4f8] aspect-[4/3] flex flex-col items-center justify-center gap-2.5">
-          {/* Replace this div with your <Image> once you have the asset */}
-          <svg width="36" height="36" viewBox="0 0 36 36" fill="none" stroke="#cbd5e1" strokeWidth="1.5">
-            <rect x="3" y="3" width="30" height="30" rx="3" />
-            <circle cx="12" cy="13" r="3.5" />
-            <path d="M3 26l8-7 6 6 5-4 9 8" />
-          </svg>
-          <span className="text-[11px] font-semibold uppercase tracking-[0.08em] text-[var(--slate-lt)]">
-            Drop your image here
-          </span>
+        {/* Right — image */}
+        <div className="overflow-hidden rounded-xl border border-[var(--border)] bg-[#f1f4f8] aspect-[4/3] relative">
+          <Image src="/team.png" alt="Team" fill className="object-cover" />
         </div>
 
       </div>
