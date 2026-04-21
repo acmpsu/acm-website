@@ -78,225 +78,112 @@ const TEAM_MEMBERS: TeamMember[] = [
     github: "https://github.com/23silicon",
     image: "/resources/dev-team/nikhil.png",
   },
-  
 ];
 
 export default function DevTeamPage() {
   const executiveMembers = TEAM_MEMBERS.filter((member) => member.role.includes("Director"));
   const coreMembers = TEAM_MEMBERS.filter((member) => !member.role.includes("Director"));
 
-  const renderMemberCard = (member: TeamMember, index: number) => {
-    const tapeVariants = [
-      {
-        left: "-top-2 left-5 h-5 w-16 rotate-[-8deg] border-sky-200/70 bg-sky-100/70",
-        right: "-top-2 right-6 h-5 w-14 rotate-[7deg] border-rose-200/70 bg-rose-100/70",
-        confettiA: "left-3 top-16 h-2.5 w-2.5 rounded-full bg-sky-300/55",
-        confettiB: "right-4 top-24 h-2 w-4 rotate-12 bg-rose-300/45",
-      },
-      {
-        left: "-top-1 left-7 h-4 w-14 rotate-[6deg] border-fuchsia-200/70 bg-fuchsia-100/65",
-        right: "-top-2 right-5 h-5 w-16 rotate-[-9deg] border-cyan-200/70 bg-cyan-100/70",
-        confettiA: "left-4 top-20 h-2 w-5 -rotate-12 bg-cyan-300/45",
-        confettiB: "right-5 top-14 h-2.5 w-2.5 rounded-full bg-fuchsia-300/55",
-      },
-      {
-        left: "-top-2 left-6 h-5 w-15 rotate-[-4deg] border-blue-200/70 bg-blue-100/70",
-        right: "-top-1 right-7 h-4 w-14 rotate-[11deg] border-pink-200/70 bg-pink-100/70",
-        confettiA: "left-5 top-12 h-2.5 w-2.5 rounded-full bg-pink-300/55",
-        confettiB: "right-3 top-22 h-2 w-4 rotate-[20deg] bg-blue-300/45",
-      },
-    ];
-    const tapeVariant = tapeVariants[index % tapeVariants.length];
-
-    return (
-      <article
-        key={`${member.name}-${index}`}
-        className="paper-curl group relative isolate overflow-hidden border border-amber-200/90 bg-gradient-to-br from-amber-50 via-yellow-50 to-amber-100 shadow-[0_10px_20px_-12px_rgba(120,53,15,0.55)] transition duration-200 hover:-translate-y-1 hover:rotate-0 hover:shadow-[0_14px_24px_-12px_rgba(120,53,15,0.65)]"
-        style={{ transform: index % 2 === 0 ? "rotate(-0.9deg)" : "rotate(0.9deg)" }}
-      >
-        <div
-          className={`pointer-events-none absolute border shadow-sm ${tapeVariant.left}`}
-          aria-hidden="true"
-        />
-        <div
-          className={`pointer-events-none absolute border shadow-sm ${tapeVariant.right}`}
-          aria-hidden="true"
-        />
-        <div className={`pointer-events-none absolute ${tapeVariant.confettiA}`} aria-hidden="true" />
-        <div className={`pointer-events-none absolute ${tapeVariant.confettiB}`} aria-hidden="true" />
-      {member.image ? (
-        <div className="p-3 pb-0">
-          <div className="relative aspect-[4/3] w-full overflow-hidden border-4 border-amber-50 bg-amber-100 shadow-[0_6px_10px_-8px_rgba(120,53,15,0.8)]">
-            <Image
-              src={member.image}
-              alt={`${member.name} profile photo`}
-              fill
-              sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
-              className="object-cover object-center saturate-[0.92] sepia-[0.08] transition duration-300 group-hover:scale-[1.03]"
-            />
-            <div className="pointer-events-none absolute inset-0 bg-[repeating-linear-gradient(0deg,rgba(120,53,15,0.08),rgba(120,53,15,0.08)_1px,transparent_1px,transparent_7px)] opacity-30" />
-            <div className="pointer-events-none absolute inset-x-0 bottom-0 h-14 bg-gradient-to-t from-amber-900/20 to-transparent" />
+  const renderMemberCard = (member: TeamMember) => (
+    <div className="text-center">
+      <div className="relative aspect-[3/4] overflow-hidden rounded-lg bg-[var(--bg-alt)]">
+        {member.image ? (
+          <Image
+            src={member.image}
+            alt={`${member.name} profile`}
+            fill
+            className="object-cover"
+            sizes="200px"
+          />
+        ) : (
+          <div className="flex h-full items-center justify-center">
+            <span className="text-[var(--slate-lt)]">No photo</span>
           </div>
-        </div>
-      ) : (
-        <div className="p-3 pb-0">
-          <div
-            className="relative aspect-[4/3] w-full overflow-hidden border-4 border-amber-50 bg-gradient-to-br from-amber-100 via-yellow-50 to-amber-200 shadow-[0_6px_10px_-8px_rgba(120,53,15,0.8)]"
-            aria-hidden="true"
-          >
-            <div className="absolute inset-0 bg-[repeating-linear-gradient(0deg,rgba(120,53,15,0.08),rgba(120,53,15,0.08)_1px,transparent_1px,transparent_7px)] opacity-30" />
-            <div className="absolute left-4 top-4 h-10 w-10 rotate-[-10deg] border border-amber-300/80 bg-amber-50/70" />
-            <div className="absolute bottom-0 left-0 right-0 h-14 bg-gradient-to-t from-amber-900/15 to-transparent" />
-          </div>
-        </div>
-      )}
-      <div className="relative space-y-1.5 p-3.5 pt-3">
-        <p className="text-xs italic tracking-wide text-amber-900/80">
-          {member.role}
-        </p>
-        <h3 className="text-base font-semibold text-amber-950">{member.name}</h3>
-        <div className="flex gap-3">
+        )}
+      </div>
+      <h3 className="mt-3 text-[14px] font-semibold text-[var(--navy-dk)]">{member.name}</h3>
+      <p className="mt-1 text-[12px] text-[var(--slate)]">{member.role}</p>
+      <div className="mt-2 flex justify-center gap-2.5">
+        <a
+          href={member.linkedin}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-[var(--slate)] transition hover:text-[var(--navy-dk)]"
+          aria-label="LinkedIn"
+        >
+          <LinkedInIcon className="h-4 w-4" />
+        </a>
+        {member.github && (
           <a
-            href={member.linkedin}
+            href={member.github}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 text-xs font-medium text-amber-800 underline decoration-amber-500/60 underline-offset-2 transition hover:text-amber-950"
+            className="text-[var(--slate)] transition hover:text-[var(--navy-dk)]"
+            aria-label="GitHub"
           >
-            <LinkedInIcon className="h-3.5 w-3.5" />
-            LinkedIn
+            <GitHubIcon className="h-4 w-4" />
           </a>
-          {member.github && (
-            <a
-              href={member.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 text-xs font-medium text-amber-800 underline decoration-amber-500/60 underline-offset-2 transition hover:text-amber-950"
-            >
-              <GitHubIcon className="h-3.5 w-3.5" />
-              GitHub
-            </a>
-          )}
-        </div>
+        )}
       </div>
-      </article>
-    );
-  };
+    </div>
+  );
 
   return (
-    <div className="space-y-14">
-      {/* Paper curl animation styles */}
-      <style>{`
-        .paper-curl {
-          /* allow the curl to render outside the card */
-          overflow: visible;
-        }
-
-        /* The curling triangle in the bottom-right corner */
-        .paper-curl::after {
-          content: "";
-          position: absolute;
-          right: 0;
-          bottom: 0;
-          width: 0;
-          height: 0;
-          background: linear-gradient(
-            135deg,
-            transparent 0%,
-            transparent 45%,
-            rgba(120, 53, 15, 0.18) 47%,
-            rgba(254, 243, 199, 0.95) 52%,
-            #fef3c7 70%,
-            #fde68a 100%
-          );
-          box-shadow: -2px -2px 6px rgba(120, 53, 15, 0.25);
-          transition: width 0.35s ease, height 0.35s ease;
-          pointer-events: none;
-          z-index: 3;
-          /* clip into a triangle pointing up-left */
-          clip-path: polygon(100% 0, 0 100%, 100% 100%);
-        }
-
-        /* The shadow cast by the curled corner onto the card below */
-        .paper-curl::before {
-          content: "";
-          position: absolute;
-          right: 0;
-          bottom: 0;
-          width: 0;
-          height: 0;
-          background: radial-gradient(
-            circle at bottom right,
-            rgba(120, 53, 15, 0.35) 0%,
-            rgba(120, 53, 15, 0.15) 40%,
-            transparent 70%
-          );
-          transition: width 0.35s ease, height 0.35s ease;
-          pointer-events: none;
-          z-index: 2;
-          clip-path: polygon(100% 0, 0 100%, 100% 100%);
-        }
-
-        .paper-curl:hover::after,
-        .paper-curl:hover::before {
-          width: 70px;
-          height: 70px;
-        }
-      `}</style>
-
-      <section className="grid min-h-[calc(100vh-10rem)] content-center gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
-        <div className="max-w-2xl">
-          <h1 className="text-4xl font-bold leading-tight text-slate-950 sm:text-5xl md:text-6xl">Dev Team</h1>
-          <p className="mt-6 text-sm font-semibold uppercase tracking-wide text-slate-500">About</p>
-          <p className="mt-2 max-w-xl text-lg leading-relaxed text-slate-700">
-            We are a student-led team that designs, builds, and maintains ACM digital projects.
-            Add your team mission, current focus, and how members can get involved.
+    <div className="border-b border-[var(--border)] px-8 py-[72px]">
+      <div className="mx-auto max-w-[1160px]">
+        {/* Header */}
+        <section className="mb-8">
+          <h1 className="mb-3 text-[clamp(28px,3vw,42px)] font-extrabold leading-[1.1] tracking-[-0.03em] text-[var(--navy-dk)]">
+            Dev Team
+          </h1>
+          <p className="mb-2 text-[10px] font-bold uppercase tracking-[0.12em] text-[var(--navy)]">
+            Our Team
           </p>
-        </div>
+          <p className="mt-2 max-w-3xl text-[15px] leading-[1.75] text-[var(--slate)]">
+            Meet the developers building the ACM website and digital infrastructure
+          </p>
+        </section>
 
-        <div className="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-[0_24px_45px_-30px_rgba(15,23,42,0.35)]">
-          <div className="relative aspect-[16/9] w-full">
+        {/* Team Photo */}
+        <section className="mb-12">
+          <div className="relative overflow-hidden rounded-lg border border-[var(--border)] bg-[#f1f4f8] aspect-[16/9]">
             <Image
               src="/resources/dev-team/devteam.png"
               alt="Dev Team group photo"
               fill
+              className="object-cover"
               priority
-              sizes="100vw"
-              className="object-cover object-center"
             />
           </div>
-        </div>
-      </section>
+        </section>
 
-      <div className="px-1" aria-hidden="true">
-        <div className="h-px w-full bg-gradient-to-r from-transparent via-slate-300 to-transparent" />
-      </div>
-
-      <section>
-        <p className="text-sm font-semibold uppercase tracking-wide text-gray-500">Team Roster</p>
-        <h2 className="mt-1 text-2xl font-semibold text-gray-900">Roster</h2>
-
-        <div className="mt-6 space-y-8">
+        {/* Team Members - Horizontal Layout */}
+        <div className="flex flex-col gap-8 lg:flex-row lg:items-start lg:justify-end">
+          {/* Directors - Center/Middle */}
           {executiveMembers.length > 0 && (
-            <div>
-              <p className="text-sm font-semibold uppercase tracking-wide text-slate-500">Dev Team Directors</p>
-              <div className="mt-4 flex justify-center">
-                <div className="grid w-full gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                  {executiveMembers.map((member, index) => renderMemberCard(member, index))}
-                </div>
+            <section className="flex-1">
+              <h2 className="mb-6 text-[18px] font-semibold text-[var(--navy-dk)]">Director</h2>
+              <div className="grid gap-6">
+                {executiveMembers.map((member) => (
+                  <div key={member.name}>{renderMemberCard(member)}</div>
+                ))}
               </div>
-            </div>
+            </section>
           )}
 
+          {/* Officers - Right */}
           {coreMembers.length > 0 && (
-            <div>
-              <p className="text-sm font-semibold uppercase tracking-wide text-slate-500">Dev Team Officers</p>
-              <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                {coreMembers.map((member, index) => renderMemberCard(member, index))}
+            <section className="flex-1">
+              <h2 className="mb-6 text-[18px] font-semibold text-[var(--navy-dk)]">Officers</h2>
+              <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-2">
+                {coreMembers.map((member) => (
+                  <div key={member.name}>{renderMemberCard(member)}</div>
+                ))}
               </div>
-            </div>
+            </section>
           )}
         </div>
-      </section>
+      </div>
     </div>
   );
 }
