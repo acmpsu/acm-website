@@ -1,50 +1,62 @@
 import Image from "next/image";
-
 import { COMMITTEES } from "@/lib/constants";
 
 export function Committees() {
   return (
-    <section className="snap-section relative overflow-hidden bg-white px-6 py-14" id="committees">
-      <div className="relative mx-auto max-w-6xl p-2 sm:p-0">
-          <h2 className="mb-2 text-center text-2xl font-semibold tracking-tight text-slate-950 sm:text-3xl">
-            Committees
+    <section className="border-b border-[var(--border)] px-8 py-[72px]" id="committees">
+      <div className="mx-auto max-w-[1160px]">
+
+        {/* Section header */}
+        <div className="mb-9">
+          <p className="mb-2 text-[10px] font-bold uppercase tracking-[0.12em] text-[var(--navy)]">
+            Get Involved
+          </p>
+          <h2 className="text-[clamp(22px,2.5vw,30px)] font-extrabold tracking-[-0.025em] text-[var(--navy-dk)]">
+            Our Committees
           </h2>
-          <div className="mt-8 flex w-full flex-nowrap items-start justify-center gap-1 sm:gap-2 md:gap-3">
-            {COMMITTEES.map((committee, index) => (
-              <div
-                key={committee.name}
-                className="committee-item flex min-w-0 flex-1 basis-0 flex-col items-center justify-center gap-1.5 px-0.5 py-2 text-center sm:gap-2 sm:px-1"
-              >
-                <div className="committee-3d-wrap relative mx-auto h-11 w-11 sm:h-14 sm:w-14 md:h-16 md:w-16">
-                  <div
-                    className={`committee-spin-3d ${index % 2 === 0 ? "committee-spin-3d-forward" : "committee-spin-3d-backward"}`}
-                  >
-                    <div className="committee-face committee-face-front">
-                      <Image
-                        src={committee.logo}
-                        alt={committee.name}
-                        fill
-                        sizes="64px"
-                        className="committee-logo-img object-contain"
-                      />
-                    </div>
-                    <div className="committee-face committee-face-back" aria-hidden="true">
-                      <Image
-                        src={committee.logo}
-                        alt=""
-                        fill
-                        sizes="64px"
-                        className="committee-logo-img object-contain"
-                      />
-                    </div>
+          <p className="mt-2 text-[15px] leading-[1.65] text-[var(--slate)]">
+            Specialized tracks across AI, cybersecurity, competitive programming, and more
+          </p>
+        </div>
+
+        {/* 3×3 grid */}
+        <div className="grid grid-cols-3 gap-12 md:gap-8">
+          {COMMITTEES.map((committee, index) => (
+            <div
+              key={committee.name}
+              className="committee-item flex flex-col items-center justify-center gap-3 text-center"
+            >
+              <div className="committee-3d-wrap relative h-20 w-20">
+                <div
+                  className={`committee-spin-3d ${index % 2 === 0 ? "committee-spin-3d-forward" : "committee-spin-3d-backward"}`}
+                >
+                  <div className="committee-face committee-face-front">
+                    <Image
+                      src={committee.logo}
+                      alt={committee.name}
+                      fill
+                      sizes="80px"
+                      className="committee-logo-img object-contain"
+                    />
+                  </div>
+                  <div className="committee-face committee-face-back" aria-hidden="true">
+                    <Image
+                      src={committee.logo}
+                      alt=""
+                      fill
+                      sizes="80px"
+                      className="committee-logo-img object-contain"
+                    />
                   </div>
                 </div>
-                <span className="text-xs font-semibold tracking-wide text-slate-700 sm:text-sm md:text-[0.95rem]">
-                  {committee.name}
-                </span>
               </div>
-            ))}
-          </div>
+              <span className="text-[13px] font-bold text-[var(--navy-dk)]">
+                {committee.name}
+              </span>
+            </div>
+          ))}
+        </div>
+
       </div>
     </section>
   );

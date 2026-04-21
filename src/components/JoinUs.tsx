@@ -1,11 +1,33 @@
 export function JoinUs() {
   return (
-    <section className="bg-white px-6 py-16 text-center" id="about">
-      <div className="mx-auto max-w-4xl rounded-2xl border border-slate-200 bg-white px-6 py-12 sm:px-10">
-        <h2 className="text-3xl font-bold text-slate-950 sm:text-4xl">Join Us</h2>
-        <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-slate-600 sm:text-base">
-          Meet builders, sharpen your technical skills, and contribute to projects that matter with one of the largest tech communities on campus
-        </p>
+    <section className="border-b border-[var(--border)] px-8 py-[80px]" id="join">
+      <div className="mx-auto flex max-w-[1160px] justify-center">
+        <div className="max-w-[560px] text-center">
+          <h2 className="mb-3.5 text-[clamp(26px,3vw,38px)] font-extrabold leading-[1.15] tracking-[-0.025em] text-[var(--navy-dk)]">
+            Join Us
+          </h2>
+          <p className="mb-7 text-[15px] leading-[1.75] text-[var(--slate)]">
+            Meet builders, sharpen your technical skills, and contribute to projects that matter with one of the largest tech communities on campus
+          </p>
+          <div className="flex flex-wrap justify-center gap-2.5">
+            <a
+              href="https://discord.gg/zkqYjGxVsh"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded-md bg-[var(--navy)] px-[22px] py-[10px] text-[13px] font-semibold text-white transition hover:bg-[var(--navy-dk)]"
+            >
+              Join Discord
+            </a>
+            <a
+              href="https://groupme.com/join_group/113864937/hfRpqc64"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded-md border border-[var(--border)] bg-white px-[22px] py-[10px] text-[13px] font-semibold text-[var(--navy-dk)] transition hover:border-[#b0bdd4] hover:bg-[var(--bg-alt)]"
+            >
+              Join GroupMe
+            </a>
+          </div>
+        </div>
       </div>
     </section>
   );

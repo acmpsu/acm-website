@@ -1,24 +1,19 @@
 export function Partners() {
-  const sponsorPlaceholders = [
-    "Sponsor 1",
-    "Sponsor 2",
-    "Sponsor 3",
-    "Sponsor 4",
-    "Sponsor 5",
-    "Sponsor 6",
-  ];
+  const sponsors = ["Sponsor 1", "Sponsor 2", "Sponsor 3", "Sponsor 4", "Sponsor 5", "Sponsor 6"];
 
   return (
-    <section className="border-t border-slate-200 bg-white px-6 py-12" id="partners">
-      <div className="mx-auto max-w-6xl text-center">
-        <p className="mb-5 text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">Working with the best</p>
-        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
-          {sponsorPlaceholders.map((sponsor) => (
+    <section className="border-b border-[var(--border)] px-8 py-9">
+      <div className="mx-auto max-w-[1160px]">
+        <p className="mb-5 text-[10px] font-bold uppercase tracking-[0.14em] text-[var(--slate-lt)]">
+          Sponsors
+        </p>
+        <div className="flex flex-wrap justify-center gap-2.5">
+          {sponsors.map((s) => (
             <div
-              key={sponsor}
-              className="flex h-20 items-center justify-center rounded-lg border border-slate-200 bg-white text-xs font-semibold tracking-wide text-slate-600 transition hover:border-slate-300"
+              key={s}
+              className="flex h-12 min-w-[110px] items-center justify-center rounded-lg border border-[var(--border)] bg-[var(--bg-alt)] px-4 text-[11px] font-semibold text-[var(--slate-lt)]"
             >
-              {sponsor}
+              {s}
             </div>
           ))}
         </div>

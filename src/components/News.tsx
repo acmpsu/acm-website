@@ -38,69 +38,101 @@ const NEWS_ITEMS: NewsItem[] = [
 export function News() {
   const [activeIndex, setActiveIndex] = useState(0);
 
-  function goPrevious() {
-    setActiveIndex((current) => (current === 0 ? NEWS_ITEMS.length - 1 : current - 1));
+  function goPrev() {
+    setActiveIndex((i) => (i === 0 ? NEWS_ITEMS.length - 1 : i - 1));
   }
-
   function goNext() {
-    setActiveIndex((current) => (current === NEWS_ITEMS.length - 1 ? 0 : current + 1));
+    setActiveIndex((i) => (i === NEWS_ITEMS.length - 1 ? 0 : i + 1));
   }
 
-  const activeItem = NEWS_ITEMS[activeIndex];
+  const item = NEWS_ITEMS[activeIndex];
 
   return (
-    <section className="snap-section relative overflow-hidden bg-slate-50 px-6 py-16" id="events">
-      <div className="relative mx-auto max-w-6xl rounded-2xl border border-slate-200 bg-white p-6 sm:p-8">
-          <div className="mb-8 flex items-center justify-between">
-            <div>
-              <h2 className="text-3xl font-bold text-slate-950">News</h2>
-            </div>
-            <div className="flex items-center gap-2">
-              <button
-                type="button"
-                onClick={goPrevious}
-                className="h-9 w-9 rounded-full border border-slate-300 bg-white text-slate-700"
-                aria-label="Previous news"
-              >
-                ←
-              </button>
-              <button
-                type="button"
-                onClick={goNext}
-                className="h-9 w-9 rounded-full border border-slate-300 bg-white text-slate-700"
-                aria-label="Next news"
-              >
-                →
-              </button>
-            </div>
+    <section className="border-b border-[var(--border)] bg-[var(--bg-alt)] px-8 py-[72px]" id="news">
+      <div className="mx-auto max-w-[1160px]">
+
+        {/* Top row */}
+        <div className="mb-7 flex items-end justify-between">
+          <div>
+            <p className="mb-2 text-[10px] font-bold uppercase tracking-[0.12em] text-[var(--navy)]">
+              Latest
+            </p>
+            <h2 className="text-[clamp(22px,2.5vw,30px)] font-extrabold tracking-[-0.025em] text-[var(--navy-dk)]">
+              News &amp; Updates
+            </h2>
+          </div>
+          <div className="flex gap-1.5">
+            <button
+              type="button"
+              onClick={goPrev}
+              aria-label="Previous"
+              className="flex h-[34px] w-[34px] items-center justify-center rounded-md border border-[var(--border)] bg-white text-[14px] text-[var(--slate)] transition hover:border-[#b0bdd4] hover:text-[var(--navy-dk)]"
+            >
+              ←
+            </button>
+            <button
+              type="button"
+              onClick={goNext}
+              aria-label="Next"
+              className="flex h-[34px] w-[34px] items-center justify-center rounded-md border border-[var(--border)] bg-white text-[14px] text-[var(--slate)] transition hover:border-[#b0bdd4] hover:text-[var(--navy-dk)]"
+            >
+              →
+            </button>
+          </div>
+        </div>
+
+        {/* Card */}
+        <div className="grid overflow-hidden rounded-[10px] border border-[var(--border)] bg-white md:grid-cols-[320px_1fr]">
+          {/* Image placeholder */}
+          <div className="flex min-h-[240px] flex-col items-center justify-center gap-2 border-b border-[var(--border)] bg-[#f1f4f8] p-8 md:border-b-0 md:border-r">
+            <svg width="40" height="40" viewBox="0 0 40 40" fill="none" stroke="#94a3b8" strokeWidth="1.5">
+              <rect x="5" y="8" width="30" height="24" rx="2" />
+              <line x1="5" y1="15" x2="35" y2="15" />
+              <line x1="12" y1="8" x2="12" y2="15" />
+              <line x1="28" y1="8" x2="28" y2="15" />
+            </svg>
+            <span className="text-[10px] font-semibold uppercase tracking-[0.1em] text-[var(--slate-lt)]">
+              News Photo
+            </span>
           </div>
 
-          <article className="rounded-xl border border-slate-200 bg-white p-4 sm:p-6">
-            <div className="grid gap-4 md:grid-cols-[0.9fr_1.1fr] md:items-center">
-              <div className="overflow-hidden rounded-xl border border-slate-200 bg-white">
-                <div className="flex aspect-[16/9] w-full items-center justify-center bg-slate-100 text-xs font-semibold uppercase tracking-[0.12em] text-slate-500">
-                  News Photo Placeholder
-                </div>
-              </div>
-              <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.16em] text-slate-500">{activeItem.date}</p>
-                <h3 className="text-xl font-semibold text-slate-900">{activeItem.title}</h3>
-                <p className="mt-3 leading-relaxed text-slate-600">{activeItem.description}</p>
-              </div>
-            </div>
-          </article>
-
-          <div className="mt-4 flex items-center gap-2">
-            {NEWS_ITEMS.map((item, index) => (
-              <button
-                key={item.title}
-                type="button"
-                onClick={() => setActiveIndex(index)}
-                className={`h-2.5 rounded-full transition ${index === activeIndex ? "w-8 bg-slate-800" : "w-2.5 bg-slate-300 hover:bg-slate-400"}`}
-                aria-label={`Show news item ${index + 1}`}
-              />
-            ))}
+          {/* Body */}
+          <div className="flex flex-col justify-center gap-2.5 px-9 py-8">
+            <p className="text-[10px] font-bold uppercase tracking-[0.1em] text-[var(--navy)]">
+              {item.date}
+            </p>
+            <h3 className="text-[20px] font-extrabold leading-[1.25] tracking-[-0.02em] text-[var(--navy-dk)]">
+              {item.title}
+            </h3>
+            <p className="text-[14px] leading-[1.72] text-[var(--slate)]">
+              {item.description}
+            </p>
+            <a
+              href="#"
+              className="mt-1 inline-flex w-fit items-center gap-1 text-[12px] font-bold text-[var(--navy)] no-underline"
+            >
+              Read more →
+            </a>
           </div>
+        </div>
+
+        {/* Dots */}
+        <div className="mt-4 flex gap-1.5">
+          {NEWS_ITEMS.map((_, i) => (
+            <button
+              key={i}
+              type="button"
+              onClick={() => setActiveIndex(i)}
+              aria-label={`News item ${i + 1}`}
+              className={`h-1 rounded-full border-none transition-all ${
+                i === activeIndex
+                  ? "w-6 bg-[var(--navy)]"
+                  : "w-1 bg-[#d1d9e8] hover:bg-[#b0bdd4]"
+              }`}
+            />
+          ))}
+        </div>
+
       </div>
     </section>
   );

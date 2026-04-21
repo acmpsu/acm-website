@@ -79,7 +79,7 @@ export function FooterSection() {
           <Image src="/logos/acm.png" alt="ACM" width={40} height={40} />
           <div>
             <p className="text-sm font-semibold tracking-wide text-slate-900">Penn State ACM</p>
-            <p className="mt-1 text-xs text-slate-500">© {new Date().getFullYear()} All rights reserved.</p>
+            <p className="mt-1 text-xs text-slate-500">© {new Date().getFullYear()} All rights reserved</p>
           </div>
         </div>
 

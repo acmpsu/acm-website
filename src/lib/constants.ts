@@ -17,6 +17,8 @@ export const COMMITTEES = [
   { name: "ICPC", logo: "/logos/icpc.png" },
   { name: "Quantum", logo: "/logos/quantum.png" },
   { name: "Web", logo: "/logos/web.png" },
+  { name: "Game", logo: "/logos/game.png" },
+  { name: "Cyber", logo: "/logos/cyber.png" },
 ];
 
 /** Same as `id` on /committees articles — use for `href` hashes from short names (`AI`) or full names (`acm.ai`). */
