@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { motion, useReducedMotion } from 'motion/react';
+import { motion } from 'motion/react';
 import type { ComponentProps, ReactNode } from 'react';
 
 interface SocialLink {
@@ -131,12 +131,6 @@ type ViewAnimationProps = {
 };
 
 function AnimatedContainer({ className, delay = 0.1, children }: ViewAnimationProps) {
-  const shouldReduceMotion = useReducedMotion();
-
-  if (shouldReduceMotion) {
-    return children;
-  }
-
   return (
     <motion.div
       initial={{ filter: 'blur(4px)', translateY: 6, opacity: 0 }}
