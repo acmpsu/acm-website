@@ -1,6 +1,7 @@
 export const NAV_ITEMS = [
-  { label: "ICPC", href: "/icpc" },
   { label: "About", href: "/about" },
+  { label: "ICPC", href: "/icpc" },
+  { label: "Resources", href: "/resources" },
   { label: "Events", href: "/events" },
 ];
 
