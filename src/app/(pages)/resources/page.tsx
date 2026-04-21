@@ -32,15 +32,6 @@ const DIRECTORS: TeamMember[] = [
   { name: "Ethan Elemento", role: "Hack Director" },
 ];
 
-const SPONSORS = [
-  { name: "Sponsor 1" },
-  { name: "Sponsor 2" },
-  { name: "Sponsor 3" },
-  { name: "Sponsor 4" },
-  { name: "Sponsor 5" },
-  { name: "Sponsor 6" },
-];
-
 const FRIENDS = [
   { name: "Partner Club 1" },
   { name: "Partner Club 2" },
@@ -94,24 +85,6 @@ export default function ResourcesPage() {
                 <TeamCard key={member.name} member={member} />
               ))}
             </div>
-          </div>
-        </section>
-
-        {/* Sponsors */}
-        <section id="sponsors">
-          <p className="text-[10px] font-bold uppercase tracking-[0.12em] text-[var(--navy)] mb-2">
-            Supporting Organizations
-          </p>
-          <h2 className="mb-4 text-[18px] font-semibold text-[var(--navy-dk)]">Our Sponsors</h2>
-          <p className="max-w-3xl text-[15px] leading-[1.75] text-[var(--slate)] mb-6">
-            We partner with industry leaders to support ACM at Penn State and provide opportunities for our members
-          </p>
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {SPONSORS.map((sponsor) => (
-              <div key={sponsor.name} className="flex items-center justify-center rounded border border-[var(--border)] bg-[var(--bg-alt)] p-8 h-24">
-                <p className="text-[13px] font-medium text-[var(--slate)]">{sponsor.name}</p>
-              </div>
-            ))}
           </div>
         </section>
 

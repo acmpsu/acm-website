@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useState } from "react";
 
 type NewsItem = {
@@ -83,17 +84,15 @@ export function News() {
 
         {/* Card */}
         <div className="grid overflow-hidden rounded-[10px] border border-[var(--border)] bg-white md:grid-cols-[320px_1fr]">
-          {/* Image placeholder */}
-          <div className="flex min-h-[240px] flex-col items-center justify-center gap-2 border-b border-[var(--border)] bg-[#f1f4f8] p-8 md:border-b-0 md:border-r">
-            <svg width="40" height="40" viewBox="0 0 40 40" fill="none" stroke="#94a3b8" strokeWidth="1.5">
-              <rect x="5" y="8" width="30" height="24" rx="2" />
-              <line x1="5" y1="15" x2="35" y2="15" />
-              <line x1="12" y1="8" x2="12" y2="15" />
-              <line x1="28" y1="8" x2="28" y2="15" />
-            </svg>
-            <span className="text-[10px] font-semibold uppercase tracking-[0.1em] text-[var(--slate-lt)]">
-              News Photo
-            </span>
+          {/* Image */}
+          <div className="relative min-h-[240px] flex-col items-center justify-center gap-2 border-b border-[var(--border)] bg-[#f1f4f8] p-0 md:border-b-0 md:border-r">
+            <Image
+              src="/nvidiags.jpeg"
+              alt="NVIDIA GPU"
+              fill
+              className="object-cover"
+              sizes="320px"
+            />
           </div>
 
           {/* Body */}

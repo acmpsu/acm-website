@@ -1,19 +1,47 @@
-export function Partners() {
-  const sponsors = ["Sponsor 1", "Sponsor 2", "Sponsor 3", "Sponsor 4", "Sponsor 5", "Sponsor 6"];
+import Image from "next/image";
 
+type Sponsor = {
+  name: string;
+  logo: string;
+};
+
+const SPONSORS: Sponsor[] = [
+  { name: "Boeing", logo: "/sponsors/1.jpg" },
+  { name: "Capital One", logo: "/sponsors/cap1.jpg" },
+  { name: "Lockheed Martin", logo: "/sponsors/Lockheed.webp" },
+  { name: "Nittany AI Advance", logo: "/sponsors/nittanyai.jpg" },
+  { name: "Textron", logo: "/sponsors/textron.png" },
+  { name: "Penn State College of Engineering", logo: "/sponsors/EECS-header-mobile.png" },
+  { name: "ArcelorMittal", logo: "/sponsors/arcelor_mittal.png" },
+  { name: "Kattis", logo: "/sponsors/kattis.png" },
+  { name: "MathWorks", logo: "/sponsors/MathWorks-Logo-square-e1661708582572.jpg" },
+  { name: "Optum", logo: "/sponsors/optum.png" },
+  { name: "Rockwell Automation", logo: "/sponsors/rockwell.png" },
+];
+
+export function Partners() {
   return (
-    <section className="border-b border-[var(--border)] px-8 py-9">
-      <div className="mx-auto max-w-[1160px]">
-        <p className="mb-5 text-[10px] font-bold uppercase tracking-[0.14em] text-[var(--slate-lt)]">
-          Sponsors
+    <section className="border-b border-[var(--border)]">
+      <div className="mx-auto flex w-full max-w-[1160px] flex-col px-8 py-[72px]">
+        <p className="mb-2 text-[10px] font-bold uppercase tracking-[0.12em] text-[var(--navy)]">
+          Supporting Organizations
         </p>
-        <div className="flex flex-wrap justify-center gap-2.5">
-          {sponsors.map((s) => (
-            <div
-              key={s}
-              className="flex h-12 min-w-[110px] items-center justify-center rounded-lg border border-[var(--border)] bg-[var(--bg-alt)] px-4 text-[11px] font-semibold text-[var(--slate-lt)]"
-            >
-              {s}
+        <h2 className="mb-4 text-[18px] font-semibold text-[var(--navy-dk)]">Our Sponsors</h2>
+        <p className="max-w-3xl text-[15px] leading-[1.75] text-[var(--slate)] mb-8">
+          We partner with industry leaders to support ACM at Penn State and provide opportunities for our members
+        </p>
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          {SPONSORS.map((sponsor) => (
+            <div key={sponsor.name} className="flex items-center justify-center h-24">
+              <div className="relative w-full h-full">
+                <Image
+                  src={sponsor.logo}
+                  alt={sponsor.name}
+                  fill
+                  className="object-contain"
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                />
+              </div>
             </div>
           ))}
         </div>
