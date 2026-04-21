@@ -37,7 +37,9 @@ export default function AboutPage() {
             </section>
           </div>
 
-          <div className="overflow-hidden rounded-lg border border-[var(--border)] bg-[var(--bg-alt)] aspect-[3/4]"></div>
+          <div className="overflow-hidden rounded-lg border border-[var(--border)] bg-[var(--bg-alt)] aspect-[3/4]">
+            <Image src="/resources/about/about-hero.png" alt="About Hero" width={1000} height={1000} />
+          </div>
         </div>
       </div>
     </div>
