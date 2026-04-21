@@ -51,47 +51,83 @@ const COMMITTEES: Committee[] = [
     description:
       "Builds full-stack web skills from accessible front ends to APIs and deployment, emphasizing real projects, modern frameworks, and clean engineering habits.",
   },
+  {
+    name: "acm.game",
+    logo: "/logos/game.png",
+    description:
+      "Explores game design, development, and interactive experiences using modern game engines and creative problem-solving.",
+  },
+  {
+    name: "acm.cyber",
+    logo: "/logos/cyber.png",
+    description:
+      "Focuses on cybersecurity fundamentals, ethical hacking, and defensive strategies to protect systems and networks.",
+  },
 ];
 
 export default function CommitteesPage() {
   return (
-    <div>
-      <section id="committees-intro">
-        <h1 className="text-4xl font-bold text-gray-900">Committees</h1>
-        <p className="mt-6 text-sm font-semibold uppercase tracking-wide text-gray-500">Our tracks</p>
-        <p className="mt-2 max-w-3xl text-gray-600">
-          ACM committees are how we organize learning and projects by interest. Each group runs events,
-          workshops, and mentorship so you can go deep with peers who care about the same problems.
-        </p>
-      </section>
+    <div className="border-b border-[var(--border)] px-8 py-[72px]">
+      <div className="mx-auto max-w-[1160px]">
+        <section id="committees-intro" className="mb-16">
+          <h1 className="mb-3 text-[clamp(28px,3vw,42px)] font-extrabold leading-[1.1] tracking-[-0.03em] text-[var(--navy-dk)]">
+            Committees
+          </h1>
+          <p className="mb-2 text-[10px] font-bold uppercase tracking-[0.12em] text-[var(--navy)]">
+            Our Tracks
+          </p>
+          <p className="mt-2 max-w-3xl text-[15px] leading-[1.75] text-[var(--slate)]">
+            ACM committees are how we organize learning and projects by interest. Each group runs events,
+            workshops, and mentorship so you can go deep with peers who care about the same problems.
+          </p>
+        </section>
 
-      <hr className="mt-10 border-0 border-t-2 border-gray-300" aria-hidden="true" />
-
-      <section id="committee-list" className="divide-y divide-gray-200">
-        {COMMITTEES.map((committee) => (
-          <article
-            key={committee.logo}
-            id={committeePageFragmentId(committee.name)}
-            className="flex flex-col gap-5 py-8 sm:flex-row sm:items-start sm:gap-8"
-          >
-            <div className="flex shrink-0 justify-center sm:justify-start">
-              <div className="relative h-40 w-40 overflow-hidden sm:h-48 sm:w-48">
-                <Image
-                  src={committee.logo}
-                  alt={`${committee.name} logo`}
-                  fill
-                  className="object-contain"
-                  sizes="(min-width: 640px) 10rem, 8rem"
-                />
+        <section id="committee-list" className="space-y-12">
+          {COMMITTEES.map((committee, index) => (
+            <article
+              key={committee.logo}
+              id={committeePageFragmentId(committee.name)}
+              className="committee-item grid gap-12 lg:grid-cols-[240px_1fr] lg:items-center"
+            >
+              <div className="flex justify-center lg:justify-start">
+                <div className="committee-3d-wrap relative h-40 w-40">
+                  <div
+                    className={`committee-spin-3d ${index % 2 === 0 ? "committee-spin-3d-forward" : "committee-spin-3d-backward"}`}
+                  >
+                    <div className="committee-face committee-face-front">
+                      <Image
+                        src={committee.logo}
+                        alt={`${committee.name} logo`}
+                        fill
+                        className="committee-logo-img object-contain"
+                        sizes="160px"
+                      />
+                    </div>
+                    <div className="committee-face committee-face-back" aria-hidden="true">
+                      <Image
+                        src={committee.logo}
+                        alt=""
+                        fill
+                        className="committee-logo-img object-contain"
+                        sizes="160px"
+                      />
+                    </div>
+                  </div>
+                </div>
               </div>
-            </div>
-            <div className="min-w-0 flex-1 text-center sm:text-left">
-              <h2 className="text-3xl font-bold text-gray-900">{committee.name}</h2>
-              <p className="mt-2 text-gray-600">{committee.description}</p>
-            </div>
-          </article>
-        ))}
-      </section>
+              
+              <div className="min-w-0 flex-1 text-center lg:text-left">
+                <h2 className="text-[clamp(20px,2vw,28px)] font-extrabold tracking-[-0.02em] text-[var(--navy-dk)]">
+                  {committee.name}
+                </h2>
+                <p className="mt-3 text-[15px] leading-[1.75] text-[var(--slate)]">
+                  {committee.description}
+                </p>
+              </div>
+            </article>
+          ))}
+        </section>
+      </div>
     </div>
   );
 }

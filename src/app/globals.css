@@ -39,6 +39,14 @@ body {
   color: var(--navy-dk);
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
+[id] {
+  scroll-margin-top: 80px;
+}
+
 /* committee card hover */
 .committee-card {
   transition: border-color 0.15s, background 0.15s;
