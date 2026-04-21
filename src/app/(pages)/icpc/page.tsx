@@ -4,8 +4,8 @@ import { CountdownTimer } from "@/components/icpc/CountdownTimer";
 
 export default function ICPCPage() {
   return (
-    <div className="border-b border-[var(--border)] px-8 py-[72px]">
-      <div className="mx-auto max-w-[1160px] space-y-16">
+    <div className="border-b border-[var(--border)]">
+      <div className="mx-auto flex w-full max-w-[1160px] flex-col px-8 py-[72px] space-y-16">
         {/* Hero Section */}
         <section className="grid gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
           <div className="max-w-2xl">

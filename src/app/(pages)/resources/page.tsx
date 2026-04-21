@@ -52,19 +52,19 @@ const FRIENDS = [
 function TeamCard({ member }: { member: TeamMember }) {
   return (
     <div className="text-center">
-      <div className="mx-auto mb-2 flex h-14 w-14 items-center justify-center rounded-full bg-[var(--bg-alt)] border border-[var(--border)] text-base font-semibold text-[var(--navy-dk)]">
+      <div className="mx-auto mb-3 flex h-16 w-16 items-center justify-center rounded-full bg-[var(--bg-alt)] border border-[var(--border)] text-lg font-semibold text-[var(--navy-dk)]">
         {getInitials(member.name)}
       </div>
-      <p className="text-[10px] font-bold uppercase tracking-[0.08em] text-[var(--navy)]">{member.role}</p>
-      <h3 className="mt-0.5 text-[13px] font-semibold text-[var(--navy-dk)]">{member.name}</h3>
+      <p className="text-[11px] font-bold uppercase tracking-[0.08em] text-[var(--navy)]">{member.role}</p>
+      <h3 className="mt-1 text-[14px] font-semibold text-[var(--navy-dk)]">{member.name}</h3>
     </div>
   );
 }
 
 export default function ResourcesPage() {
   return (
-    <div className="border-b border-[var(--border)] px-8 py-[72px]">
-      <div className="mx-auto max-w-[1160px] space-y-12">
+    <div className="border-b border-[var(--border)]">
+      <div className="mx-auto flex w-full max-w-[1160px] flex-col px-8 py-[72px] space-y-16">
         <section>
           <h1 className="mb-3 text-[clamp(28px,3vw,42px)] font-extrabold leading-[1.1] tracking-[-0.03em] text-[var(--navy-dk)]">
             Resources
@@ -76,11 +76,11 @@ export default function ResourcesPage() {
 
         {/* Meet Us */}
         <section id="meet-us">
-          <h2 className="mb-6 text-[18px] font-semibold text-[var(--navy-dk)]">Meet Us</h2>
+          <h2 className="mb-8 text-[18px] font-semibold text-[var(--navy-dk)]">Meet Us</h2>
           
-          <div className="mb-8">
-            <h3 className="mb-4 text-[13px] font-semibold text-[var(--navy-dk)]">Eboard</h3>
-            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mb-12">
+            <h3 className="mb-6 text-[14px] font-semibold text-[var(--navy-dk)]">Eboard</h3>
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {EBOARD.map((member) => (
                 <TeamCard key={member.name} member={member} />
               ))}
@@ -88,8 +88,8 @@ export default function ResourcesPage() {
           </div>
 
           <div>
-            <h3 className="mb-4 text-[13px] font-semibold text-[var(--navy-dk)]">Directors</h3>
-            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            <h3 className="mb-6 text-[14px] font-semibold text-[var(--navy-dk)]">Directors</h3>
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
               {DIRECTORS.map((member) => (
                 <TeamCard key={member.name} member={member} />
               ))}

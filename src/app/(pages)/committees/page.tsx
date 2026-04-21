@@ -67,8 +67,8 @@ const COMMITTEES: Committee[] = [
 
 export default function CommitteesPage() {
   return (
-    <div className="border-b border-[var(--border)] px-8 py-[72px]">
-      <div className="mx-auto max-w-[1160px]">
+    <div className="border-b border-[var(--border)]">
+      <div className="mx-auto flex w-full max-w-[1160px] flex-col px-8 py-[72px]">
         <section id="committees-intro" className="mb-16">
           <h1 className="mb-3 text-[clamp(28px,3vw,42px)] font-extrabold leading-[1.1] tracking-[-0.03em] text-[var(--navy-dk)]">
             Committees

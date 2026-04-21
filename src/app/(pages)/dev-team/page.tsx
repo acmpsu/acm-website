@@ -129,10 +129,10 @@ export default function DevTeamPage() {
   );
 
   return (
-    <div className="border-b border-[var(--border)] px-8 py-[72px]">
-      <div className="mx-auto max-w-[1160px]">
+    <div className="border-b border-[var(--border)]">
+      <div className="mx-auto flex w-full max-w-[1160px] flex-col px-8 py-[72px]">
         {/* Header */}
-        <section className="mb-8">
+        <section className="mb-12">
           <h1 className="mb-3 text-[clamp(28px,3vw,42px)] font-extrabold leading-[1.1] tracking-[-0.03em] text-[var(--navy-dk)]">
             Dev Team
           </h1>
@@ -146,7 +146,7 @@ export default function DevTeamPage() {
 
         {/* Team Photo */}
         <section className="mb-12">
-          <div className="relative overflow-hidden rounded-lg border border-[var(--border)] bg-[#f1f4f8] aspect-[16/9]">
+          <div className="relative overflow-hidden rounded-lg border border-[var(--border)] bg-[#f1f4f8] aspect-[16/9] flex items-center justify-center">
             <Image
               src="/resources/dev-team/devteam.png"
               alt="Dev Team group photo"
@@ -157,7 +157,7 @@ export default function DevTeamPage() {
           </div>
         </section>
 
-        {/* Team Members - Horizontal Layout */}
+        {/* Team Members Layout */}
         <div className="flex flex-col gap-8 lg:flex-row lg:items-start lg:justify-end">
           {/* Directors - Center/Middle */}
           {executiveMembers.length > 0 && (
