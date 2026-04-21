@@ -1,6 +1,7 @@
 "use client";
 
 import { CountdownTimer } from "@/components/icpc/CountdownTimer";
+import Image from "next/image";
 
 export default function ICPCPage() {
   return (
@@ -20,7 +21,9 @@ export default function ICPCPage() {
             </p>
           </div>
 
-          <div className="overflow-hidden rounded-lg border border-[var(--border)] bg-[var(--bg-alt)] aspect-[16/9]"></div>
+          <div className="overflow-hidden rounded-lg border border-[var(--border)] bg-[var(--bg-alt)] aspect-[16/9]">
+            <Image src="/resources/icpc/icpc-hero.png" alt="ICPC Hero" width={1000} height={1000} />
+          </div>
         </section>
 
         {/* Countdown */}
@@ -39,20 +42,20 @@ export default function ICPCPage() {
           </p>
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             <div className="text-center">
-              <p className="text-2xl font-bold text-[var(--navy-dk)]">[X] Teams</p>
-              <p className="text-[14px] text-[var(--slate)] mt-2">Competed</p>
+              <p className="text-2xl font-bold text-[var(--navy-dk)]">30+ Teams</p>
+              <p className="text-[14px] text-[var(--slate)] mt-2">Sent to regionals</p>
             </div>
             <div className="text-center">
-              <p className="text-2xl font-bold text-[var(--navy-dk)]">[X] Years</p>
-              <p className="text-[14px] text-[var(--slate)] mt-2">Active</p>
+              <p className="text-2xl font-bold text-[var(--navy-dk)]">15+ Years</p>
+              <p className="text-[14px] text-[var(--slate)] mt-2">Training and contests</p>
             </div>
             <div className="text-center">
-              <p className="text-2xl font-bold text-[var(--navy-dk)]">[X] Placements</p>
-              <p className="text-[14px] text-[var(--slate)] mt-2">Regional</p>
+              <p className="text-2xl font-bold text-[var(--navy-dk)]">40+ Honors</p>
+              <p className="text-[14px] text-[var(--slate)] mt-2">Regional standings</p>
             </div>
             <div className="text-center">
-              <p className="text-2xl font-bold text-[var(--navy-dk)]">[X] Students</p>
-              <p className="text-[14px] text-[var(--slate)] mt-2">Participated</p>
+              <p className="text-2xl font-bold text-[var(--navy-dk)]">500+ Students</p>
+              <p className="text-[14px] text-[var(--slate)] mt-2">Through practices and tryouts</p>
             </div>
           </div>
         </section>
