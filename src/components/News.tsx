@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { Reveal } from "@/components/ui/reveal";
 
 type NewsItem = {
   title: string;
@@ -51,8 +50,7 @@ export function News() {
 
   return (
     <section className="snap-section relative overflow-hidden bg-slate-50 px-6 py-16" id="events">
-      <Reveal>
-        <div className="relative mx-auto max-w-6xl rounded-2xl border border-slate-200 bg-white p-6 sm:p-8">
+      <div className="relative mx-auto max-w-6xl rounded-2xl border border-slate-200 bg-white p-6 sm:p-8">
           <div className="mb-8 flex items-center justify-between">
             <div>
               <h2 className="text-3xl font-bold text-slate-950">News</h2>
@@ -103,8 +101,7 @@ export function News() {
               />
             ))}
           </div>
-        </div>
-      </Reveal>
+      </div>
     </section>
   );
 }

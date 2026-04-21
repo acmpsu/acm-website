@@ -1,9 +1,5 @@
-'use client';
-
 import Image from 'next/image';
 import Link from 'next/link';
-import { motion } from 'motion/react';
-import type { ComponentProps, ReactNode } from 'react';
 
 interface SocialLink {
   title: string;
@@ -79,15 +75,15 @@ export function FooterSection() {
   return (
     <footer className="relative w-full border-t border-slate-200 bg-white px-6 py-8 md:py-10 lg:py-12">
       <div className="mx-auto flex w-full max-w-6xl flex-col gap-8 text-center md:flex-row md:items-center md:justify-between md:text-left">
-        <AnimatedContainer className="flex flex-col items-center gap-4 md:flex-row md:items-center md:gap-5">
+        <div className="flex flex-col items-center gap-4 md:flex-row md:items-center md:gap-5">
           <Image src="/logos/acm.png" alt="ACM" width={40} height={40} />
           <div>
             <p className="text-sm font-semibold tracking-wide text-slate-900">Penn State ACM</p>
             <p className="mt-1 text-xs text-slate-500">© {new Date().getFullYear()} All rights reserved.</p>
           </div>
-        </AnimatedContainer>
+        </div>
 
-        <AnimatedContainer delay={0.15} className="flex flex-col items-center gap-4 md:items-end">
+        <div className="flex flex-col items-center gap-4 md:items-end">
           <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-3 text-xs font-medium text-slate-700 md:justify-end">
             {socialLinks.map((link) => (
               <Link
@@ -118,28 +114,9 @@ export function FooterSection() {
               </span>
             ))}
           </div>
-        </AnimatedContainer>
+        </div>
       </div>
     </footer>
   );
 }
 
-type ViewAnimationProps = {
-  delay?: number;
-  className?: ComponentProps<typeof motion.div>['className'];
-  children: ReactNode;
-};
-
-function AnimatedContainer({ className, delay = 0.1, children }: ViewAnimationProps) {
-  return (
-    <motion.div
-      initial={{ filter: 'blur(4px)', translateY: 6, opacity: 0 }}
-      whileInView={{ filter: 'blur(0px)', translateY: 0, opacity: 1 }}
-      viewport={{ once: true }}
-      transition={{ delay, duration: 0.55 }}
-      className={className}
-    >
-      {children}
-    </motion.div>
-  );
-}

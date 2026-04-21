@@ -48,18 +48,6 @@ const FRIENDS = [
   { name: "Partner Club 5" },
 ];
 
-const OFFICIAL_LINKS = [
-  { label: "Instagram", display: "@pennstateacm", href: "https://www.instagram.com/pennstateacm" },
-  { label: "Website", display: "psuacm.com", href: "https://www.psuacm.com/" },
-  { label: "LinkedIn", display: "ACM PSU", href: "https://www.linkedin.com/company/acmpsu" },
-  {
-    label: "Org Page",
-    display: "Penn State Discover",
-    href: "https://discover.psu.edu/organization/association-for-computing-machinery",
-  },
-  { label: "Discord", display: "Join the server", href: "https://discord.gg/zkqYjGxVsh" },
-  { label: "GroupMe", display: "Join the group", href: "https://groupme.com/join_group/113864937/hfRpqc64" },
-];
 
 function TeamCard({ member }: { member: TeamMember }) {
   return (
@@ -150,34 +138,12 @@ export default function ResourcesPage() {
       {/* Contact */}
       <section>
         <h2 className="text-2xl font-semibold text-gray-900">Get In Touch</h2>
-
-        <div className="mt-8">
-          <p className="text-sm font-semibold uppercase tracking-wide text-gray-500">Official Channels</p>
-          <dl className="mt-4 grid gap-x-8 gap-y-4 sm:grid-cols-2">
-            {OFFICIAL_LINKS.map((link) => (
-              <div key={link.label} className="space-y-1">
-                <dt className="text-xs font-semibold uppercase tracking-wide text-gray-500">{link.label}</dt>
-                <dd>
-                  <a
-                    className="text-sm text-gray-700 hover:text-gray-900"
-                    href={link.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    {link.display}
-                  </a>
-                </dd>
-              </div>
-            ))}
-          </dl>
-        </div>
-
-        <div className="mt-8">
-          <p className="text-sm font-semibold uppercase tracking-wide text-gray-500">Email</p>
-          {/* TODO: add official contact email address */}
-          <p className="mt-4 text-sm text-gray-600">
-            Email us at <span className="font-medium text-gray-900">[contact email]</span> for inquiries.
-          </p>
+        <p className="mt-4 max-w-3xl text-gray-600">
+          Contact us for questions, partnership inquiries, or to get more involved.
+        </p>
+        {/* TODO: add contact form or contact details */}
+        <div className="mt-6 rounded border border-gray-200 bg-gray-50 p-8 text-center">
+          <p className="text-sm text-gray-500">Contact section coming soon</p>
         </div>
       </section>
     </div>

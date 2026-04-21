@@ -41,23 +41,35 @@ export function CommitteesDropDown() {
       onMouseEnter={openDropdown}
       onMouseLeave={closeDropdownWithDelay}
     >
-      <button
-        type="button"
-        aria-haspopup="menu"
-        aria-expanded={open}
-        onFocus={openDropdown}
-        onBlur={closeDropdownWithDelay}
-        onClick={() => setOpen((prev) => !prev)}
-        className="flex items-center gap-1 text-sm font-medium text-gray-800 hover:text-gray-600"
-      >
-        <span>Committees</span>
-        <ChevronDown
-          size={16}
-          className={`transition-transform duration-200 ${open ? "rotate-180" : ""}`}
-        />
-      </button>
+      <div className="flex items-center gap-1">
+        <Link
+          href="/committees"
+          className="text-sm font-medium text-gray-800 hover:text-gray-600 transition"
+        >
+          Committees
+        </Link>
+        <button
+          type="button"
+          aria-haspopup="menu"
+          aria-expanded={open}
+          onFocus={openDropdown}
+          onBlur={closeDropdownWithDelay}
+          onClick={() => setOpen((prev) => !prev)}
+          className="p-1"
+        >
+          <ChevronDown
+            size={16}
+            className={`transition-transform duration-200 ${open ? "rotate-180" : ""}`}
+          />
+        </button>
+      </div>
 
-      <AnimatePresence>
+      <div
+        className="relative"
+        onMouseEnter={openDropdown}
+        onMouseLeave={closeDropdownWithDelay}
+      >
+        <AnimatePresence>
         {open ? (
           <>
             <div className="absolute left-0 top-full h-3 w-48" />
@@ -81,6 +93,7 @@ export function CommitteesDropDown() {
           </>
         ) : null}
       </AnimatePresence>
+      </div>
     </div>
   );
 }

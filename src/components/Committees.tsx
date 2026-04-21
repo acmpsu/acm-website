@@ -1,13 +1,11 @@
 import Image from "next/image";
 
 import { COMMITTEES } from "@/lib/constants";
-import { Reveal } from "@/components/ui/reveal";
 
 export function Committees() {
   return (
     <section className="snap-section relative overflow-hidden bg-white px-6 py-14" id="committees">
-      <Reveal>
-        <div className="relative mx-auto max-w-6xl p-2 sm:p-0">
+      <div className="relative mx-auto max-w-6xl p-2 sm:p-0">
           <h2 className="mb-2 text-center text-2xl font-semibold tracking-tight text-slate-950 sm:text-3xl">
             Committees
           </h2>
@@ -47,8 +45,7 @@ export function Committees() {
               </div>
             ))}
           </div>
-        </div>
-      </Reveal>
+      </div>
     </section>
   );
 }

@@ -3,6 +3,7 @@ import Link from "next/link";
 import { NAV_ITEMS } from "@/lib/constants";
 import { ShiftingDropDown } from "@/components/ui/shifting-dropdown";
 import { CommitteesDropDown } from "@/components/ui/committees-dropdown";
+import { MobileMenu } from "@/components/ui/mobile-menu";
 
 export function Header() {
   return (
@@ -27,6 +28,7 @@ export function Header() {
               </Link>
             ))}
           </nav>
+          <MobileMenu />
           <button className="whitespace-nowrap rounded-full bg-blue-900 px-5 py-2 text-sm font-semibold text-white transition hover:-translate-y-0.5 hover:bg-blue-950">
             Login
           </button>
