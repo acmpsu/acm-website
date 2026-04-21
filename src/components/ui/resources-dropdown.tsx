@@ -4,9 +4,15 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { ChevronDown } from "lucide-react";
-import { COMMITTEES, committeePageFragmentId } from "@/lib/constants";
 
-export function CommitteesDropDown() {
+const RESOURCE_SECTIONS = [
+  { name: "Meet Us", id: "meet-us" },
+  { name: "Our Sponsors", id: "sponsors" },
+  { name: "Our Partners", id: "friends" },
+  { name: "Contact Us", id: "contact" },
+];
+
+export function ResourcesDropDown() {
   const [open, setOpen] = useState(false);
   const closeTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -43,10 +49,10 @@ export function CommitteesDropDown() {
     >
       <div className="flex items-center gap-1">
         <Link
-          href="/committees"
+          href="/resources"
           className="text-[13px] font-medium text-[var(--navy-dk)] hover:text-[var(--navy)] transition"
         >
-          Committees
+          Resources
         </Link>
         <button
           type="button"
@@ -78,15 +84,15 @@ export function CommitteesDropDown() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 4 }}
               transition={{ duration: 0.15, ease: "easeOut" }}
-              className="absolute left-0 top-[calc(100%+8px)] w-32 rounded-lg border border-gray-200 bg-white shadow-lg"
+              className="absolute left-0 top-[calc(100%+8px)] w-28 rounded-lg border border-gray-200 bg-white shadow-lg"
             >
-              {COMMITTEES.map((committee) => (
+              {RESOURCE_SECTIONS.map((section) => (
                 <Link
-                  key={committee.name}
-                  href={`/committees#${committeePageFragmentId(committee.name)}`}
+                  key={section.id}
+                  href={`/resources#${section.id}`}
                   className="block px-1.5 py-1 text-xs text-gray-700 hover:bg-gray-100 hover:text-gray-900 first:rounded-t-lg last:rounded-b-lg whitespace-nowrap"
                 >
-                  {committee.name}
+                  {section.name}
                 </Link>
               ))}
             </motion.div>

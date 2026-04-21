@@ -59,17 +59,17 @@ export function ShiftingDropDown() {
       <AnimatePresence>
         {open ? (
           <>
-            <div className="absolute left-0 top-full h-3 w-48" />
+            <div className="absolute left-0 top-full h-2 w-20" />
             <motion.div
-              initial={{ opacity: 0, y: 8 }}
+              initial={{ opacity: 0, y: 4 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 8 }}
-              transition={{ duration: 0.18, ease: "easeOut" }}
-              className="absolute left-0 top-[calc(100%+12px)] w-48 rounded-xl border border-gray-200 bg-white p-2 shadow-lg"
+              exit={{ opacity: 0, y: 4 }}
+              transition={{ duration: 0.15, ease: "easeOut" }}
+              className="absolute left-0 top-[calc(100%+8px)] w-24 rounded-lg border border-gray-200 bg-white shadow-lg"
             >
               <Link
                 href="/dev-team"
-                className="block rounded-lg px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+                className="block px-1.5 py-1 text-xs text-gray-700 hover:bg-gray-100 hover:text-gray-900 rounded-lg whitespace-nowrap"
               >
                 Dev Team
               </Link>

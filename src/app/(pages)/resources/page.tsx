@@ -29,6 +29,7 @@ const DIRECTORS: TeamMember[] = [
   { name: "Sri Nikhil Bandi", role: "AI Director" },
   { name: "Aryaman Ajmera", role: "Data Director" },
   { name: "Younsoo Park", role: "Design Director" },
+  { name: "Ethan Elemento", role: "Hack Director" },
 ];
 
 const SPONSORS = [
@@ -48,104 +49,101 @@ const FRIENDS = [
   { name: "Partner Club 5" },
 ];
 
-
 function TeamCard({ member }: { member: TeamMember }) {
   return (
-    <article className="rounded border border-gray-200 bg-white p-6 text-center shadow-sm transition hover:-translate-y-0.5 hover:border-gray-300 hover:shadow-md">
-      <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full border border-gray-200 bg-gray-100 text-xl font-semibold text-gray-700">
+    <div className="text-center">
+      <div className="mx-auto mb-2 flex h-14 w-14 items-center justify-center rounded-full bg-[var(--bg-alt)] border border-[var(--border)] text-base font-semibold text-[var(--navy-dk)]">
         {getInitials(member.name)}
       </div>
-      <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">{member.role}</p>
-      <h3 className="mt-2 text-lg font-semibold text-gray-900">{member.name}</h3>
-    </article>
+      <p className="text-[10px] font-bold uppercase tracking-[0.08em] text-[var(--navy)]">{member.role}</p>
+      <h3 className="mt-0.5 text-[13px] font-semibold text-[var(--navy-dk)]">{member.name}</h3>
+    </div>
   );
 }
 
 export default function ResourcesPage() {
   return (
-    <div className="space-y-14">
-      <section>
-        <h1 className="text-4xl font-bold text-gray-900">Resources</h1>
-        <p className="mt-6 text-sm font-semibold uppercase tracking-wide text-gray-500">Get to know us</p>
-      </section>
+    <div className="border-b border-[var(--border)] px-8 py-[72px]">
+      <div className="mx-auto max-w-[1160px] space-y-12">
+        <section>
+          <h1 className="mb-3 text-[clamp(28px,3vw,42px)] font-extrabold leading-[1.1] tracking-[-0.03em] text-[var(--navy-dk)]">
+            Resources
+          </h1>
+          <p className="mb-2 text-[10px] font-bold uppercase tracking-[0.12em] text-[var(--navy)]">
+            Get to know us
+          </p>
+        </section>
 
-      {/* Meet Us */}
-      <section>
-        <h2 className="text-2xl font-semibold text-gray-900 mb-6">Meet Us</h2>
-        <div className="space-y-4">
-          <details className="border border-gray-200 rounded-lg">
-            <summary className="cursor-pointer px-6 py-4 font-semibold text-gray-900 hover:bg-gray-50 select-none">
-              Eboard
-            </summary>
-            <div className="border-t border-gray-200 px-6 py-6">
-              <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-                {EBOARD.map((member) => (
-                  <TeamCard key={member.name} member={member} />
-                ))}
+        {/* Meet Us */}
+        <section id="meet-us">
+          <h2 className="mb-6 text-[18px] font-semibold text-[var(--navy-dk)]">Meet Us</h2>
+          
+          <div className="mb-8">
+            <h3 className="mb-4 text-[13px] font-semibold text-[var(--navy-dk)]">Eboard</h3>
+            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+              {EBOARD.map((member) => (
+                <TeamCard key={member.name} member={member} />
+              ))}
+            </div>
+          </div>
+
+          <div>
+            <h3 className="mb-4 text-[13px] font-semibold text-[var(--navy-dk)]">Directors</h3>
+            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+              {DIRECTORS.map((member) => (
+                <TeamCard key={member.name} member={member} />
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Sponsors */}
+        <section id="sponsors">
+          <p className="text-[10px] font-bold uppercase tracking-[0.12em] text-[var(--navy)] mb-2">
+            Supporting Organizations
+          </p>
+          <h2 className="mb-4 text-[18px] font-semibold text-[var(--navy-dk)]">Our Sponsors</h2>
+          <p className="max-w-3xl text-[15px] leading-[1.75] text-[var(--slate)] mb-6">
+            We partner with industry leaders to support ACM at Penn State and provide opportunities for our members
+          </p>
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {SPONSORS.map((sponsor) => (
+              <div key={sponsor.name} className="flex items-center justify-center rounded border border-[var(--border)] bg-[var(--bg-alt)] p-8 h-24">
+                <p className="text-[13px] font-medium text-[var(--slate)]">{sponsor.name}</p>
               </div>
-            </div>
-          </details>
+            ))}
+          </div>
+        </section>
 
-          <details className="border border-gray-200 rounded-lg">
-            <summary className="cursor-pointer px-6 py-4 font-semibold text-gray-900 hover:bg-gray-50 select-none">
-              Directors
-            </summary>
-            <div className="border-t border-gray-200 px-6 py-6">
-              <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-                {DIRECTORS.map((member) => (
-                  <TeamCard key={member.name} member={member} />
-                ))}
+        {/* Friends */}
+        <section id="friends">
+          <p className="text-[10px] font-bold uppercase tracking-[0.12em] text-[var(--navy)] mb-2">
+            Campus Community
+          </p>
+          <h2 className="mb-4 text-[18px] font-semibold text-[var(--navy-dk)]">Our Partners</h2>
+          <p className="max-w-3xl text-[15px] leading-[1.75] text-[var(--slate)] mb-6">
+            We collaborate with peer organizations across Penn State to strengthen our campus computing community
+          </p>
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {FRIENDS.map((friend) => (
+              <div key={friend.name} className="flex items-center justify-center rounded border border-[var(--border)] bg-[var(--bg-alt)] p-6 h-24">
+                <p className="text-[13px] font-medium text-[var(--slate)]">{friend.name}</p>
               </div>
-            </div>
-          </details>
-        </div>
-      </section>
+            ))}
+          </div>
+        </section>
 
-      {/* Sponsors */}
-      <section>
-        <p className="text-sm font-semibold uppercase tracking-wide text-gray-500">Supporting Organizations</p>
-        <h2 className="mt-2 text-2xl font-semibold text-gray-900">Sponsors</h2>
-        <p className="mt-4 max-w-3xl text-gray-600">
-          We partner with industry leaders to support ACM at Penn State and provide opportunities for our members.
-        </p>
-        {/* TODO: replace with real sponsor logos and links */}
-        <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {SPONSORS.map((sponsor) => (
-            <div key={sponsor.name} className="flex items-center justify-center rounded border border-gray-200 bg-gray-50 p-8 h-32">
-              <p className="text-sm font-medium text-gray-500">{sponsor.name}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Friends */}
-      <section>
-        <p className="text-sm font-semibold uppercase tracking-wide text-gray-500">Campus Community</p>
-        <h2 className="mt-2 text-2xl font-semibold text-gray-900">Friends & Partners</h2>
-        <p className="mt-4 max-w-3xl text-gray-600">
-          We collaborate with peer organizations across Penn State to strengthen our campus computing community.
-        </p>
-        {/* TODO: add real partner club logos and links */}
-        <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {FRIENDS.map((friend) => (
-            <div key={friend.name} className="rounded border border-gray-200 bg-white p-6 shadow-sm">
-              <p className="text-sm font-medium text-gray-700">{friend.name}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Contact */}
-      <section>
-        <h2 className="text-2xl font-semibold text-gray-900">Get In Touch</h2>
-        <p className="mt-4 max-w-3xl text-gray-600">
-          Contact us for questions, partnership inquiries, or to get more involved.
-        </p>
-        {/* TODO: add contact form or contact details */}
-        <div className="mt-6 rounded border border-gray-200 bg-gray-50 p-8 text-center">
-          <p className="text-sm text-gray-500">Contact section coming soon</p>
-        </div>
-      </section>
+        {/* Contact */}
+        <section id="contact">
+          <h2 className="mb-4 text-[18px] font-semibold text-[var(--navy-dk)]">Contact Us</h2>
+          <p className="max-w-3xl text-[15px] leading-[1.75] text-[var(--slate)] mb-6">
+            Contact us for questions, partnership inquiries, or to get more involved
+          </p>
+          <div className="rounded border border-[var(--border)] bg-[var(--bg-alt)] p-8 text-center">
+            <p className="text-[13px] text-[var(--slate)]">Contact section coming soon</p>
+          </div>
+        </section>
+      </div>
     </div>
   );
 }

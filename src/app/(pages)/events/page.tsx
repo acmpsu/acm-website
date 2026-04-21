@@ -90,21 +90,23 @@ function Calendar() {
 
           <div className="grid grid-cols-7 gap-2">
             {days.map((day, idx) => {
-              const hasEvent = day && datesWithEvents.has(day);
+              if (day === null) {
+                return <div key={idx} className="aspect-square" />;
+              }
+
+              const hasEvent = datesWithEvents.has(day);
               const isSelected = day === selectedDate;
 
               return (
                 <button
                   key={idx}
-                  onClick={() => day && setSelectedDate(day)}
+                  onClick={() => setSelectedDate(day)}
                   className={`relative aspect-square rounded-lg border py-2 text-[13px] font-medium transition-all ${
-                    day === null
-                      ? "cursor-default bg-white"
-                      : isSelected
-                        ? "border-[var(--navy)] bg-[#f0f4f8] text-[var(--navy-dk)]"
-                        : hasEvent
-                          ? "border-[var(--border)] bg-white text-[var(--navy-dk)] hover:bg-[#f0f4f8]"
-                          : "border-[var(--border)] bg-white text-[var(--slate)] hover:bg-[var(--bg-alt)]"
+                    isSelected
+                      ? "border-[var(--navy)] bg-[#f0f4f8] text-[var(--navy-dk)]"
+                      : hasEvent
+                        ? "border-[var(--border)] bg-white text-[var(--navy-dk)] hover:bg-[#f0f4f8]"
+                        : "border-[var(--border)] bg-white text-[var(--slate)] hover:bg-[var(--bg-alt)]"
                   }`}
                 >
                   {day}
