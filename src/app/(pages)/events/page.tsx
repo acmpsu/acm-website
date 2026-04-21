@@ -12,32 +12,7 @@ interface Event {
   category: "workshop" | "hackathon" | "social";
 }
 
-const events: Event[] = [
-  {
-    id: 1,
-    title: "Web Development Workshop",
-    date: 18,
-    time: "6:00 PM – 8:00 PM",
-    location: "Innovation Hub, Room 201",
-    category: "workshop",
-  },
-  {
-    id: 2,
-    title: "AI Challenge 2026",
-    date: 25,
-    time: "All day",
-    location: "Tech Center, Building 5",
-    category: "hackathon",
-  },
-  {
-    id: 3,
-    title: "Coffee & Code Social",
-    date: 20,
-    time: "4:00 PM – 6:00 PM",
-    location: "Campus Café",
-    category: "social",
-  },
-];
+const events: Event[] = [];
 
 const categoryColors = {
   workshop: { bg: "bg-blue-50", text: "text-blue-700", badge: "bg-blue-100 text-blue-800" },
