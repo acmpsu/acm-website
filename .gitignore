@@ -39,3 +39,19 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# secrets & credentials
+# `.env*` above already covers .env.local and .env.local.example — no exceptions.
+*.key
+*.p12
+*.pfx
+*.crt
+*.cer
+id_rsa*
+*.keystore
+secrets.json
+credentials.json
+service-account*.json
+.supabase/
+supabase/.temp/
+supabase/.branches/

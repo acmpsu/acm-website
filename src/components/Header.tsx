@@ -5,6 +5,7 @@ import { ShiftingDropDown } from "@/components/ui/shifting-dropdown";
 import { CommitteesDropDown } from "@/components/ui/committees-dropdown";
 import { ResourcesDropDown } from "@/components/ui/resources-dropdown";
 import { MobileMenu } from "@/components/ui/mobile-menu";
+import { HeaderAuth } from "@/components/HeaderAuth";
 
 export function Header() {
   // Filter out items that have dropdown components
@@ -49,12 +50,7 @@ export function Header() {
 
           <MobileMenu />
 
-          <Link
-            href="/login"
-            className="rounded-md bg-[var(--navy)] px-[18px] py-[7px] text-[13px] font-semibold text-white transition hover:bg-[var(--navy-dk)]"
-          >
-            Login
-          </Link>
+          <HeaderAuth />
         </div>
       </div>
     </header>
