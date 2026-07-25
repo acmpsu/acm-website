@@ -57,9 +57,6 @@ export default function CommitteesPage() {
                 <h2 className="text-[clamp(20px,2vw,28px)] font-extrabold tracking-[-0.02em] text-[var(--navy-dk)]">
                   {committee.name}
                 </h2>
-                <p className="mt-1 text-[10px] font-bold uppercase tracking-[0.12em] text-[var(--navy)]">
-                  {committee.shortName}
-                </p>
                 <p className="mt-3 text-[15px] leading-[1.75] text-[var(--slate)]">
                   {committee.description}
                 </p>
