@@ -25,7 +25,7 @@ export default function AboutPage() {
             <section>
               <h2 className="mb-4 text-[18px] font-semibold text-[var(--navy-dk)]">What Do We Do</h2>
               <p className="max-w-3xl text-[15px] leading-[1.75] text-[var(--slate)]">
-                We run nine committees focused on different areas of computing—from AI and data to web development and game design. Each committee meets regularly for workshops, collaborative projects, and skill-building sessions. We also host larger events like hackathons, guest speaker panels, and competitions to bring the community together
+                We run six committees focused on different areas of computing—ICPC, web &amp; design, AI, hackathon, data, and quantum. Each committee meets regularly for workshops, collaborative projects, and skill-building sessions. Alongside them, initiatives like the Dev Team support the organization year-round. We also host larger events like hackathons, guest speaker panels, and competitions to bring the community together
               </p>
             </section>
 

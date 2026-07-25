@@ -1,3 +1,8 @@
+import { CONTACT_LINKS } from "@/lib/constants";
+
+const discordHref = CONTACT_LINKS.find((link) => link.label === "Discord")!.href;
+const groupMeHref = CONTACT_LINKS.find((link) => link.label === "GroupMe")!.href;
+
 export function JoinUs() {
   return (
     <section className="border-b border-[var(--border)] px-8 py-[80px]" id="join">
@@ -11,7 +16,7 @@ export function JoinUs() {
           </p>
           <div className="flex flex-wrap justify-center gap-2.5">
             <a
-              href="https://discord.gg/zkqYjGxVsh"
+              href={discordHref}
               target="_blank"
               rel="noopener noreferrer"
               className="rounded-md bg-[var(--navy)] px-[22px] py-[10px] text-[13px] font-semibold text-white transition hover:bg-[var(--navy-dk)]"
@@ -19,7 +24,7 @@ export function JoinUs() {
               Join Discord
             </a>
             <a
-              href="https://groupme.com/join_group/113864937/hfRpqc64"
+              href={groupMeHref}
               target="_blank"
               rel="noopener noreferrer"
               className="rounded-md border border-[var(--border)] bg-white px-[22px] py-[10px] text-[13px] font-semibold text-[var(--navy-dk)] transition hover:border-[#b0bdd4] hover:bg-[var(--bg-alt)]"

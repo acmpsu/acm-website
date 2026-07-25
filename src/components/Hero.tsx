@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { HERO_TITLE, HERO_DESCRIPTION, COMMITTEES } from "@/lib/constants";
+import { HERO_TITLE, HERO_DESCRIPTION } from "@/lib/constants";
 
 export function Hero() {
   return (

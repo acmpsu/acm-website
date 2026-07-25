@@ -1,6 +1,9 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
+import { CONTACT_LINKS } from '@/lib/constants';
+import { InstagramIcon, LinkedinIcon } from '@/components/ui/brand-icons';
+
 interface SocialLink {
   title: string;
   href: string;
@@ -12,64 +15,18 @@ interface TextLink {
   href: string;
 }
 
-function InstagramIcon({ className }: { className?: string }) {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.8"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className={className}
-      aria-hidden="true"
-    >
-      <rect x="2.8" y="2.8" width="18.4" height="18.4" rx="5" />
-      <circle cx="12" cy="12" r="4.2" />
-      <circle cx="17.2" cy="6.8" r="1.1" />
-    </svg>
-  );
-}
+const SOCIAL_ICONS: Record<string, React.ComponentType<{ className?: string }>> = {
+  Instagram: InstagramIcon,
+  LinkedIn: LinkedinIcon,
+};
 
-function LinkedinIcon({ className }: { className?: string }) {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.8"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className={className}
-      aria-hidden="true"
-    >
-      <circle cx="5" cy="6.3" r="1.7" />
-      <line x1="5" y1="10" x2="5" y2="19" />
-      <line x1="9" y1="10" x2="9" y2="19" />
-      <path d="M9 13.2c0-1.9 1.5-3.4 3.4-3.4S16 11.3 16 13.2V19" />
-      <line x1="16" y1="14.2" x2="16" y2="19" />
-    </svg>
-  );
-}
+const socialLinks: SocialLink[] = CONTACT_LINKS.filter((link) => link.group === 'social').map(
+  (link) => ({ title: link.label, href: link.href, icon: SOCIAL_ICONS[link.label] })
+);
 
-const socialLinks: SocialLink[] = [
-  {
-    title: 'Instagram',
-    href: 'https://www.instagram.com/pennstateacm/',
-    icon: InstagramIcon,
-  },
-  {
-    title: 'LinkedIn',
-    href: 'https://www.linkedin.com/company/acmpsu/',
-    icon: LinkedinIcon,
-  },
-];
-
-const officialLinks: TextLink[] = [
-  { title: 'Org Page', href: 'https://discover.psu.edu/organization/acmpsu' },
-  { title: 'Discord', href: 'https://discord.gg/zkqYjGxVsh' },
-  { title: 'GroupMe', href: 'https://groupme.com/join_group/113864937/hfRpqc64' },
-];
+const officialLinks: TextLink[] = CONTACT_LINKS.filter((link) => link.group === 'official').map(
+  (link) => ({ title: link.label, href: link.href })
+);
 
 export function FooterSection() {
   return (

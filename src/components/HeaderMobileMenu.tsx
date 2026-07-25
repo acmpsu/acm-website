@@ -6,9 +6,7 @@ import { useCallback, useEffect, useId, useState, type ReactNode } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { ChevronDown, ChevronRight, Menu, X } from "lucide-react";
 
-import { COMMITTEES, committeePageFragmentId, NAV_ITEMS } from "@/lib/constants";
-
-const INITIATIVES_ITEMS = [{ label: "Dev Team", href: "/dev-team" }] as const;
+import { COMMITTEES, INITIATIVES, NAV_ITEMS } from "@/lib/constants";
 
 type MobileNavAccordionProps = {
   menuOpen: boolean;
@@ -149,13 +147,13 @@ export function HeaderMobileMenu() {
                   </Link>
                   <ul>
                     {COMMITTEES.map((c) => (
-                      <li key={c.name}>
+                      <li key={c.id}>
                         <Link
-                          href={`/committees#${committeePageFragmentId(c.name)}`}
+                          href={`/committees#${c.id}`}
                           className="block rounded-lg py-2 pl-6 pr-3 text-slate-700 hover:bg-slate-50"
                           onClick={close}
                         >
-                          {c.name}
+                          {c.shortName}
                         </Link>
                       </li>
                     ))}
@@ -164,7 +162,7 @@ export function HeaderMobileMenu() {
 
                 <MobileNavAccordion menuOpen={open} title="Initiatives">
                   <ul>
-                    {INITIATIVES_ITEMS.map((item) => (
+                    {INITIATIVES.map((item) => (
                       <li key={item.href}>
                         <Link
                           href={item.href}

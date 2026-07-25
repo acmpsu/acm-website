@@ -1,5 +1,22 @@
 import Image from "next/image";
 
+import { CONTACT_LINKS } from "@/lib/constants";
+import {
+  DiscordIcon,
+  GroupMeIcon,
+  InstagramIcon,
+  LinkedinIcon,
+  OrgPageIcon,
+} from "@/components/ui/brand-icons";
+
+const CONTACT_ICONS: Record<string, React.ComponentType<{ className?: string }>> = {
+  Discord: DiscordIcon,
+  GroupMe: GroupMeIcon,
+  "Org Page": OrgPageIcon,
+  Instagram: InstagramIcon,
+  LinkedIn: LinkedinIcon,
+};
+
 function getInitials(name: string) {
   return name
     .split(" ")
@@ -14,7 +31,7 @@ type TeamMember = {
   role: string;
 };
 
-type Sponsor = {
+type Organization = {
   name: string;
   logo: string;
 };
@@ -39,7 +56,7 @@ const DIRECTORS: TeamMember[] = [
   { name: "Ethan Elemento", role: "Hack Director" },
 ];
 
-const SPONSORS: Sponsor[] = [
+const SPONSORS: Organization[] = [
   { name: "Boeing", logo: "/sponsors/1.jpg" },
   { name: "Capital One", logo: "/sponsors/cap1.jpg" },
   { name: "Lockheed Martin", logo: "/sponsors/Lockheed.webp" },
@@ -53,12 +70,12 @@ const SPONSORS: Sponsor[] = [
   { name: "Rockwell Automation", logo: "/sponsors/rockwell.png" },
 ];
 
-const FRIENDS = [
-  { name: "Partner Club 1" },
-  { name: "Partner Club 2" },
-  { name: "Partner Club 3" },
-  { name: "Partner Club 4" },
-  { name: "Partner Club 5" },
+const PARTNERS: Organization[] = [
+  { name: "AWS Cloud Club at Penn State", logo: "/partners/awspsu.jpg" },
+  { name: "Girls Who Code at Penn State", logo: "/partners/gwcpsu.jpeg" },
+  { name: "Nittany AI", logo: "/partners/nittanyai.jpeg" },
+  { name: "QSS", logo: "/partners/qss.png" },
+  { name: "SASE at Penn State", logo: "/partners/sasepsu.png" },
 ];
 
 function TeamCard({ member }: { member: TeamMember }) {
@@ -135,8 +152,8 @@ export default function ResourcesPage() {
           </div>
         </section>
 
-        {/* Friends */}
-        <section id="friends">
+        {/* Partners */}
+        <section id="partners">
           <p className="text-[10px] font-bold uppercase tracking-[0.12em] text-[var(--navy)] mb-2">
             Campus Community
           </p>
@@ -144,10 +161,18 @@ export default function ResourcesPage() {
           <p className="max-w-3xl text-[15px] leading-[1.75] text-[var(--slate)] mb-6">
             We collaborate with peer organizations across Penn State to strengthen our campus computing community
           </p>
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {FRIENDS.map((friend) => (
-              <div key={friend.name} className="flex items-center justify-center rounded border border-[var(--border)] bg-[var(--bg-alt)] p-6 h-24">
-                <p className="text-[13px] font-medium text-[var(--slate)]">{friend.name}</p>
+          <div className="grid grid-cols-5 gap-3 sm:gap-6">
+            {PARTNERS.map((partner) => (
+              <div key={partner.name} className="flex items-center justify-center h-16 sm:h-24">
+                <div className="relative w-full h-full">
+                  <Image
+                    src={partner.logo}
+                    alt={partner.name}
+                    fill
+                    className="object-contain"
+                    sizes="20vw"
+                  />
+                </div>
               </div>
             ))}
           </div>
@@ -159,8 +184,29 @@ export default function ResourcesPage() {
           <p className="max-w-3xl text-[15px] leading-[1.75] text-[var(--slate)] mb-6">
             Contact us for questions, partnership inquiries, or to get more involved
           </p>
-          <div className="rounded border border-[var(--border)] bg-[var(--bg-alt)] p-8 text-center">
-            <p className="text-[13px] text-[var(--slate)]">Contact section coming soon</p>
+          <div className="grid grid-cols-5 gap-3 sm:gap-4">
+            {CONTACT_LINKS.map((link) => {
+              const Icon = CONTACT_ICONS[link.label];
+              return (
+                <a
+                  key={link.label}
+                  href={link.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group flex flex-col items-center rounded border border-[var(--border)] bg-[var(--bg-alt)] px-3 py-5 text-center no-underline transition hover:border-[#b0bdd4] hover:bg-white"
+                >
+                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md border border-[var(--border)] bg-white text-[var(--navy)] transition group-hover:border-[#b0bdd4] group-hover:bg-[var(--navy)] group-hover:text-white">
+                    <Icon className="h-[18px] w-[18px]" />
+                  </span>
+                  <span className="mt-3 block text-[13px] font-semibold text-[var(--navy-dk)] group-hover:text-[var(--navy)]">
+                    {link.label}
+                  </span>
+                  <span className="mt-1.5 hidden text-[12px] leading-[1.55] text-[var(--slate)] sm:block">
+                    {link.description}
+                  </span>
+                </a>
+              );
+            })}
           </div>
         </section>
       </div>

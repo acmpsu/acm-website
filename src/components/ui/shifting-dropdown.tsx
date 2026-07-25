@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { ChevronDown } from "lucide-react";
+import { INITIATIVES } from "@/lib/constants";
 
 export function ShiftingDropDown() {
   const [open, setOpen] = useState(false);
@@ -65,14 +66,17 @@ export function ShiftingDropDown() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 4 }}
               transition={{ duration: 0.15, ease: "easeOut" }}
-              className="absolute left-0 top-[calc(100%+8px)] w-24 rounded-lg border border-gray-200 bg-white shadow-lg"
+              className="absolute left-0 top-[calc(100%+8px)] w-28 rounded-lg border border-gray-200 bg-white shadow-lg"
             >
-              <Link
-                href="/dev-team"
-                className="block px-1.5 py-1 text-xs text-gray-700 hover:bg-gray-100 hover:text-gray-900 rounded-lg whitespace-nowrap"
-              >
-                Dev Team
-              </Link>
+              {INITIATIVES.map((initiative) => (
+                <Link
+                  key={initiative.href}
+                  href={initiative.href}
+                  className="block px-2.5 py-1.5 text-xs text-gray-700 hover:bg-gray-100 hover:text-gray-900 first:rounded-t-lg last:rounded-b-lg whitespace-nowrap"
+                >
+                  {initiative.label}
+                </Link>
+              ))}
             </motion.div>
           </>
         ) : null}

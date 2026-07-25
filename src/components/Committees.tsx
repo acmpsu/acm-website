@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { COMMITTEES } from "@/lib/constants";
 
 export function Committees() {
@@ -15,16 +16,17 @@ export function Committees() {
             Our Committees
           </h2>
           <p className="mt-2 text-[15px] leading-[1.65] text-[var(--slate)]">
-            Specialized tracks across AI, cybersecurity, competitive programming, and more
+            Six specialized tracks across AI, data, competitive programming, and more
           </p>
         </div>
 
-        {/* 3×3 grid */}
+        {/* 3×2 grid */}
         <div className="grid grid-cols-3 gap-12 md:gap-8">
           {COMMITTEES.map((committee, index) => (
-            <div
-              key={committee.name}
-              className="committee-item flex flex-col items-center justify-center gap-3 text-center"
+            <Link
+              key={committee.id}
+              href={`/committees#${committee.id}`}
+              className="committee-item flex flex-col items-center justify-center gap-3 text-center no-underline"
             >
               <div className="committee-3d-wrap relative h-20 w-20">
                 <div
@@ -33,7 +35,7 @@ export function Committees() {
                   <div className="committee-face committee-face-front">
                     <Image
                       src={committee.logo}
-                      alt={committee.name}
+                      alt={committee.shortName}
                       fill
                       sizes="80px"
                       className="committee-logo-img object-contain"
@@ -51,9 +53,9 @@ export function Committees() {
                 </div>
               </div>
               <span className="text-[13px] font-bold text-[var(--navy-dk)]">
-                {committee.name}
+                {committee.shortName}
               </span>
-            </div>
+            </Link>
           ))}
         </div>
 

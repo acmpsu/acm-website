@@ -1,69 +1,6 @@
 import Image from "next/image";
 
-import { committeePageFragmentId } from "@/lib/constants";
-
-type Committee = {
-  name: string;
-  logo: string;
-  description: string;
-};
-
-const COMMITTEES: Committee[] = [
-  {
-    name: "acm.ai",
-    logo: "/logos/ai.png",
-    description:
-      "Explores machine learning, modern AI tooling, and responsible applications through workshops, reading groups, and hands-on projects that meet members where they are",
-  },
-  {
-    name: "acm.data",
-    logo: "/logos/data.png",
-    description:
-      "Focuses on data engineering, analytics, and visualization—turning raw information into clear stories and reliable pipelines with practical, industry-relevant skills",
-  },
-  {
-    name: "acm.design",
-    logo: "/logos/design.png",
-    description:
-      "Covers product and visual design, UX fundamentals, and design systems so technical work ships with interfaces people actually want to use",
-  },
-  {
-    name: "acm.hack",
-    logo: "/logos/hack.png",
-    description:
-      "Builds full-stack web skills from accessible front ends to APIs and deployment, emphasizing real projects, modern frameworks, and clean engineering habits",
-  },
-  {
-    name: "acm.icpc",
-    logo: "/logos/icpc.png",
-    description:
-      "Prepares members for competitive programming and ICPC-style contests with structured practice, algorithms deep dives, and team problem-solving sessions",
-  },
-  {
-    name: "acm.quantum",
-    logo: "/logos/quantum.png",
-    description:
-      "Introduces quantum computing concepts, tools, and research directions—bridging linear algebra and programming with curiosity-first learning",
-  },
-  {
-    name: "acm.web",
-    logo: "/logos/web.png",
-    description:
-      "Builds full-stack web skills from accessible front ends to APIs and deployment, emphasizing real projects, modern frameworks, and clean engineering habits",
-  },
-  {
-    name: "acm.game",
-    logo: "/logos/game.png",
-    description:
-      "Explores game design, development, and interactive experiences using modern game engines and creative problem-solving",
-  },
-  {
-    name: "acm.cyber",
-    logo: "/logos/cyber.png",
-    description:
-      "Focuses on cybersecurity fundamentals, ethical hacking, and defensive strategies to protect systems and networks",
-  },
-];
+import { COMMITTEES } from "@/lib/constants";
 
 export default function CommitteesPage() {
   return (
@@ -77,16 +14,16 @@ export default function CommitteesPage() {
             Our Tracks
           </p>
           <p className="mt-2 max-w-3xl text-[15px] leading-[1.75] text-[var(--slate)]">
-            ACM committees are how we organize learning and projects by interest. Each group runs events,
-            workshops, and mentorship so you can go deep with peers who care about the same problems
+            ACM committees are how we organize learning and projects by interest. Our six committees each run
+            events, workshops, and mentorship so you can go deep with peers who care about the same problems
           </p>
         </section>
 
         <section id="committee-list" className="space-y-12">
           {COMMITTEES.map((committee, index) => (
             <article
-              key={committee.logo}
-              id={committeePageFragmentId(committee.name)}
+              key={committee.id}
+              id={committee.id}
               className="committee-item grid gap-12 lg:grid-cols-[240px_1fr] lg:items-center"
             >
               <div className="flex justify-center lg:justify-start">
@@ -120,6 +57,9 @@ export default function CommitteesPage() {
                 <h2 className="text-[clamp(20px,2vw,28px)] font-extrabold tracking-[-0.02em] text-[var(--navy-dk)]">
                   {committee.name}
                 </h2>
+                <p className="mt-1 text-[10px] font-bold uppercase tracking-[0.12em] text-[var(--navy)]">
+                  {committee.shortName}
+                </p>
                 <p className="mt-3 text-[15px] leading-[1.75] text-[var(--slate)]">
                   {committee.description}
                 </p>
