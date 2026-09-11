@@ -2,11 +2,12 @@
 
 import { useState, useMemo } from "react";
 import Link from "next/link";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 interface Event {
   id: number;
   title: string;
-  date: number;
+  date: string; // ISO calendar day, e.g. "2026-09-11"
   time: string;
   location: string;
   category: "workshop" | "hackathon" | "social";
@@ -20,12 +21,42 @@ const categoryColors = {
   social: { bg: "bg-[#f0f4f8]", text: "text-[var(--navy)]", badge: "bg-[#e0e8f2] text-[var(--navy)]" },
 };
 
-function EventDayView({ date, dayEvents }: { date: number; dayEvents: Event[] }) {
+function pad(n: number) {
+  return String(n).padStart(2, "0");
+}
+
+function toIsoDate(year: number, month: number, day: number) {
+  return `${year}-${pad(month + 1)}-${pad(day)}`;
+}
+
+function monthIndex(year: number, month: number) {
+  return year * 12 + month;
+}
+
+function daysInMonth(year: number, month: number) {
+  return new Date(year, month + 1, 0).getDate();
+}
+
+function EventDayView({
+  year,
+  month,
+  day,
+  dayEvents,
+}: {
+  year: number;
+  month: number;
+  day: number;
+  dayEvents: Event[];
+}) {
+  const label = new Date(year, month, day).toLocaleDateString("en-US", {
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+  });
+
   return (
     <div className="space-y-4">
-      <h3 className="text-[14px] font-semibold text-[var(--navy-dk)]">
-        April {date}, 2026
-      </h3>
+      <h3 className="text-[14px] font-semibold text-[var(--navy-dk)]">{label}</h3>
       {dayEvents.length === 0 ? (
         <p className="text-[14px] text-[var(--slate)]">No events scheduled for this day</p>
       ) : (
@@ -54,31 +85,81 @@ function EventDayView({ date, dayEvents }: { date: number; dayEvents: Event[] })
 }
 
 function Calendar() {
-  const [selectedDate, setSelectedDate] = useState<number>(20);
-  
-  const datesWithEvents = useMemo(() => new Set(events.map((e) => e.date)), []);
+  const [today] = useState(() => new Date());
+  const [viewYear, setViewYear] = useState(today.getFullYear());
+  const [viewMonth, setViewMonth] = useState(today.getMonth());
+  const [selectedDay, setSelectedDay] = useState(today.getDate());
+
+  const minIndex = monthIndex(today.getFullYear(), today.getMonth()) - 12;
+  const maxIndex = monthIndex(today.getFullYear(), today.getMonth()) + 12;
+  const viewIndex = monthIndex(viewYear, viewMonth);
+  const canGoPrev = viewIndex > minIndex;
+  const canGoNext = viewIndex < maxIndex;
+
+  const firstDay = new Date(viewYear, viewMonth, 1).getDay();
+  const monthLength = daysInMonth(viewYear, viewMonth);
+  const selectedIso = toIsoDate(viewYear, viewMonth, selectedDay);
+
+  const datesWithEvents = useMemo(
+    () => new Set(events.map((e) => e.date)),
+    []
+  );
   const selectedDayEvents = useMemo(
-    () => events.filter((e) => e.date === selectedDate),
-    [selectedDate]
+    () => events.filter((e) => e.date === selectedIso),
+    [selectedIso]
   );
 
-  const firstDay = 2;
-  const daysInMonth = 30;
-  const days = [];
-
+  const days: (number | null)[] = [];
   for (let i = 0; i < firstDay; i++) {
     days.push(null);
   }
-
-  for (let i = 1; i <= daysInMonth; i++) {
+  for (let i = 1; i <= monthLength; i++) {
     days.push(i);
+  }
+
+  const monthLabel = new Date(viewYear, viewMonth).toLocaleDateString("en-US", {
+    month: "long",
+    year: "numeric",
+  });
+
+  function shiftMonth(delta: number) {
+    const next = new Date(viewYear, viewMonth + delta, 1);
+    const nextIndex = monthIndex(next.getFullYear(), next.getMonth());
+    if (nextIndex < minIndex || nextIndex > maxIndex) return;
+
+    const nextLength = daysInMonth(next.getFullYear(), next.getMonth());
+    setViewYear(next.getFullYear());
+    setViewMonth(next.getMonth());
+    setSelectedDay((day) => Math.min(day, nextLength));
   }
 
   return (
     <div className="grid gap-8 lg:grid-cols-3">
       <div className="lg:col-span-2">
         <div className="rounded-lg border border-[var(--border)] bg-white p-6">
-          <h2 className="mb-6 text-[18px] font-semibold text-[var(--navy-dk)]">April 2026</h2>
+          <div className="mb-6 flex items-center justify-between">
+            <h2 className="text-[18px] font-semibold text-[var(--navy-dk)]">{monthLabel}</h2>
+            <div className="flex gap-2">
+              <button
+                type="button"
+                onClick={() => shiftMonth(-1)}
+                disabled={!canGoPrev}
+                aria-label="Previous month"
+                className="rounded-lg border border-[var(--border)] p-1.5 text-[var(--navy-dk)] transition hover:bg-[#f0f4f8] disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-white"
+              >
+                <ChevronLeft className="h-4 w-4" />
+              </button>
+              <button
+                type="button"
+                onClick={() => shiftMonth(1)}
+                disabled={!canGoNext}
+                aria-label="Next month"
+                className="rounded-lg border border-[var(--border)] p-1.5 text-[var(--navy-dk)] transition hover:bg-[#f0f4f8] disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-white"
+              >
+                <ChevronRight className="h-4 w-4" />
+              </button>
+            </div>
+          </div>
 
           <div className="mb-4 grid grid-cols-7 gap-2 text-center">
             {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((day) => (
@@ -94,13 +175,13 @@ function Calendar() {
                 return <div key={idx} className="aspect-square" />;
               }
 
-              const hasEvent = datesWithEvents.has(day);
-              const isSelected = day === selectedDate;
+              const hasEvent = datesWithEvents.has(toIsoDate(viewYear, viewMonth, day));
+              const isSelected = day === selectedDay;
 
               return (
                 <button
                   key={idx}
-                  onClick={() => setSelectedDate(day)}
+                  onClick={() => setSelectedDay(day)}
                   className={`relative aspect-square rounded-lg border py-2 text-[13px] font-medium transition-all ${
                     isSelected
                       ? "border-[var(--navy)] bg-[#f0f4f8] text-[var(--navy-dk)]"
@@ -121,7 +202,7 @@ function Calendar() {
       </div>
 
       <div className="rounded-lg border border-[var(--border)] bg-[var(--bg-alt)] p-6">
-        <EventDayView date={selectedDate} dayEvents={selectedDayEvents} />
+        <EventDayView year={viewYear} month={viewMonth} day={selectedDay} dayEvents={selectedDayEvents} />
       </div>
     </div>
   );
