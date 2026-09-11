@@ -29,6 +29,11 @@ function toIsoDate(year: number, month: number, day: number) {
   return `${year}-${pad(month + 1)}-${pad(day)}`;
 }
 
+function parseIsoDate(iso: string) {
+  const [year, month, day] = iso.split("-").map(Number);
+  return { year, month: month - 1, day };
+}
+
 function monthIndex(year: number, month: number) {
   return year * 12 + month;
 }
@@ -88,7 +93,9 @@ function Calendar() {
   const [today] = useState(() => new Date());
   const [viewYear, setViewYear] = useState(today.getFullYear());
   const [viewMonth, setViewMonth] = useState(today.getMonth());
-  const [selectedDay, setSelectedDay] = useState(today.getDate());
+  const [selectedDate, setSelectedDate] = useState(
+    toIsoDate(today.getFullYear(), today.getMonth(), today.getDate())
+  );
 
   const minIndex = monthIndex(today.getFullYear(), today.getMonth()) - 12;
   const maxIndex = monthIndex(today.getFullYear(), today.getMonth()) + 12;
@@ -98,15 +105,15 @@ function Calendar() {
 
   const firstDay = new Date(viewYear, viewMonth, 1).getDay();
   const monthLength = daysInMonth(viewYear, viewMonth);
-  const selectedIso = toIsoDate(viewYear, viewMonth, selectedDay);
+  const selected = parseIsoDate(selectedDate);
 
   const datesWithEvents = useMemo(
     () => new Set(events.map((e) => e.date)),
     []
   );
   const selectedDayEvents = useMemo(
-    () => events.filter((e) => e.date === selectedIso),
-    [selectedIso]
+    () => events.filter((e) => e.date === selectedDate),
+    [selectedDate]
   );
 
   const days: (number | null)[] = [];
@@ -127,10 +134,8 @@ function Calendar() {
     const nextIndex = monthIndex(next.getFullYear(), next.getMonth());
     if (nextIndex < minIndex || nextIndex > maxIndex) return;
 
-    const nextLength = daysInMonth(next.getFullYear(), next.getMonth());
     setViewYear(next.getFullYear());
     setViewMonth(next.getMonth());
-    setSelectedDay((day) => Math.min(day, nextLength));
   }
 
   return (
@@ -175,13 +180,14 @@ function Calendar() {
                 return <div key={idx} className="aspect-square" />;
               }
 
-              const hasEvent = datesWithEvents.has(toIsoDate(viewYear, viewMonth, day));
-              const isSelected = day === selectedDay;
+              const iso = toIsoDate(viewYear, viewMonth, day);
+              const hasEvent = datesWithEvents.has(iso);
+              const isSelected = iso === selectedDate;
 
               return (
                 <button
                   key={idx}
-                  onClick={() => setSelectedDay(day)}
+                  onClick={() => setSelectedDate(iso)}
                   className={`relative aspect-square rounded-lg border py-2 text-[13px] font-medium transition-all ${
                     isSelected
                       ? "border-[var(--navy)] bg-[#f0f4f8] text-[var(--navy-dk)]"
@@ -202,7 +208,7 @@ function Calendar() {
       </div>
 
       <div className="rounded-lg border border-[var(--border)] bg-[var(--bg-alt)] p-6">
-        <EventDayView year={viewYear} month={viewMonth} day={selectedDay} dayEvents={selectedDayEvents} />
+        <EventDayView year={selected.year} month={selected.month} day={selected.day} dayEvents={selectedDayEvents} />
       </div>
     </div>
   );
