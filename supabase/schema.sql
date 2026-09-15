@@ -90,11 +90,14 @@ create table if not exists public.events (
   id           uuid primary key default gen_random_uuid(),
   title        text not null,
   starts_at    timestamptz not null,
+  ends_at      timestamptz,
   location     text,
   committee_id text,
   checkin_code text not null unique,
   created_at   timestamptz not null default now()
 );
+
+alter table public.events add column if not exists ends_at timestamptz;
 
 alter table public.events enable row level security;
 
