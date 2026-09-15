@@ -1,8 +1,7 @@
 import { createClient } from "@/lib/supabase/server";
 import { isSupabaseConfigured } from "@/lib/supabase/env";
 import { EVENT_CATEGORIES, type CalendarEvent, type EventCategory } from "@/lib/events";
-
-const EASTERN = "America/New_York";
+import { EASTERN } from "@/lib/eastern";
 
 type EventRow = {
   id: string;

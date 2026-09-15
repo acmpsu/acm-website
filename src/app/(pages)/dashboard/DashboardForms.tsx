@@ -3,7 +3,9 @@
 import { useActionState } from "react";
 import { useFormStatus } from "react-dom";
 
-import { checkIn, updateProfile, type ActionState } from "./actions";
+import { checkIn, createEvent, updateProfile, type ActionState } from "./actions";
+import { COMMITTEES } from "@/lib/constants";
+import { EVENT_CATEGORIES, categoryStyles } from "@/lib/events";
 
 const EMPTY: ActionState = {};
 
@@ -133,6 +135,98 @@ export function CheckInForm() {
         </div>
       </div>
       <Feedback state={state} />
+    </form>
+  );
+}
+
+export function CreateEventForm() {
+  const [state, formAction] = useActionState(createEvent, EMPTY);
+
+  return (
+    <form action={formAction} className="max-w-[520px] space-y-4">
+      <div>
+        <label htmlFor="event_title" className={labelClass}>
+          Title <span aria-hidden="true">*</span>
+        </label>
+        <input id="event_title" name="title" type="text" required aria-required="true" className={fieldClass} />
+      </div>
+
+      <div className="grid gap-4 sm:grid-cols-3">
+        <div>
+          <label htmlFor="event_date" className={labelClass}>
+            Date <span aria-hidden="true">*</span>
+          </label>
+          <input id="event_date" name="date" type="date" required aria-required="true" className={fieldClass} />
+        </div>
+        <div>
+          <label htmlFor="event_start" className={labelClass}>
+            Start <span aria-hidden="true">*</span>
+          </label>
+          <input id="event_start" name="start_time" type="time" required aria-required="true" className={fieldClass} />
+        </div>
+        <div>
+          <label htmlFor="event_end" className={labelClass}>
+            End
+          </label>
+          <input id="event_end" name="end_time" type="time" className={fieldClass} />
+        </div>
+      </div>
+      <p className="text-[12px] text-[var(--slate)]">Times are Eastern</p>
+
+      <div>
+        <label htmlFor="event_location" className={labelClass}>
+          Location
+        </label>
+        <input id="event_location" name="location" type="text" placeholder="Westgate E243" className={fieldClass} />
+      </div>
+
+      <div className="grid gap-4 sm:grid-cols-2">
+        <div>
+          <label htmlFor="event_category" className={labelClass}>
+            Category
+          </label>
+          <select id="event_category" name="category" defaultValue="" className={fieldClass}>
+            <option value="">None</option>
+            {EVENT_CATEGORIES.map((category) => (
+              <option key={category} value={category}>
+                {categoryStyles[category].label}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div>
+          <label htmlFor="event_committee" className={labelClass}>
+            Committee
+          </label>
+          <select id="event_committee" name="committee_id" defaultValue="" className={fieldClass}>
+            <option value="">None</option>
+            {COMMITTEES.map((committee) => (
+              <option key={committee.id} value={committee.id}>
+                {committee.shortName}
+              </option>
+            ))}
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <label htmlFor="event_code" className={labelClass}>
+          Check-in code <span aria-hidden="true">*</span>
+        </label>
+        <input
+          id="event_code"
+          name="checkin_code"
+          type="text"
+          required
+          aria-required="true"
+          autoComplete="off"
+          placeholder="Shared at the event"
+          className={fieldClass}
+        />
+      </div>
+
+      <Feedback state={state} />
+      <Submit label="Add event" />
     </form>
   );
 }

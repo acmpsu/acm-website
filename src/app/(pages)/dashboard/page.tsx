@@ -5,7 +5,7 @@ import { COMMITTEES } from "@/lib/constants";
 import { createClient } from "@/lib/supabase/server";
 import { isSupabaseConfigured } from "@/lib/supabase/env";
 
-import { CheckInForm, ProfileForm } from "./DashboardForms";
+import { CheckInForm, CreateEventForm, ProfileForm } from "./DashboardForms";
 import { toggleCommittee } from "./actions";
 
 export const metadata = { title: "My membership — Penn State ACM" };
@@ -105,6 +105,16 @@ export default async function DashboardPage() {
           })}
         </div>
       </section>
+
+      {profile?.is_officer ? (
+        <section id="create-event">
+          <h2 className="mb-2 text-[18px] font-semibold text-[var(--navy-dk)]">Add calendar event</h2>
+          <p className="mb-6 text-[15px] leading-[1.75] text-[var(--slate)]">
+            Officers can publish events to the public calendar. Members will use the check-in code at the event
+          </p>
+          <CreateEventForm />
+        </section>
+      ) : null}
 
       <section id="attendance">
         <h2 className="mb-2 text-[18px] font-semibold text-[var(--navy-dk)]">Event attendance</h2>
