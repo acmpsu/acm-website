@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import { getCalendarEvents } from "@/lib/events";
+import { getCalendarEvents } from "@/lib/events.server";
 
 import { EventsCalendar } from "./EventsCalendar";
 
