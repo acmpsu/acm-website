@@ -92,23 +92,33 @@ create table if not exists public.events (
   starts_at    timestamptz not null,
   ends_at      timestamptz,
   location     text,
+  category     text,
   committee_id text,
   checkin_code text not null unique,
   created_at   timestamptz not null default now()
 );
 
 alter table public.events add column if not exists ends_at timestamptz;
+alter table public.events add column if not exists category text;
+alter table public.events drop constraint if exists events_category_check;
+alter table public.events add constraint events_category_check
+  check (category is null or category in ('workshop', 'hackathon', 'social', 'gbm'));
 
 alter table public.events enable row level security;
 
--- Any signed-in member can see the event list; only officers manage it.
+-- Public calendar can list events; only officers insert/update/delete.
+-- The app never selects checkin_code here; check-in still goes through check_in().
 drop policy if exists "members read events" on public.events;
-create policy "members read events" on public.events
-  for select using (auth.uid() is not null);
+drop policy if exists "public read events" on public.events;
+create policy "public read events" on public.events
+  for select using (true);
 
 drop policy if exists "officers manage events" on public.events;
 create policy "officers manage events" on public.events
   for all using (public.is_officer()) with check (public.is_officer());
+
+grant select on public.events to anon, authenticated;
+grant insert, update, delete on public.events to authenticated;
 
 create table if not exists public.attendance (
   profile_id    uuid not null references public.profiles on delete cascade,
