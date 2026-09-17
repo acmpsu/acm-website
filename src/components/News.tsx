@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 type NewsItem = {
   title: string;
@@ -38,15 +38,29 @@ const NEWS_ITEMS: NewsItem[] = [
 
 export function News() {
   const [activeIndex, setActiveIndex] = useState(0);
+  const trackRef = useRef<HTMLDivElement>(null);
+
+  function goTo(index: number) {
+    setActiveIndex(index);
+    trackRef.current?.scrollTo({
+      left: index * trackRef.current.clientWidth,
+      behavior: "smooth",
+    });
+  }
 
   function goPrev() {
-    setActiveIndex((i) => (i === 0 ? NEWS_ITEMS.length - 1 : i - 1));
+    goTo(activeIndex === 0 ? NEWS_ITEMS.length - 1 : activeIndex - 1);
   }
   function goNext() {
-    setActiveIndex((i) => (i === NEWS_ITEMS.length - 1 ? 0 : i + 1));
+    goTo(activeIndex === NEWS_ITEMS.length - 1 ? 0 : activeIndex + 1);
   }
 
-  const item = NEWS_ITEMS[activeIndex];
+  function updateActiveIndex() {
+    const track = trackRef.current;
+    if (!track || track.clientWidth === 0) return;
+
+    setActiveIndex(Math.round(track.scrollLeft / track.clientWidth));
+  }
 
   return (
     <section className="border-b border-[var(--border)] bg-[var(--bg-alt)] px-8 py-[72px]" id="news">
@@ -82,37 +96,50 @@ export function News() {
           </div>
         </div>
 
-        {/* Card */}
-        <div className="grid overflow-hidden rounded-[10px] border border-[var(--border)] bg-white md:grid-cols-[320px_1fr]">
-          {/* Image */}
-          <div className="relative min-h-[240px] flex-col items-center justify-center gap-2 border-b border-[var(--border)] bg-[#f1f4f8] p-0 md:border-b-0 md:border-r">
-            <Image
-              src="/nvidiags.jpeg"
-              alt="NVIDIA GPU"
-              fill
-              className="object-cover"
-              sizes="320px"
-            />
-          </div>
-
-          {/* Body */}
-          <div className="flex flex-col justify-center gap-2.5 px-9 py-8">
-            <p className="text-[10px] font-bold uppercase tracking-[0.1em] text-[var(--navy)]">
-              {item.date}
-            </p>
-            <h3 className="text-[20px] font-extrabold leading-[1.25] tracking-[-0.02em] text-[var(--navy-dk)]">
-              {item.title}
-            </h3>
-            <p className="text-[14px] leading-[1.72] text-[var(--slate)]">
-              {item.description}
-            </p>
-            <a
-              href="#"
-              className="mt-1 inline-flex w-fit items-center gap-1 text-[12px] font-bold text-[var(--navy)] no-underline"
+        {/* Cards */}
+        <div
+          ref={trackRef}
+          onScroll={updateActiveIndex}
+          aria-label="News carousel"
+          className="flex snap-x snap-mandatory overflow-x-auto overscroll-x-contain rounded-[10px] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        >
+          {NEWS_ITEMS.map((item) => (
+            <article
+              key={item.title}
+              className="grid min-w-full snap-start snap-always overflow-hidden rounded-[10px] border border-[var(--border)] bg-white md:grid-cols-[320px_1fr]"
             >
-              Read more →
-            </a>
-          </div>
+              {/* Image */}
+              <div className="relative min-h-[240px] flex-col items-center justify-center gap-2 border-b border-[var(--border)] bg-[#f1f4f8] p-0 md:border-b-0 md:border-r">
+                <Image
+                  src="/nvidiags.jpeg"
+                  alt="NVIDIA GPU"
+                  fill
+                  draggable={false}
+                  className="select-none object-cover"
+                  sizes="(max-width: 767px) 100vw, 320px"
+                />
+              </div>
+
+              {/* Body */}
+              <div className="flex flex-col justify-center gap-2.5 px-9 py-8">
+                <p className="text-[10px] font-bold uppercase tracking-[0.1em] text-[var(--navy)]">
+                  {item.date}
+                </p>
+                <h3 className="text-[20px] font-extrabold leading-[1.25] tracking-[-0.02em] text-[var(--navy-dk)]">
+                  {item.title}
+                </h3>
+                <p className="text-[14px] leading-[1.72] text-[var(--slate)]">
+                  {item.description}
+                </p>
+                <a
+                  href="#"
+                  className="mt-1 inline-flex w-fit items-center gap-1 text-[12px] font-bold text-[var(--navy)] no-underline"
+                >
+                  Read more →
+                </a>
+              </div>
+            </article>
+          ))}
         </div>
 
         {/* Dots */}
@@ -121,7 +148,7 @@ export function News() {
             <button
               key={i}
               type="button"
-              onClick={() => setActiveIndex(i)}
+              onClick={() => goTo(i)}
               aria-label={`News item ${i + 1}`}
               className={`h-1 rounded-full border-none transition-all ${
                 i === activeIndex
