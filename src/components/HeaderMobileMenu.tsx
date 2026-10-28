@@ -22,6 +22,7 @@ function MobileNavAccordion({ menuOpen, title, defaultOpen = false, children }: 
   const [expanded, setExpanded] = useState(defaultOpen);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- reset accordion when the menu closes
     if (!menuOpen) setExpanded(false);
   }, [menuOpen]);
 
@@ -67,6 +68,7 @@ export function HeaderMobileMenu() {
   const close = useCallback(() => setOpen(false), []);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- close the mobile menu on route change
     close();
   }, [pathname, close]);
 

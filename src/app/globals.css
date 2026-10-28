@@ -12,6 +12,14 @@
   --bg-alt:   #f8f9fb;
   --slate:    #64748b;
   --slate-lt: #94a3b8;
+
+  /* Login / auth design tokens (Figma) */
+  --azure-12:    #00243f;
+  --auth-card:   #faf9f6;
+  --auth-muted:  #7a8c8f;
+  --auth-placeholder: #8f999e;
+  --auth-input-border: #c9d6d6;
+  --auth-divider: #d6dedb;
 }
 
 @theme inline {
@@ -97,4 +105,26 @@ html {
 .committee-item:hover .committee-spin-3d-backward,
 .committee-item:focus-within .committee-spin-3d-backward {
   transform: rotateX(14deg) rotateY(0deg) scale(1);
+}
+
+/* ===== Login "ASCII Meadow" backdrop (see AuthMeadow.tsx) ===== */
+/* Atmospheric veil over the blurred landscape photo (exact tints from Figma). */
+.auth-meadow-veil {
+  background:
+    linear-gradient(rgba(245, 242, 229, 0.2), rgba(245, 242, 229, 0.2)),
+    linear-gradient(rgba(92, 120, 117, 0.18), rgba(92, 120, 117, 0.18));
+}
+
+/* Monospace glyph "contours" layer on top of the photo + veil (Figma node
+   487:169): IBM Plex Mono, #fffbf4 at 90% opacity. Content lives in AuthMeadow. */
+.auth-meadow-glyphs {
+  font-family: var(--font-ibm-plex-mono), monospace;
+  font-size: 18px;
+  line-height: 22.5px;
+  letter-spacing: 4.2px;
+  color: #fffbf4;
+  opacity: 0.9;
+  white-space: pre;
+  text-shadow: 0px 1px 2px rgba(13, 31, 36, 0.2);
+  pointer-events: none;
 }
