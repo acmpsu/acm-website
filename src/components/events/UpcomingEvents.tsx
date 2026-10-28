@@ -19,7 +19,7 @@ export async function UpcomingEvents({ headingLevel = "h2" }: { headingLevel?: "
         </header>
         <div className={styles.calendar}>
           <EventsCalendar events={events} />
-          <p className={styles.notice}><Link href="/tickets" className="inline-flex min-h-11 items-center underline focus-visible:outline-2 focus-visible:outline-white">View your boarding passes →</Link></p>
+          <p className={styles.notice}><Link href="/my-events" className="inline-flex min-h-11 items-center underline focus-visible:outline-2 focus-visible:outline-white">View my events →</Link></p>
           {status !== "ready" && (
             <p role="status" className={styles.notice}>
               {status === "unconfigured" ? "Our calendar is being set up. Please check back soon." : "We couldn’t load the calendar. Please refresh the page in a moment."}

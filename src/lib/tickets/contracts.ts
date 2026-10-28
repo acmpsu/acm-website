@@ -23,7 +23,10 @@ export type TicketMember = {
 export type MemberTicket = Registration & { event: TicketEvent; member: TicketMember };
 export type TicketState = "ready" | "unconfigured" | "unauthenticated" | "member-not-found" | "invalid-ticket" | "unavailable";
 export type TicketResult = { state: TicketState; ticket: MemberTicket | null };
-export type TicketSummary = { id: string; event_id: string; ticket_number: number; status: "confirmed" | "cancelled"; event: { title: string; starts_at: string } };
+export const ticketSummarySchema = registrationSchema.pick({ id: true, event_id: true, ticket_number: true, status: true }).extend({
+  event: eventSchema.pick({ title: true, starts_at: true, ends_at: true, location: true, category: true, committee_id: true }),
+});
+export type TicketSummary = z.infer<typeof ticketSummarySchema>;
 export type TicketActionState = { error?: string; message?: string };
 
 export function registrationOpen(event: TicketEvent, now: number) {

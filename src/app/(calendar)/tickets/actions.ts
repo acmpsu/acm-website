@@ -6,7 +6,7 @@ import { ticketSession } from "@/lib/tickets/server";
 import { ticketError, uuidSchema, type TicketActionState } from "@/lib/tickets/contracts";
 
 function refreshTickets() {
-  revalidatePath("/tickets", "layout"); revalidatePath("/dashboard");
+  revalidatePath("/my-events"); revalidatePath("/tickets", "layout"); revalidatePath("/dashboard");
   revalidatePath("/events", "layout"); revalidatePath("/");
 }
 
@@ -20,7 +20,7 @@ export async function rsvpForEvent(_previous: TicketActionState, form: FormData)
     const { data, error } = await client.rpc("rsvp_for_event", { p_event_id: eventId.data });
     if (error) return { error: ticketError(error.code, error.message) };
     const parsed = uuidSchema.safeParse(data);
-    if (!parsed.success) return { error: "We couldn’t load your ticket. Check My tickets before retrying." };
+    if (!parsed.success) return { error: "We couldn’t load your ticket. Check My events before retrying." };
     ticketId = parsed.data;
   } catch { return { error: ticketError() }; }
   refreshTickets();

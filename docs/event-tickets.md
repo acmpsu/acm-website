@@ -23,8 +23,13 @@ NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=YOUR_PUBLISHABLE_KEY
 
 The legacy anon-key variable is also supported. No service-role key is needed.
 Restart/rebuild after setting environment variables. Without a configured
-database, `/tickets` displays the real ticket layout with blank fields and an
-explanatory empty state. It never manufactures member information or event data.
+database, `/my-events` displays an explicitly labeled static preview collection,
+with upcoming, past and cancelled sample tickets. Samples live in
+`src/lib/tickets/preview.ts`; they are never written to a database or mixed into
+accounts. `/my-events/preview/[previewId]` opens a sample boarding pass without
+RSVP or cancellation controls. Preview routes redirect to My events once
+Supabase is configured. Individual real invitation/ticket routes retain blank
+states when their data is unavailable.
 
 Officers create events from the dashboard, including optional flight notes,
 capacity, an Eastern-time RSVP deadline, and an “Allow RSVPs” setting. Existing
@@ -37,8 +42,10 @@ deadline equal to the event’s start. These defaults are stored in the database
 - `/events/[eventId]`: view the public event invitation and stamp it by tapping
   the ticket or using the keyboard. Sign-in returns to the same event. Confirm
   the RSVP to receive a ticket, or choose “Maybe next time” without any write.
-- `/tickets`: view the most recent 100 tickets owned by the signed-in member.
-  The dashboard and account menu also link here.
+- `/my-events`: search and filter upcoming, past and cancelled tickets owned by
+  the signed-in member. RSVP and cancellation actions automatically refresh this
+  collection. The dashboard and account menu link here; `/tickets` redirects here.
+  Signed-out, empty and failed account loads never display samples.
 - `/tickets/[ticketId]`: view your private boarding pass, including its RSVP
   status and member fields. Confirmed tickets can be added to Google Calendar or
   downloaded as `.ics` for Apple Calendar/Outlook. Cancellation asks for a second
@@ -63,9 +70,9 @@ website does not edit an external calendar entry.
 | `event_registrations` | Opaque ticket UUID, generated ticket number, profile/event foreign keys, confirmed/cancelled status, issue/cancellation dates. |
 
 TypeScript contracts and response validation live in `src/lib/tickets/`. Missing
-optional values display as an em dash. No mock person, event title, date, ticket
-number, or membership identifier is embedded in a UI component. Branding and
-labels are static; ticket content comes from database records.
+optional values display as an em dash. UI components accept the same typed model for static previews and live records.
+Live ticket content comes from account-owned database records. Preview fixtures
+are isolated from server queries and clearly labeled; no real person is impersonated.
 
 ## Authorization and consistency
 
@@ -86,7 +93,7 @@ confirmed RSVPs can still be retrieved by retry after registration closes. The
 same event-first locking order is used for cancellation to avoid lock inversion.
 
 Database operations have eight-second network timeouts. An interrupted response
-can follow a committed RSVP, so members can check My tickets and safely retry.
+can follow a committed RSVP, so members can check My events and safely retry.
 Errors expose only allowlisted messages. Private pages are dynamic and prevent
 indexing/referrer forwarding; calendar downloads use `private, no-store`.
 

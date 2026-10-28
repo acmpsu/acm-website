@@ -3,7 +3,7 @@ import { z } from "zod";
 import { createClient } from "../supabase/server";
 import { isSupabaseConfigured } from "../supabase/env";
 import { COMMITTEES } from "../constants";
-import { eventSchema, registrationSchema, uuidSchema, type TicketResult, type TicketState, type TicketSummary } from "./contracts";
+import { eventSchema, registrationSchema, ticketSummarySchema, uuidSchema, type TicketResult, type TicketState, type TicketSummary } from "./contracts";
 
 export const EVENT_FIELDS = "id, title, starts_at, ends_at, location, category, committee_id, description, rsvp_enabled, rsvp_closes_at, capacity";
 export const REGISTRATION_FIELDS = "id, event_id, ticket_number, status, issued_at";
@@ -65,10 +65,20 @@ export async function listOwnTickets(): Promise<{ state: TicketState; tickets: T
     const { data: profile, error: profileError } = await client.from("profiles").select("id").eq("id", user.id).maybeSingle();
     if (profileError) return { state: "unavailable", tickets: [] };
     if (!profile) return { state: "member-not-found", tickets: [] };
-    const { data, error } = await client.from("event_registrations").select("id, event_id, ticket_number, status, event:events(title, starts_at)")
-      .eq("profile_id", user.id).order("issued_at", { ascending: false }).limit(100);
-    if (error) return { state: "unavailable", tickets: [] };
-    const parsed = z.array(z.object({ id: uuidSchema, event_id: uuidSchema, ticket_number: z.number().int(), status: z.enum(["confirmed", "cancelled"]), event: z.object({ title: z.string(), starts_at: z.string().datetime({ offset: true }) }) })).safeParse(data);
-    return parsed.success ? { state: "ready", tickets: parsed.data } : { state: "unavailable", tickets: [] };
+    const tickets: TicketSummary[] = [];
+    const pageSize = 500;
+    for (let offset = 0; ; offset += pageSize) {
+      const { data, error } = await client.from("event_registrations")
+        .select("id, event_id, ticket_number, status, event:events(title, starts_at, ends_at, location, category, committee_id)")
+        .eq("profile_id", user.id).order("issued_at", { ascending: false }).order("id")
+        .range(offset, offset + pageSize - 1);
+      if (error) return { state: "unavailable", tickets: [] };
+      const parsed = z.array(ticketSummarySchema).safeParse(data);
+      if (!parsed.success) return { state: "unavailable", tickets: [] };
+      tickets.push(...parsed.data);
+      if (parsed.data.length < pageSize) break;
+    }
+    return { state: "ready", tickets };
+
   } catch { return { state: "unavailable", tickets: [] }; }
 }

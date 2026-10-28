@@ -23,7 +23,7 @@ export function TicketControls({ ticket }: { ticket: MemberTicket }) {
           <li><a href={`/tickets/${ticket.id}/calendar.ics`}>Apple / Outlook (.ics)</a></li>
         </ul>
       </details> : <Link href={`/events/${ticket.event_id}`} className={styles.primary}>RSVP again</Link>}
-      <Link href="/tickets" className={styles.secondary}>My tickets</Link>
+      <Link href="/my-events" className={styles.secondary}>My events</Link>
     </div>
     {ticket.status === "confirmed" && Date.parse(ticket.event.starts_at) > now && (
       !confirm ? <button type="button" onClick={() => setConfirm(true)} className={styles.textButton}>Cancel RSVP</button> : <form action={action} className={styles.cancelForm} aria-busy={pending}>

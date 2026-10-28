@@ -1,8 +1,7 @@
 import Image from "next/image";
-import { Red_Hat_Mono } from "next/font/google";
+import { ticketMono } from "./typography";
 import styles from "./tickets.module.css";
 
-const ticketMono = Red_Hat_Mono({ variable: "--font-ticket-mono", subsets: ["latin"], weight: ["400", "500"] });
 
 export function TicketBackdrop({ children }: { children: React.ReactNode }) {
   return <section className={`${styles.scene} ${ticketMono.variable}`}>
