@@ -60,12 +60,14 @@ function ScrollCameraRig() {
     const targetFov = lerp(58, 49, introProgress);
 
     const smoothing = Math.min(1, delta * 2.2);
+    /* eslint-disable react-hooks/immutability -- r3f requires mutating the live camera inside useFrame */
     perspectiveCamera.position.x += (targetX - perspectiveCamera.position.x) * smoothing;
     perspectiveCamera.position.y += (targetY - perspectiveCamera.position.y) * smoothing;
     perspectiveCamera.position.z += (targetZ - perspectiveCamera.position.z) * smoothing;
     perspectiveCamera.fov += (targetFov - perspectiveCamera.fov) * smoothing;
     perspectiveCamera.lookAt(0, 0, 0);
     perspectiveCamera.updateProjectionMatrix();
+    /* eslint-enable react-hooks/immutability */
   });
 
   return null;

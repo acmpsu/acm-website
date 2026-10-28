@@ -18,7 +18,7 @@ export default async function EventsPage() {
             Join Us
           </p>
           <p className="max-w-3xl text-[15px] leading-[1.75] text-[var(--slate)]">
-            Join us for workshops, hackathons, and networking events. Click on any date to see what's happening that day
+            Join us for workshops, hackathons, and networking events. Click on any date to see what&apos;s happening that day
           </p>
         </div>
       </section>
@@ -35,7 +35,7 @@ export default async function EventsPage() {
             Want to host an event?
           </h2>
           <p className="mb-6 max-w-2xl mx-auto text-[15px] leading-[1.75] text-[var(--slate)]">
-            If you have an idea for an event, we'd love to hear it
+            If you have an idea for an event, we&apos;d love to hear it
           </p>
           <div className="flex justify-center">
             <Link
