@@ -20,6 +20,23 @@
   --auth-placeholder: #8f999e;
   --auth-input-border: #c9d6d6;
   --auth-divider: #d6dedb;
+
+  /* Upcoming events — Figma 50:560 (home page). */
+  --events-sky: #002052;
+  --events-heading: #e1eaf2;
+  --events-radius: 48px;
+  --events-content-width: 1612.8px;
+  --events-calendar-width: 1256.54px;
+  --events-calendar-gap: 39.266px;
+  --events-section-height: 1244px;
+  --events-heading-height: 90px;
+  --events-heading-gap: 176px;
+  --events-heading-tracking: -0.72px;
+  --events-cloud-top: 1.58px;
+  --events-vignette: radial-gradient(ellipse 120% 90% at 50% 35%,
+    rgb(225 234 242 / 5%) 0%, rgb(225 234 242 / 0%) 45%,
+    rgb(112 117 121 / 17.5%) 72.5%, rgb(56 59 61 / 26.25%) 86.25%,
+    rgb(28 29 30 / 30.625%) 93.125%, rgb(0 0 0 / 35%) 100%);
 }
 
 @theme inline {

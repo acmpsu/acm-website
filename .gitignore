@@ -55,3 +55,6 @@ service-account*.json
 .supabase/
 supabase/.temp/
 supabase/.branches/
+
+# Project-local runtimes, caches, and browser tooling
+/.local-tooling/

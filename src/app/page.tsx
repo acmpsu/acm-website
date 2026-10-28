@@ -5,6 +5,7 @@ import { Committees } from "@/components/Committees";
 import { News } from "@/components/News";
 import { JoinUs } from "@/components/JoinUs";
 import { Footer } from "@/components/Footer";
+import { UpcomingEvents } from "@/components/events/UpcomingEvents";
 
 export default function Home() {
   return (
@@ -14,6 +15,7 @@ export default function Home() {
         <Hero />
         <Partners />
         <Committees />
+        <UpcomingEvents />
         <News />
         <JoinUs />
       </main>
