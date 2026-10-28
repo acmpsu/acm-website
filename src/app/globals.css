@@ -20,6 +20,65 @@
   --auth-placeholder: #8f999e;
   --auth-input-border: #c9d6d6;
   --auth-divider: #d6dedb;
+
+  /* ============================================================
+     ACM 2026 design system — tokens from the Figma source of truth
+     (file HFRT30R89UUHyUL5GaTfSh, "acm — new page")
+     ============================================================ */
+
+  /* Azure / midnight brand scale */
+  --azure-13:  #002440;  /* near-midnight */
+  --azure-16:  #002052;  /* Prussian Blue */
+  --azure-23:  #004775;  /* Regal Blue */
+  --azure-25:  #1c4866;  /* Biscay */
+  --azure-36:  #1f6a9b;  /* Matisse */
+  --azure-75:  #80c8fe;  /* Malibu — bright sky accent */
+
+  /* Cool greys / surface tints */
+  --mystic:      #dce6ed; /* grey/90 */
+  --catskill:    #e1eaf2; /* grey/92 */
+  --link-water:  #e8f4fa; /* grey/95 */
+  --surface-pill: #e8f2fa; /* Link Water — utility pill / dropdown fill */
+
+  /* Semantic brand aliases (map onto the azure scale) */
+  --brand:        var(--azure-12); /* primary ink / deep navy */
+  --brand-strong: var(--azure-16);
+  --brand-mid:    var(--azure-23);
+  --brand-accent: var(--azure-36);
+  --sky:          var(--azure-75);
+
+  /* Border radii */
+  --radius-sm:   8px;
+  --radius-md:   14.4px;
+  --radius-lg:   24px;
+  --radius-pill: 999px;
+
+  /* Shadows (from Figma nav + card elevations) */
+  --shadow-pill:  0 8.96px 33.6px rgba(0, 36, 63, 0.18);
+  --shadow-card:  0 10px 30px rgba(0, 36, 63, 0.12);
+  --shadow-float: 0 18px 48px rgba(0, 36, 63, 0.22);
+  --shadow-inset-pill:
+    inset 0 -1.12px 1.12px rgba(0, 36, 63, 0.16),
+    inset 0 1.12px 0 rgba(255, 255, 255, 0.6);
+
+  /* Layout */
+  --container-max:    1180px;
+  --container-wide:   1440px;
+  --nav-height:       108px;
+
+  /* Section spacing + common gaps */
+  --section-y:    clamp(3.5rem, 6vw, 6rem);
+  --gap-xxs:  4px;
+  --gap-xs:   12px;
+  --gap-sm:   20px;
+  --gap-md:   24px;
+  --gap-lg:   40px;
+
+  /* Animation timing */
+  --ease-out:    cubic-bezier(0.22, 0.61, 0.36, 1);
+  --dur-fast:    0.15s;
+  --dur-base:    0.25s;
+  --dur-slow:    0.4s;
 }
 
 @theme inline {
@@ -32,8 +91,35 @@
   --color-bg-alt:     var(--bg-alt);
   --color-slate:      var(--slate);
   --color-slate-lt:   var(--slate-lt);
+
+  /* ACM 2026 design-system colors */
+  --color-azure-12:    var(--azure-12);
+  --color-azure-13:    var(--azure-13);
+  --color-azure-16:    var(--azure-16);
+  --color-azure-23:    var(--azure-23);
+  --color-azure-25:    var(--azure-25);
+  --color-azure-36:    var(--azure-36);
+  --color-azure-75:    var(--azure-75);
+  --color-mystic:      var(--mystic);
+  --color-catskill:    var(--catskill);
+  --color-link-water:  var(--link-water);
+  --color-surface-pill: var(--surface-pill);
+  --color-brand:        var(--brand);
+  --color-brand-strong: var(--brand-strong);
+  --color-brand-mid:    var(--brand-mid);
+  --color-brand-accent: var(--brand-accent);
+  --color-sky:          var(--sky);
+
+  --radius-sm:   var(--radius-sm);
+  --radius-md:   var(--radius-md);
+  --radius-lg:   var(--radius-lg);
+  --radius-pill: var(--radius-pill);
+
   --font-sans: var(--font-sans);
   --font-mono: var(--font-mono);
+  --font-display: var(--font-instrument-serif);
+  --font-red-hat: var(--font-red-hat);
+  --font-red-hat-mono: var(--font-ibm-plex-mono);
 }
 
 body {
@@ -127,4 +213,55 @@ html {
   white-space: pre;
   text-shadow: 0px 1px 2px rgba(13, 31, 36, 0.2);
   pointer-events: none;
+}
+
+/* ============================================================
+   ACM 2026 shared shell — navbar, footer, shared components
+   ============================================================ */
+
+/* Glassmorphic navigation pill (Figma "Navigation Links" container):
+   translucent Link Water fill + backdrop blur + hairline white border. */
+.nav-glass {
+  background: rgba(232, 242, 250, 0.55);
+  backdrop-filter: blur(13.44px);
+  -webkit-backdrop-filter: blur(13.44px);
+  border: 1.12px solid rgba(255, 255, 255, 0.45);
+  box-shadow: var(--shadow-pill);
+}
+
+/* Inner highlight/shadow that gives the pill its embossed edge. */
+.nav-glass-emboss {
+  box-shadow: var(--shadow-inset-pill);
+}
+
+/* Shared pill button surface (utility links, Committees trigger, dropdown). */
+.pill-surface {
+  background: var(--surface-pill);
+  color: var(--azure-12);
+}
+
+/* Entrance animation used by the Reveal primitive fallback + section headers. */
+@keyframes acm-fade-up {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.acm-fade-up {
+  animation: acm-fade-up var(--dur-slow) var(--ease-out) both;
+}
+
+/* Honor the user's reduced-motion preference everywhere. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .acm-fade-up {
+    animation: none;
+  }
 }

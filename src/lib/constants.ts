@@ -1,11 +1,21 @@
-export const NAV_ITEMS = [
+/**
+ * Shared shell navigation config (new ACM Figma design).
+ *
+ * `primary` links live in the centered glass pill. `utility` items are the
+ * right-side pills. The Committees pill is a dropdown driven by `COMMITTEES`.
+ * Every href points at a real route/anchor in this app.
+ */
+export const PRIMARY_NAV = [
   { label: "About", href: "/about" },
   { label: "Committees", href: "/committees" },
   { label: "Initiatives", href: "/dev-team" },
   { label: "ICPC", href: "/icpc" },
-  { label: "Resources", href: "/resources" },
   { label: "Events", href: "/events" },
-];
+] as const;
+
+export const UTILITY_NAV = [
+  { label: "Resources", href: "/resources" },
+] as const;
 
 export const HERO_TITLE = "Excellence in Computing, Together.";
 export const HERO_DESCRIPTION =
@@ -72,8 +82,6 @@ export const COMMITTEES: Committee[] = [
       "Introduces quantum computing concepts, tools, and research directions—bridging linear algebra and programming with curiosity-first learning",
   },
 ];
-
-export const INITIATIVES = [{ label: "Dev Team", href: "/dev-team" }];
 
 export type ContactLink = {
   label: string;
