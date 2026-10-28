@@ -133,5 +133,6 @@ export async function createEvent(_prev: ActionState, formData: FormData): Promi
 
   revalidatePath("/dashboard");
   revalidatePath("/events");
+  revalidatePath("/");
   return { message: `Event added. Check-in code: ${checkinCode}` };
 }

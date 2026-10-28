@@ -50,9 +50,9 @@ function EventDayView({
 
   return (
     <div className="space-y-4">
-      <h3 className="text-[14px] font-semibold text-[var(--navy-dk)]">{label}</h3>
+      <h3 className="text-base font-semibold text-[var(--navy-dk)]">{label}</h3>
       {dayEvents.length === 0 ? (
-        <p className="text-[14px] text-[var(--slate)]">No events scheduled for this day</p>
+        <p className="text-base text-[var(--slate)]">No events scheduled for this day</p>
       ) : (
         <div className="space-y-3">
           {dayEvents.map((event) => {
@@ -139,18 +139,18 @@ export function EventsCalendar({ events }: { events: CalendarEvent[] }) {
   }
 
   return (
-    <div className="grid gap-8 lg:grid-cols-3">
+    <div className="grid gap-6 lg:grid-cols-3 lg:gap-[var(--events-calendar-gap)]">
       <div className="lg:col-span-2">
-        <div className="rounded-lg border border-[var(--border)] bg-white p-6">
+        <div className="rounded-xl border border-[var(--border)] bg-white p-4 sm:p-8">
           <div className="mb-6 flex items-center justify-between">
-            <h2 className="text-[18px] font-semibold text-[var(--navy-dk)]">{monthLabel}</h2>
+            <h2 className="text-lg font-semibold text-[var(--navy-dk)] sm:text-2xl">{monthLabel}</h2>
             <div className="flex gap-2">
               <button
                 type="button"
                 onClick={() => shiftMonth(-1)}
                 disabled={!canGoPrev}
                 aria-label="Previous month"
-                className="rounded-lg border border-[var(--border)] p-1.5 text-[var(--navy-dk)] transition hover:bg-[#f0f4f8] disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-white"
+                className="flex h-11 w-11 items-center justify-center rounded-xl border border-[var(--border)] text-[var(--navy-dk)] transition hover:bg-[var(--bg-alt)] focus-visible:outline-2 focus-visible:outline-[var(--navy)] disabled:cursor-not-allowed disabled:opacity-40"
               >
                 <ChevronLeft className="h-4 w-4" />
               </button>
@@ -159,7 +159,7 @@ export function EventsCalendar({ events }: { events: CalendarEvent[] }) {
                 onClick={() => shiftMonth(1)}
                 disabled={!canGoNext}
                 aria-label="Next month"
-                className="rounded-lg border border-[var(--border)] p-1.5 text-[var(--navy-dk)] transition hover:bg-[#f0f4f8] disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-white"
+                className="flex h-11 w-11 items-center justify-center rounded-xl border border-[var(--border)] text-[var(--navy-dk)] transition hover:bg-[var(--bg-alt)] focus-visible:outline-2 focus-visible:outline-[var(--navy)] disabled:cursor-not-allowed disabled:opacity-40"
               >
                 <ChevronRight className="h-4 w-4" />
               </button>
@@ -168,22 +168,22 @@ export function EventsCalendar({ events }: { events: CalendarEvent[] }) {
 
           <div className="mb-4 flex flex-wrap gap-x-4 gap-y-2">
             {EVENT_CATEGORIES.map((category) => (
-              <div key={category} className="flex items-center gap-1.5 text-[12px] text-[var(--slate)]">
+              <div key={category} className="flex items-center gap-2 text-sm text-[var(--slate)] sm:text-base">
                 <span className={`h-1.5 w-1.5 rounded-full ${categoryStyles[category].dot}`} />
                 {categoryStyles[category].label}
               </div>
             ))}
           </div>
 
-          <div className="mb-4 grid grid-cols-7 gap-2 text-center">
+          <div className="mb-6 grid grid-cols-7 text-center sm:gap-2">
             {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((day) => (
-              <div key={day} className="py-2 text-[12px] font-semibold text-[var(--slate)]">
+              <div key={day} className="py-2 text-sm font-semibold text-[var(--slate)]">
                 {day}
               </div>
             ))}
           </div>
 
-          <div className="grid grid-cols-7 gap-2">
+          <div className="grid grid-cols-7 sm:gap-2">
             {days.map((day, idx) => {
               if (day === null) {
                 return <div key={idx} className="aspect-square" />;
@@ -197,8 +197,11 @@ export function EventsCalendar({ events }: { events: CalendarEvent[] }) {
               return (
                 <button
                   key={idx}
+                  type="button"
+                  aria-pressed={isSelected}
+                  aria-label={`${new Date(viewYear, viewMonth, day).toLocaleDateString("en-US", { dateStyle: "full" })}${hasEvent ? ", events scheduled" : ""}`}
                   onClick={() => setSelectedDate(iso)}
-                  className={`relative aspect-square rounded-lg border py-2 text-[13px] font-medium transition-all ${
+                  className={`relative aspect-square min-h-11 rounded-xl border py-2 text-sm font-medium transition focus-visible:outline-2 focus-visible:outline-[var(--navy)] sm:text-base ${
                     isSelected
                       ? "border-[var(--navy)] bg-[#f0f4f8] text-[var(--navy-dk)]"
                       : hasEvent
@@ -226,7 +229,7 @@ export function EventsCalendar({ events }: { events: CalendarEvent[] }) {
         </div>
       </div>
 
-      <div className="rounded-lg border border-[var(--border)] bg-[var(--bg-alt)] p-6">
+      <div className="rounded-xl border border-[var(--border)] bg-[var(--bg-alt)] p-6 sm:p-8">
         <EventDayView year={selected.year} month={selected.month} day={selected.day} dayEvents={selectedDayEvents} />
       </div>
     </div>

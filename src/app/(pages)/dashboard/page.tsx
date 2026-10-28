@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { redirect } from "next/navigation";
 
 import { COMMITTEES } from "@/lib/constants";
@@ -113,6 +114,9 @@ export default async function DashboardPage() {
             Officers can publish events to the public calendar. Members will use the check-in code at the event
           </p>
           <CreateEventForm />
+          <Link href="/dashboard/agents" className="mt-6 inline-flex min-h-11 items-center text-sm font-semibold text-[var(--navy)] underline">
+            Connect calendar assistant
+          </Link>
         </section>
       ) : null}
 

@@ -1,0 +1,83 @@
+/* Dimensions, colors and artwork slots come from Figma node 50:560.
+   Calendar/date content stays dynamic instead of displaying the mock images. */
+.section {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border-radius: var(--events-radius) var(--events-radius) 0 0;
+  background-color: var(--events-sky);
+  background-image: var(--events-vignette);
+}
+
+.background {
+  z-index: -1;
+  object-fit: fill;
+  pointer-events: none;
+}
+
+.clouds {
+  position: absolute;
+  top: var(--events-cloud-top);
+  left: 46.979%;
+  width: 47.24%;
+  height: auto;
+  pointer-events: none;
+  animation: events-cloud-drift 40s infinite;
+}
+
+.content {
+  position: relative;
+  margin-inline: auto;
+  max-width: var(--events-content-width);
+  padding-block: clamp(4rem, 4.167vw, 5rem);
+  width: 84%;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  min-height: var(--events-heading-height);
+  margin-bottom: clamp(4rem, 9.167vw, var(--events-heading-gap));
+}
+
+.heading {
+  font-family: var(--font-instrument-serif), serif;
+  font-size: clamp(2.25rem, 3.334vw, 4rem);
+  font-weight: 400;
+  font-style: normal;
+  line-height: 1.1;
+  letter-spacing: var(--events-heading-tracking);
+  color: var(--events-heading);
+}
+
+.calendar {
+  position: relative;
+  max-width: var(--events-calendar-width);
+  margin-inline: auto;
+}
+
+.notice {
+  margin-top: 1.5rem;
+  color: var(--events-heading);
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+@keyframes events-cloud-drift {
+  0%, 15.25%, 100% { transform: none; animation-timing-function: ease-in-out; }
+  7.63% { transform: translate(-10.584px, 3.969px) rotate(0.7deg); animation-timing-function: ease-in-out; }
+}
+
+@media (min-width: 1280px) {
+  .content { min-height: min(var(--events-section-height), 64.792vw); }
+}
+
+@media (max-width: 639px) {
+  .section { border-radius: 1.5rem 1.5rem 0 0; }
+  .content { width: auto; margin-inline: 1rem; }
+  .header { margin-bottom: 3rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .clouds { animation: none; }
+}

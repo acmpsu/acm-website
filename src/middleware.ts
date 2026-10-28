@@ -6,6 +6,9 @@ import { isSupabaseConfigured, SUPABASE_KEY, SUPABASE_URL } from "@/lib/supabase
 const PROTECTED_PREFIXES = ["/dashboard"];
 
 export async function middleware(request: NextRequest) {
+  // MCP authenticates agent bearer tokens itself; never redirect agents to login
+  // or refresh a browser session for this endpoint.
+  if (request.nextUrl.pathname === "/api/mcp") return NextResponse.next();
   let response = NextResponse.next({ request });
 
   // Without credentials configured the app still renders; auth pages explain the gap.

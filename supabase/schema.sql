@@ -40,6 +40,8 @@ create policy "update own profile" on public.profiles
 -- `is_officer` is deliberately NOT self-assignable: promote officers by hand in
 -- the Supabase table editor, or with
 --   update public.profiles set is_officer = true where email = 'you@psu.edu';
+revoke update on public.profiles from public, anon, authenticated;
+grant update (full_name, major, grad_year) on public.profiles to authenticated;
 
 -- Create the profile row automatically on signup.
 create or replace function public.handle_new_user()
@@ -117,7 +119,9 @@ drop policy if exists "officers manage events" on public.events;
 create policy "officers manage events" on public.events
   for all using (public.is_officer()) with check (public.is_officer());
 
-grant select on public.events to anon, authenticated;
+revoke select on public.events from public, anon, authenticated;
+grant select (id, title, starts_at, ends_at, location, category, committee_id, created_at)
+  on public.events to anon, authenticated;
 grant insert, update, delete on public.events to authenticated;
 
 create table if not exists public.attendance (

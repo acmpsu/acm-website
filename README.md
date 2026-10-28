@@ -19,3 +19,5 @@ Student community for computing, collaboration, and growth
 </p>
 
 </div>
+
+Developer setup and agent calendar publishing: [Calendar MCP integration](docs/calendar-mcp.md).

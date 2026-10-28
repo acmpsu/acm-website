@@ -51,8 +51,10 @@ function toCalendarEvent(row: EventRow): CalendarEvent {
   };
 }
 
-export async function getCalendarEvents(): Promise<CalendarEvent[]> {
-  if (!isSupabaseConfigured) return [];
+export type CalendarResult = { events: CalendarEvent[]; status: "ready" | "unconfigured" | "unavailable" };
+
+export async function getCalendarEvents(): Promise<CalendarResult> {
+  if (!isSupabaseConfigured) return { events: [], status: "unconfigured" };
 
   const supabase = await createClient();
   const { data, error } = await supabase
@@ -62,8 +64,8 @@ export async function getCalendarEvents(): Promise<CalendarEvent[]> {
     .returns<EventRow[]>();
 
   if (error || !data) {
-    console.error("Failed to load calendar events", error?.message);
-    return [];
+    console.warn("Failed to load calendar events");
+    return { events: [], status: "unavailable" };
   }
-  return data.map(toCalendarEvent);
+  return { events: data.map(toCalendarEvent), status: "ready" };
 }
