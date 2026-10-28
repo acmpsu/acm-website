@@ -116,6 +116,16 @@ export async function createEvent(_prev: ActionState, formData: FormData): Promi
   if (endTime && !endsAt) return { error: "Enter a valid end time" };
   if (endsAt && endsAt <= startsAt) return { error: "End time must be after the start time" };
 
+  const description = String(formData.get("description") ?? "").trim() || null;
+  const capacityRaw = String(formData.get("capacity") ?? "").trim();
+  const capacity = capacityRaw ? Number(capacityRaw) : null;
+  const closeRaw = String(formData.get("rsvp_closes_at") ?? "").trim();
+  const [closeDate, closeTime] = closeRaw.split("T");
+  const closesAt = closeRaw ? easternWallTimeToIso(closeDate ?? "", closeTime ?? "") : null;
+  if (description && description.length > 2000) return { error: "Flight notes must be at most 2000 characters" };
+  if (capacity !== null && (!Number.isInteger(capacity) || capacity < 1 || capacity > 100000)) return { error: "Capacity must be a whole number from 1 to 100000" };
+  if (closeRaw && (!closesAt || closesAt > startsAt)) return { error: "Choose an RSVP deadline at or before the event start" };
+
   const { error } = await supabase.from("events").insert({
     title,
     starts_at: startsAt,
@@ -124,6 +134,7 @@ export async function createEvent(_prev: ActionState, formData: FormData): Promi
     category,
     committee_id: committee,
     checkin_code: checkinCode,
+    description, capacity, rsvp_closes_at: closesAt, rsvp_enabled: formData.get("rsvp_enabled") === "on",
   });
 
   if (error) {
