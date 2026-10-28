@@ -84,6 +84,8 @@ export function AccountMenu({ email, fullName }: AccountMenuProps) {
               My membership
             </Link>
 
+            <Link href="/tickets" role="menuitem" onClick={() => setOpen(false)} className="block px-3 py-2.5 text-[13px] text-[var(--navy-dk)] transition hover:bg-[var(--bg-alt)]">My tickets</Link>
+
             <form action={signOut} className="border-t border-[var(--border)]">
               <button
                 type="submit"

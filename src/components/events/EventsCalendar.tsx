@@ -2,6 +2,7 @@
 
 import { useState, useMemo } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import Link from "next/link";
 
 import {
   EVENT_CATEGORIES,
@@ -63,7 +64,7 @@ function EventDayView({
                 className={`rounded-lg border border-[var(--border)] p-4 ${styles?.bg ?? "bg-[#f0f4f8]"}`}
               >
                 <div className="mb-2 flex items-start justify-between gap-3">
-                  <h4 className="font-semibold text-[var(--navy-dk)]">{event.title}</h4>
+                  <h4 className="font-semibold text-[var(--navy-dk)]"><Link href={`/events/${event.id}`} className="underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-[var(--navy)]">{event.title}</Link></h4>
                   {styles && (
                     <span className={`rounded-full px-2 py-1 text-xs font-medium ${styles.badge}`}>
                       {styles.label}
@@ -73,6 +74,7 @@ function EventDayView({
                 <div className="space-y-1 text-[14px] text-[var(--slate)]">
                   <p>⏰ {event.time}</p>
                   <p>📍 {event.location}</p>
+                  <Link href={`/events/${event.id}`} className="inline-flex min-h-11 items-center font-semibold text-[var(--navy)] underline">View invitation &amp; RSVP →</Link>
                 </div>
               </div>
             );

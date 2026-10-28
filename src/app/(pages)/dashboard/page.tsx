@@ -49,6 +49,7 @@ export default async function DashboardPage() {
           Signed in as {user.email}
           {profile?.is_officer ? " · Officer" : ""}
         </p>
+        <Link href="/tickets" className="mt-4 inline-flex min-h-11 items-center text-sm font-semibold text-[var(--navy)] underline">View my tickets →</Link>
       </section>
 
       <section id="profile">

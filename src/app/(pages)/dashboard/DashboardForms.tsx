@@ -6,6 +6,7 @@ import { useFormStatus } from "react-dom";
 import { checkIn, createEvent, updateProfile, type ActionState } from "./actions";
 import { COMMITTEES } from "@/lib/constants";
 import { EVENT_CATEGORIES, categoryStyles } from "@/lib/events";
+import { EventRsvpFields } from "@/components/events/EventRsvpFields";
 
 const EMPTY: ActionState = {};
 
@@ -226,6 +227,7 @@ export function CreateEventForm() {
       </div>
 
       <Feedback state={state} />
+      <EventRsvpFields fieldClass={fieldClass} labelClass={labelClass} />
       <Submit label="Add event" />
     </form>
   );

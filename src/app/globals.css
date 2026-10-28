@@ -37,6 +37,21 @@
     rgb(225 234 242 / 5%) 0%, rgb(225 234 242 / 0%) 45%,
     rgb(112 117 121 / 17.5%) 72.5%, rgb(56 59 61 / 26.25%) 86.25%,
     rgb(28 29 30 / 30.625%) 93.125%, rgb(0 0 0 / 35%) 100%);
+
+  /* GBM boarding pass — Figma 503:1720 / 503:2508. */
+  --ticket-ink: #1c4866;
+  --ticket-muted: #1f6a9b;
+  --ticket-paper: #fffef8;
+  --ticket-edge: #cfd9e1;
+  --ticket-rule: #dce6ed;
+  --ticket-soft: #e8f4fa;
+  --ticket-stamp: #973d3d;
+  --ticket-scrim: linear-gradient(rgb(232 244 250 / 16%), rgb(232 244 250 / 16%)), linear-gradient(rgb(0 36 63 / 37%), rgb(0 36 63 / 37%));
+  --ticket-scene-width: 1720px;
+  --ticket-front-width: 1180px;
+  --ticket-front-height: 450px;
+  --ticket-reverse-width: 1100px;
+  --ticket-reverse-height: 470px;
 }
 
 @theme inline {
