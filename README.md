@@ -21,3 +21,5 @@ Student community for computing, collaboration, and growth
 </div>
 
 Developer setup and agent calendar publishing: [Calendar MCP integration](docs/calendar-mcp.md).
+
+Event signup and private boarding passes: [RSVP tickets](docs/event-tickets.md).

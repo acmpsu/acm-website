@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 import { createClient } from "@/lib/supabase/server";
+import { safeNextPath } from "@/lib/authRedirect";
 
 export type AuthState = { error?: string; message?: string };
 
@@ -14,10 +15,6 @@ function readCredentials(formData: FormData) {
     fullName: String(formData.get("full_name") ?? "").trim(),
     next: String(formData.get("next") ?? "/dashboard"),
   };
-}
-
-function safeNext(next: string) {
-  return next.startsWith("/") ? next : "/dashboard";
 }
 
 /**
@@ -48,7 +45,7 @@ export async function signIn(_prev: AuthState, formData: FormData): Promise<Auth
   if (error) return { error: toUserError(error.message) };
 
   revalidatePath("/", "layout");
-  redirect(safeNext(next));
+  redirect(safeNextPath(next));
 }
 
 export async function signUp(_prev: AuthState, formData: FormData): Promise<AuthState> {
@@ -76,7 +73,7 @@ export async function signUp(_prev: AuthState, formData: FormData): Promise<Auth
   }
 
   revalidatePath("/", "layout");
-  redirect(safeNext(next));
+  redirect(safeNextPath(next));
 }
 
 /** Sends a one-time sign-in code / magic link to the given email. */

@@ -2,6 +2,7 @@ import { NextResponse, type NextRequest } from "next/server";
 import { createServerClient } from "@supabase/ssr";
 
 import { isSupabaseConfigured, SUPABASE_KEY, SUPABASE_URL } from "@/lib/supabase/env";
+import { safeNextPath } from "@/lib/authRedirect";
 
 const PROTECTED_PREFIXES = ["/dashboard"];
 
@@ -48,9 +49,7 @@ export async function middleware(request: NextRequest) {
   }
 
   if (user && (pathname === "/login" || pathname.startsWith("/login/"))) {
-    const redirectUrl = request.nextUrl.clone();
-    redirectUrl.pathname = "/dashboard";
-    redirectUrl.search = "";
+    const redirectUrl = new URL(safeNextPath(request.nextUrl.searchParams.get("next") ?? "/dashboard"), request.url);
     return NextResponse.redirect(redirectUrl);
   }
 
