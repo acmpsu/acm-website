@@ -74,22 +74,24 @@ export function AuthMeadow() {
   // Scale the frame by width so the backdrop is 1:1 with the Figma artboard at
   // 1920px wide and scales proportionally with the window. The height/0.5 terms
   // only clamp up to cover a vertical gap on unusually short, wide windows.
+  //
+  // We measure the viewport (not the parent element) so the backdrop only
+  // responds to window resizes. Measuring the parent would also react to the
+  // sign-in card growing/shrinking between modes, visibly rescaling the photo.
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
 
     const apply = () => {
-      const parent = el.parentElement;
-      if (!parent) return;
-      const { width, height } = parent.getBoundingClientRect();
+      const width = window.innerWidth;
+      const height = window.innerHeight;
       const scale = Math.max(width / FRAME_W, height / FRAME_H, 0.5);
       el.style.transform = `translate(-50%, -50%) scale(${scale})`;
     };
 
     apply();
-    const observer = new ResizeObserver(apply);
-    observer.observe(el.parentElement!);
-    return () => observer.disconnect();
+    window.addEventListener("resize", apply);
+    return () => window.removeEventListener("resize", apply);
   }, []);
 
   return (

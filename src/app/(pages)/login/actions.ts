@@ -3,9 +3,15 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
+import { isSupabaseConfigured } from "@/lib/supabase/env";
 import { createClient } from "@/lib/supabase/server";
 
 export type AuthState = { error?: string; message?: string };
+
+/** Friendly message shown while Supabase keys haven't been configured yet. */
+const NOT_CONFIGURED: AuthState = {
+  error: "Sign-in is temporarily unavailable. Please check back soon.",
+};
 
 function readCredentials(formData: FormData) {
   return {
@@ -40,6 +46,7 @@ function toUserError(message: string): string {
 }
 
 export async function signIn(_prev: AuthState, formData: FormData): Promise<AuthState> {
+  if (!isSupabaseConfigured) return NOT_CONFIGURED;
   const { email, password, next } = readCredentials(formData);
   if (!email || !password) return { error: "Enter your email and password." };
 
@@ -52,6 +59,7 @@ export async function signIn(_prev: AuthState, formData: FormData): Promise<Auth
 }
 
 export async function signUp(_prev: AuthState, formData: FormData): Promise<AuthState> {
+  if (!isSupabaseConfigured) return NOT_CONFIGURED;
   const { email, password, fullName, next } = readCredentials(formData);
   if (!email || !password) return { error: "Enter your email and password." };
   if (password.length < 8) return { error: "Password must be at least 8 characters." };
@@ -81,6 +89,7 @@ export async function signUp(_prev: AuthState, formData: FormData): Promise<Auth
 
 /** Sends a one-time sign-in code / magic link to the given email. */
 export async function sendEmailCode(_prev: AuthState, formData: FormData): Promise<AuthState> {
+  if (!isSupabaseConfigured) return NOT_CONFIGURED;
   const { email } = readCredentials(formData);
   if (!email) return { error: "Enter your email address." };
 
@@ -102,6 +111,7 @@ export async function sendEmailCode(_prev: AuthState, formData: FormData): Promi
 
 /** Sends a password-reset email to the given address. */
 export async function sendPasswordReset(_prev: AuthState, formData: FormData): Promise<AuthState> {
+  if (!isSupabaseConfigured) return NOT_CONFIGURED;
   const { email } = readCredentials(formData);
   if (!email) return { error: "Enter your email address." };
 

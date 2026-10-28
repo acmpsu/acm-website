@@ -1,5 +1,3 @@
-import { isSupabaseConfigured } from "@/lib/supabase/env";
-
 import { AuthMeadow } from "./AuthMeadow";
 import { LoginForm } from "./LoginForm";
 
@@ -19,19 +17,9 @@ export default async function LoginPage({
       <AuthMeadow />
 
       <div className="relative z-10 flex min-h-[calc(100vh-60px)] items-center justify-center px-4 py-12 sm:py-16">
-        {isSupabaseConfigured ? (
-          <LoginForm next={safeNext} />
-        ) : (
-          <div className="font-[family-name:var(--font-red-hat)] w-full max-w-[420px] rounded-2xl border border-white/60 bg-[var(--auth-card)] p-6 shadow-[0px_12px_46px_0px_rgba(10,28,41,0.1)]">
-            <p className="text-[14px] font-semibold text-[var(--azure-12)]">Login is not configured yet</p>
-            <p className="mt-2 text-[13px] leading-[1.6] text-[var(--auth-muted)]">
-              Add <code className="font-mono">NEXT_PUBLIC_SUPABASE_URL</code> and{" "}
-              <code className="font-mono">NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY</code> to{" "}
-              <code className="font-mono">.env.local</code>, then run{" "}
-              <code className="font-mono">supabase/schema.sql</code> in the Supabase SQL editor.
-            </p>
-          </div>
-        )}
+        {/* Supabase isn't configured yet; render the sign-in UI anyway so the page
+            looks complete. Auth server actions won't succeed until the keys land. */}
+        <LoginForm next={safeNext} />
       </div>
     </div>
   );
