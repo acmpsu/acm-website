@@ -1,6 +1,7 @@
 import Image from "next/image";
 
 import type { Committee } from "@/lib/constants";
+import { committeeDirector } from "@/lib/team";
 import { CommitteePreview } from "./CommitteePreview";
 import styles from "./committees.module.css";
 
@@ -12,7 +13,8 @@ type CommitteePaneProps = {
 
 /** One full-width committee pane from the Figma Committees frame (478:597). */
 export function CommitteePane({ committee, next }: CommitteePaneProps) {
-  const { id, shortName, tagline, description, director, meeting, resources, project } = committee;
+  const { id, shortName, tagline, description, meeting, resources, project } = committee;
+  const director = committeeDirector(id)?.name;
 
   return (
     <>

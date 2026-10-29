@@ -17,44 +17,10 @@ const CONTACT_ICONS: Record<string, React.ComponentType<{ className?: string }>>
   LinkedIn: LinkedinIcon,
 };
 
-function getInitials(name: string) {
-  return name
-    .split(" ")
-    .filter(Boolean)
-    .slice(0, 2)
-    .map((part) => part[0]?.toUpperCase() ?? "")
-    .join("");
-}
-
-type TeamMember = {
-  name: string;
-  role: string;
-};
-
 type Organization = {
   name: string;
   logo: string;
 };
-
-const EBOARD: TeamMember[] = [
-  { name: "David Youm", role: "President" },
-  { name: "Coen McFerson", role: "Vice President" },
-  { name: "Rishi Raj", role: "Secretary" },
-  { name: "Ayan Ospan", role: "Treasurer" },
-  { name: "Cia Sherpa", role: "Publicity" },
-  { name: "Bansari Patel", role: "Relations" },
-];
-
-const DIRECTORS: TeamMember[] = [
-  { name: "Khai Ta", role: "Dev Team Director" },
-  { name: "Ben Nguyen", role: "Quantum Director" },
-  { name: "Nikita Kiselov", role: "ICPC Director" },
-  { name: "Mohammad Yafi Akhtar", role: "Web Director" },
-  { name: "Sri Nikhil Bandi", role: "AI Director" },
-  { name: "Aryaman Ajmera", role: "Data Director" },
-  { name: "Younsoo Park", role: "Design Director" },
-  { name: "Ethan Elemento", role: "Hack Director" },
-];
 
 const SPONSORS: Organization[] = [
   { name: "Boeing", logo: "/sponsors/1.jpg" },
@@ -78,18 +44,6 @@ const PARTNERS: Organization[] = [
   { name: "SASE at Penn State", logo: "/partners/sasepsu.png" },
 ];
 
-function TeamCard({ member }: { member: TeamMember }) {
-  return (
-    <div className="text-center">
-      <div className="mx-auto mb-3 flex h-16 w-16 items-center justify-center rounded-full bg-[var(--bg-alt)] border border-[var(--border)] text-lg font-semibold text-[var(--navy-dk)]">
-        {getInitials(member.name)}
-      </div>
-      <p className="text-[11px] font-bold uppercase tracking-[0.08em] text-[var(--navy)]">{member.role}</p>
-      <h3 className="mt-1 text-[14px] font-semibold text-[var(--navy-dk)]">{member.name}</h3>
-    </div>
-  );
-}
-
 export default function ResourcesPage() {
   return (
     <div className="border-b border-[var(--border)]">
@@ -101,29 +55,6 @@ export default function ResourcesPage() {
           <p className="mb-2 text-[10px] font-bold uppercase tracking-[0.12em] text-[var(--navy)]">
             Get to know us
           </p>
-        </section>
-
-        {/* Meet Us */}
-        <section id="meet-us">
-          <h2 className="mb-8 text-[18px] font-semibold text-[var(--navy-dk)]">Meet Us</h2>
-          
-          <div className="mb-12">
-            <h3 className="mb-6 text-[14px] font-semibold text-[var(--navy-dk)]">Eboard</h3>
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {EBOARD.map((member) => (
-                <TeamCard key={member.name} member={member} />
-              ))}
-            </div>
-          </div>
-
-          <div>
-            <h3 className="mb-6 text-[14px] font-semibold text-[var(--navy-dk)]">Directors</h3>
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-              {DIRECTORS.map((member) => (
-                <TeamCard key={member.name} member={member} />
-              ))}
-            </div>
-          </div>
         </section>
 
         {/* Sponsors */}

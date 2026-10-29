@@ -1,0 +1,209 @@
+/* Meet Us: Figma frame 466:83. Uses the Figma azure scale already defined for
+   tickets: --ticket-ink (#1c4866), --ticket-muted (#1f6a9b), --ticket-soft (#e8f4fa). */
+.scene {
+  --team-badge: #e8f2fa;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding: clamp(2rem, 4vw, 4rem) 1rem clamp(4rem, 10vw, 12rem);
+  background: var(--ticket-ink);
+  color: var(--ticket-ink);
+  font-family: var(--font-red-hat), sans-serif;
+}
+
+.meadow {
+  z-index: -2;
+  object-fit: cover;
+  filter: blur(14px);
+  transform: scale(1.04);
+}
+
+.tint {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--ticket-ink);
+  opacity: 0.28;
+}
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  max-width: 1240px;
+  margin-inline: auto;
+  padding: 56px 72px 44px;
+  border: 1px solid #fff;
+  border-radius: 28px;
+  background: var(--ticket-soft);
+  box-shadow: 0 20px 64px rgb(0 26 51 / 0.22);
+}
+
+.intro {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.title {
+  font: italic 400 clamp(3.5rem, 5.83vw, 7rem) / 1.2 var(--font-instrument-serif), serif;
+}
+
+.subtitle {
+  font-size: clamp(1rem, 1.094vw, 1.3125rem);
+  line-height: 1.2;
+  opacity: 0.8;
+}
+
+.divider {
+  height: 1px;
+  margin: 0;
+  border: 0;
+  background: var(--ticket-ink);
+}
+
+.group {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.groupHeading {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.groupTitle {
+  flex: 1;
+  font: 400 clamp(2rem, 2.5vw, 3rem) / 1.2 var(--font-instrument-serif), serif;
+}
+
+.mono,
+.role {
+  font-family: var(--font-ticket-mono), monospace;
+  line-height: 1.2;
+  color: var(--ticket-muted);
+}
+
+.mono { font-size: 12px; }
+.count { font-size: 11px; text-transform: uppercase; }
+
+.grid {
+  display: grid;
+  gap: 24px;
+}
+
+/* ===== Person card ===== */
+.card {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  min-width: 0;
+  min-height: 136px;
+  padding: 22px 20px 22px 24px;
+  border: 1px solid var(--ticket-ink);
+  border-radius: 14px;
+  background: #fff;
+}
+
+.avatar {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  overflow: hidden;
+  border: 1px solid var(--ticket-muted);
+  border-radius: 50%;
+  background: var(--team-badge);
+  object-fit: cover;
+  font: italic 400 29px / 1.2 var(--font-instrument-serif), serif;
+}
+
+.identity {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+
+.role {
+  font-size: 12px;
+  letter-spacing: 0.5px;
+}
+
+.role a {
+  color: inherit;
+  text-underline-offset: 3px;
+}
+
+.role a:hover { text-decoration: underline; }
+
+.name {
+  font-size: clamp(1.25rem, 1.25vw, 1.5rem);
+  font-weight: 500;
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+}
+
+.description {
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: var(--ticket-muted);
+}
+
+.socials {
+  display: flex;
+  flex: none;
+  gap: 4px;
+}
+
+.social {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  color: var(--ticket-muted);
+  transition: background-color 150ms cubic-bezier(0.4, 0, 0.2, 1), color 150ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.social:hover {
+  background: var(--team-badge);
+  color: var(--ticket-ink);
+}
+
+.socialIcon {
+  width: 18px;
+  height: 18px;
+}
+
+.role a:focus-visible,
+.social:focus-visible {
+  outline: 2px solid var(--ticket-ink);
+  outline-offset: 2px;
+}
+
+.footer { text-transform: uppercase; }
+
+@media (min-width: 768px) {
+  .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 767px) {
+  .panel { gap: 32px; padding: 36px 24px 32px; border-radius: 20px; }
+  .card { flex-wrap: wrap; gap: 16px; padding: 18px 16px; min-height: 112px; }
+  .avatar { width: 56px; height: 56px; font-size: 25px; }
+  /* Icons move under the name so they don't squeeze the text column. */
+  .socials { flex-basis: 100%; margin: -8px 0 -8px 60px; }
+}
+
+@media (max-width: 374px) {
+  .panel { padding-inline: 16px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .social { transition: none; }
+}

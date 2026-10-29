@@ -6,10 +6,10 @@ import { AnimatePresence, motion } from "motion/react";
 import { ChevronDown } from "lucide-react";
 
 const RESOURCE_SECTIONS = [
-  { name: "Meet Us", id: "meet-us" },
-  { name: "Our Sponsors", id: "sponsors" },
-  { name: "Our Partners", id: "friends" },
-  { name: "Contact Us", id: "contact" },
+  { name: "Meet Us", href: "/meet-us" },
+  { name: "Our Sponsors", href: "/resources#sponsors" },
+  { name: "Our Partners", href: "/resources#friends" },
+  { name: "Contact Us", href: "/resources#contact" },
 ];
 
 export function ResourcesDropDown() {
@@ -88,8 +88,8 @@ export function ResourcesDropDown() {
             >
               {RESOURCE_SECTIONS.map((section) => (
                 <Link
-                  key={section.id}
-                  href={`/resources#${section.id}`}
+                  key={section.href}
+                  href={section.href}
                   className="block px-1.5 py-1 text-xs text-gray-700 hover:bg-gray-100 hover:text-gray-900 first:rounded-t-lg last:rounded-b-lg whitespace-nowrap"
                 >
                   {section.name}
