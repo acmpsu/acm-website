@@ -1,0 +1,592 @@
+/* Committees page: Figma frame 478:597 ("Scrolling Panes Prototype").
+   Geometry is from the 1920 × 1140 desktop pane; percentages keep it fluid. */
+.page {
+  --pane-radius: 56px;
+  --pane-overlap: 80px;
+  background-color: var(--events-sky);
+}
+
+/* ===== Pane ===== */
+.pane {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  margin-bottom: calc(-1 * var(--pane-overlap));
+  border-radius: var(--pane-radius) var(--pane-radius) 0 0;
+  background: linear-gradient(144.53deg, var(--pane-from) 12.587%, var(--pane-mid) 51.748%, var(--pane-to) 82.517%);
+  color: var(--pane-text);
+  font-family: var(--font-red-hat), sans-serif;
+}
+
+.pane:first-of-type { border-radius: 0; }
+.pane:last-of-type { margin-bottom: 0; }
+
+.atmosphere {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  background: linear-gradient(to bottom, transparent, rgb(0 0 0 / var(--pane-vignette, 0.16)));
+  pointer-events: none;
+}
+
+.aurora,
+.bloom {
+  position: absolute;
+  border-radius: 999px;
+  filter: blur(110px);
+}
+
+.aurora {
+  top: -36.84%;
+  left: 40.625%;
+  width: 78.125%;
+  height: 114.04%;
+  background: var(--pane-aurora);
+  opacity: 0.3;
+}
+
+.bloom {
+  top: 50%;
+  left: -31.25%;
+  width: 72.92%;
+  height: 87.72%;
+  background: var(--pane-bloom);
+  opacity: 0.2;
+}
+
+.grain {
+  position: absolute;
+  inset: 0;
+  background: url("/resources/committees/grain.png") repeat;
+  mix-blend-mode: soft-light;
+  opacity: 0.32;
+}
+
+/* Subject motif slot (lower right). Each theme sets the slot and its art layers. */
+.motif {
+  position: absolute;
+  top: 69.3%;
+  left: 54.69%;
+  width: 44.27%;
+  height: 29.82%;
+  overflow: hidden;
+  opacity: 0.15;
+}
+
+.motif::before,
+.motif::after {
+  position: absolute;
+  background: var(--motif-art, none) center / 100% 100% no-repeat;
+  content: "";
+}
+
+.motif::before { inset: var(--motif-inset, 0); }
+.motif::after { inset: var(--motif-inset-2, 0); background-image: var(--motif-art-2, none); }
+
+/* ===== Layout ===== */
+.content {
+  position: relative;
+  width: 84%;
+  max-width: 1612px;
+  margin-inline: auto;
+  padding-top: clamp(4rem, 6.875vw, 8.25rem);
+  padding-bottom: calc(var(--pane-overlap) + clamp(3rem, 4vw, 5rem));
+}
+
+.story {
+  display: grid;
+  gap: 2.5rem;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.info > :not(.title) { max-width: 95.4%; }
+
+.title,
+.tagline,
+.windowTitle,
+.wireHero,
+.stepTitle {
+  font-family: var(--font-instrument-serif), serif;
+  font-weight: 400;
+  line-height: 1.1;
+}
+
+.title { font-size: clamp(3.5rem, 5.21vw, 6.25rem); }
+.tagline { font-size: clamp(1.75rem, 2.19vw, 2.625rem); }
+
+.description {
+  font-size: clamp(1rem, 1.094vw, 1.3125rem);
+  line-height: 1.45;
+}
+
+.meta,
+.label {
+  font-family: var(--font-ticket-mono), monospace;
+  line-height: 1.45;
+}
+
+.meta { font-size: 0.9375rem; }
+
+.label {
+  font-size: 11px;
+  letter-spacing: 1.2px;
+  color: var(--pane-accent);
+}
+
+.caps { text-transform: uppercase; }
+.small { font-size: 10px; }
+
+.projectColumn {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 1.5rem;
+}
+
+.clouds {
+  width: 62.65%;
+  opacity: 0.87;
+}
+
+.clouds img {
+  display: block;
+  width: 72.95%;
+  height: auto;
+  margin-inline: auto;
+}
+
+.footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1.5rem 3rem;
+  margin-top: 3rem;
+}
+
+.resources {
+  display: flex;
+  flex: 0 1 73.2%;
+  flex-direction: column;
+  gap: 0.75rem;
+  min-width: 0;
+}
+
+.resources .label {
+  font-size: 12px;
+  color: inherit;
+}
+
+.resourceList {
+  font-size: clamp(1rem, 0.99vw, 1.1875rem);
+  line-height: 1.45;
+}
+
+.next {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25em;
+  min-height: 44px;
+  padding: 14px 24px;
+  border-radius: 8px;
+  background: var(--pane-soft);
+  color: var(--pane-ink);
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.45;
+  transition: transform 200ms cubic-bezier(0.4, 0, 0.2, 1), box-shadow 200ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.next:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgb(0 0 0 / 0.18);
+}
+
+.next:focus-visible {
+  outline: 2px solid var(--pane-text);
+  outline-offset: 3px;
+}
+
+/* ===== Sample project window ===== */
+.window {
+  display: flex;
+  flex-direction: column;
+  gap: 1.375rem;
+  width: 100%;
+  padding: 24px 32px 28px;
+  border: 1px solid var(--pane-border);
+  border-radius: 16px;
+  background: linear-gradient(148.57deg, var(--pane-soft) 12.587%, #fff 51.748%, var(--pane-soft) 82.517%);
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.dot {
+  width: 9px;
+  height: 9px;
+  flex: none;
+  border-radius: 50%;
+  background: var(--pane-accent);
+  opacity: 0.35;
+}
+
+.windowTitle {
+  font-size: clamp(1.75rem, 2.08vw, 2.5rem);
+  color: var(--pane-ink);
+}
+
+.disclaimer {
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--pane-accent);
+}
+
+.preview {
+  position: relative;
+  min-height: 240px;
+  overflow: hidden;
+  border-radius: 10px;
+  background: #fff;
+  color: var(--pane-ink);
+}
+
+/* Checklist (ICPC) */
+.checklist {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: 28px 30px;
+}
+
+.checkRow {
+  display: flex;
+  align-items: baseline;
+  gap: 30px;
+  line-height: 1.45;
+}
+
+.checkRow .label:first-child { font-size: 12px; }
+.checkLabel { font-size: 18px; }
+
+/* Wireframe (Web) */
+.wireframe {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: 24px 32px;
+}
+
+.wireNav,
+.wireSide,
+.wireTile { background: var(--pane-soft); }
+
+.wireNav {
+  height: 28px;
+  border-radius: 5px;
+}
+
+.wireRow {
+  display: grid;
+  grid-template-columns: 430fr 276fr;
+  gap: 28px;
+  height: 100px;
+}
+
+.wireHero {
+  padding: 20px 22px;
+  border-radius: 8px;
+  background: var(--pane-accent);
+  color: var(--pane-text);
+  font-size: clamp(1.25rem, 1.67vw, 2rem);
+}
+
+.wireSide { border-radius: 8px; }
+
+.wireTiles {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.wireTile {
+  height: 30px;
+  border-radius: 6px;
+}
+
+/* Question and answer (AI) */
+.qa {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 24px 30px;
+  line-height: 1.45;
+}
+
+.qa .label:not(:last-child) { font-size: 12px; }
+.question { font-size: 20px; }
+.answer { font-size: 18px; }
+
+/* Circuit (Quantum): wires at 60, 124 and 188px; the wire spans 14%–94% of the width. */
+.circuit {
+  --wire-start: max(14.04%, 4.5rem);
+  --wire-span: calc(100% - var(--wire-start) - 6.27%);
+  height: 240px;
+}
+
+.qubit {
+  position: absolute;
+  top: calc(60px + var(--row) * 64px);
+  right: 0;
+  left: 0;
+}
+
+.qubit .label {
+  position: absolute;
+  left: 28px;
+  font-size: 12px;
+  transform: translateY(-50%);
+}
+
+.wire,
+.link {
+  position: absolute;
+  background: var(--pane-accent);
+}
+
+.wire {
+  top: -1px;
+  left: var(--wire-start);
+  width: var(--wire-span);
+  height: 2px;
+}
+
+.link {
+  top: calc(60px + var(--from) * 64px);
+  left: calc(var(--wire-start) + var(--at) * var(--wire-span) - 1px);
+  width: 2px;
+  height: calc((var(--to) - var(--from)) * 64px);
+}
+
+.gate {
+  position: absolute;
+  top: calc(36px + var(--row) * 64px);
+  left: calc(var(--wire-start) + var(--at) * var(--wire-span) - 24px);
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 5px;
+  background: var(--pane-soft);
+  font-size: 23px;
+}
+
+/* Steps (Dev) */
+.steps {
+  display: flex;
+  gap: 20px;
+  padding: 24px 32px;
+}
+
+.step {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 14px;
+  min-width: 0;
+  padding: 30px 0 30px 24px;
+  background: var(--pane-soft);
+}
+
+.step .label:first-child { font-size: 12px; }
+.stepTitle { font-size: clamp(1.75rem, 2.19vw, 2.625rem); }
+
+/* Bar chart (Data): bars sit 4px above a baseline spanning 9%–91% of the width. */
+.chart { padding: 14px 32px; }
+
+.bars {
+  position: absolute;
+  top: 30px;
+  right: 9.27%;
+  bottom: 35px;
+  left: 9.27%;
+  display: flex;
+  align-items: flex-end;
+  gap: 4.615%;
+  padding: 0 0 4px 3.38%;
+  border-bottom: 1px solid var(--pane-accent);
+}
+
+.bar {
+  width: 10.77%;
+  height: var(--h);
+  border-radius: 5px;
+  background: var(--pane-chart-a);
+}
+
+.bar:nth-child(even) { background: var(--pane-chart-b); }
+
+/* ===== Themes (exact Figma colors per pane) ===== */
+.icpc {
+  --pane-from: rgb(16 43 87);
+  --pane-mid: rgb(36 79 154);
+  --pane-to: rgb(49 75 135);
+  --pane-aurora: #83d5ff;
+  --pane-bloom: #b2afff;
+  --pane-text: #f1f7ff;
+  --pane-accent: #3975ba;
+  --pane-ink: #163762;
+  --pane-soft: #eaf3ff;
+  --pane-border: rgb(131 213 255 / 0.35);
+  --motif-art: url("/resources/committees/motif-icpc.svg");
+  --motif-inset: 0 0 2.94% -33.33%;
+}
+
+.icpc .motif { width: 46.875%; }
+
+.web {
+  --pane-from: rgb(69 33 63);
+  --pane-mid: rgb(121 72 107);
+  --pane-to: rgb(92 53 90);
+  --pane-aurora: #ffd1a4;
+  --pane-bloom: #eca3d2;
+  --pane-text: #fff4ea;
+  --pane-accent: #a65b83;
+  --pane-ink: #5e324d;
+  --pane-soft: #fff0ea;
+  --pane-border: rgb(255 209 164 / 0.35);
+  --motif-art: url("/resources/committees/motif-web.svg");
+}
+
+/* The Web & Design motif is drawn at full pane size. */
+.web .motif {
+  inset: 0;
+  width: auto;
+  height: auto;
+  opacity: 1;
+}
+
+.ai {
+  --pane-from: rgb(74 33 52);
+  --pane-mid: rgb(151 62 80);
+  --pane-to: rgb(111 46 73);
+  --pane-aurora: #ffa883;
+  --pane-bloom: #f9839e;
+  --pane-text: #fff3ee;
+  --pane-accent: #bc5e66;
+  --pane-ink: #712e43;
+  --pane-soft: #fff0eb;
+  --pane-border: rgb(255 168 131 / 0.35);
+  --motif-art: url("/resources/committees/motif-ai.svg");
+}
+
+/* The AI constellation carries its own 15% opacity. */
+.ai .motif {
+  height: 28.07%;
+  overflow: visible;
+  opacity: 1;
+}
+
+.quantum {
+  --pane-from: rgb(41 27 81);
+  --pane-mid: rgb(82 65 139);
+  --pane-to: rgb(59 44 113);
+  --pane-aurora: #d0beff;
+  --pane-bloom: #98b9f4;
+  --pane-text: #f6f0ff;
+  --pane-accent: #8e70b2;
+  --pane-ink: #4c3575;
+  --pane-soft: #f1ebff;
+  --pane-border: rgb(208 190 255 / 0.35);
+  --motif-art: url("/resources/committees/motif-quantum.svg");
+  --motif-inset: -24.87% 10.98% -24.87% 12.15%;
+}
+
+.dev {
+  --pane-from: rgb(16 62 58);
+  --pane-mid: rgb(36 104 82);
+  --pane-to: rgb(24 83 73);
+  --pane-aurora: #b7e9a4;
+  --pane-bloom: #6cd8bf;
+  --pane-text: #effbec;
+  --pane-accent: #448d68;
+  --pane-ink: #1d5346;
+  --pane-soft: #eaf6e4;
+  --pane-border: rgb(183 233 164 / 0.35);
+  --motif-art: url("/resources/committees/motif-dev-traces.svg");
+  --motif-inset: 0 3.53% 0 2.35%;
+  --motif-art-2: url("/resources/committees/motif-dev-nodes.svg");
+  --motif-inset-2: 23.13% 4% 29.38% 1.65%;
+}
+
+.dev .motif { height: 28.07%; }
+
+.data {
+  --pane-from: rgb(248 232 193);
+  --pane-mid: rgb(228 177 107);
+  --pane-to: rgb(244 214 153);
+  --pane-aurora: #fffbdd;
+  --pane-bloom: #efa26c;
+  --pane-vignette: 0.03;
+  --pane-text: #58391d;
+  --pane-accent: #b2752f;
+  --pane-ink: #66431e;
+  --pane-soft: #fff7e5;
+  --pane-border: rgb(255 251 221 / 0.35);
+  --pane-chart-a: #c48a37;
+  --pane-chart-b: #8c5426;
+  --motif-art: url("/resources/committees/motif-data.svg");
+  --motif-inset: 4.93% 7.34% 16.74% 2.18%;
+}
+
+/* ===== Responsive ===== */
+@media (min-width: 1024px) {
+  .story {
+    grid-template-columns: minmax(0, 650fr) minmax(0, 862fr);
+    column-gap: 6.2%;
+    align-items: start;
+  }
+}
+
+@media (min-width: 1280px) {
+  .pane { min-height: min(1140px, 59.375vw); }
+}
+
+@media (max-width: 1023px) {
+  .projectColumn { align-items: stretch; }
+  .clouds { align-self: flex-end; width: min(62.65%, 340px); }
+  .resources { flex-basis: 100%; }
+}
+
+@media (max-width: 639px) {
+  .page {
+    --pane-radius: 1.5rem;
+    --pane-overlap: 2rem;
+  }
+
+  .content { width: auto; margin-inline: 1rem; }
+  .window { padding: 20px 16px 24px; }
+  .checklist,
+  .qa { padding: 20px 16px; }
+  .checkRow { gap: 16px; }
+  .wireframe,
+  .steps { gap: 10px; padding: 20px 16px; }
+  .wireRow { gap: 10px; }
+  .wireTiles { gap: 10px; }
+  .step { padding: 20px 0 20px 12px; }
+  .chart { padding: 14px 16px; }
+  .bars { top: 40px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .next { transition: none; }
+  .next:hover { transform: none; }
+}

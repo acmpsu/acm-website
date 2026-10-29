@@ -11,17 +11,43 @@ export const HERO_TITLE = "Excellence in Computing, Together.";
 export const HERO_DESCRIPTION =
   "ACM at Penn State is the largest computer science and engineering student organization on campus. We welcome all majors and experience levels to learn, build, and connect through workshops, projects, and events.";
 
+/** Color palette for a committee's pane on /committees (see committees.module.css). */
+export type CommitteeTheme = "icpc" | "web" | "ai" | "quantum" | "dev" | "data";
+
+/** Illustrative mockup inside a committee's sample-project window. */
+export type CommitteePreview =
+  | { kind: "checklist"; items: { label: string; tag: string }[] }
+  | { kind: "wireframe"; headline: string }
+  | { kind: "qa"; question: string; answer: string; sources: string[] }
+  | {
+      kind: "circuit";
+      qubits: number;
+      /** `at` is the gate's position along the wires, 0–1; `link` draws a wire between two qubits. */
+      gates: { label: string; qubit: number; at: number; link?: [number, number] }[];
+    }
+  | { kind: "steps"; items: string[]; caption: string }
+  | { kind: "chart"; label: string; values: number[] };
+
 export type Committee = {
   /** Fragment id used on /committees — also the dropdown/menu anchor target. */
   id: string;
   /** Full name, e.g. `acm.icpc`. */
   name: string;
-  /** Compact label for grids and menus, e.g. `ICPC`. */
+  /** Compact label for grids, menus and the committee pane title, e.g. `ICPC`. */
   shortName: string;
   logo: string;
   description: string;
+  tagline: string;
+  director?: string;
+  /** Optional when/where line, e.g. `Tuesdays 7 PM · Westgate E201`. */
+  meeting?: string;
+  /** What members can expect to find, e.g. problem sets or notebooks. */
+  resources: string[];
+  theme: CommitteeTheme;
+  project?: { title: string; preview: CommitteePreview };
 };
 
+// Pane order, palettes and sample projects follow the Committees frame (478:597) in Figma.
 export const COMMITTEES: Committee[] = [
   {
     id: "acm-icpc",
@@ -30,14 +56,34 @@ export const COMMITTEES: Committee[] = [
     logo: "/logos/icpc.png",
     description:
       "Prepares members for competitive programming and ICPC-style contests with structured practice, algorithms deep dives, and team problem-solving sessions",
+    tagline: "Think clearly. Solve together.",
+    director: "Nikita Kiselov",
+    resources: ["Problem sets", "contest notes", "solutions"],
+    theme: "icpc",
+    project: {
+      title: "Practice tracker",
+      preview: {
+        kind: "checklist",
+        items: [
+          { label: "Graph traversal", tag: "practice" },
+          { label: "Dynamic programming", tag: "discuss" },
+          { label: "Greedy strategies", tag: "compare" },
+        ],
+      },
+    },
   },
   {
     id: "acm-web",
     name: "acm.web",
-    shortName: "Web & Design",
+    shortName: "Web",
     logo: "/logos/web.png",
     description:
       "Pairs full-stack web development with product and visual design—accessible front ends, APIs, and deployment alongside UX fundamentals and design systems, so technical work ships with interfaces people actually want to use",
+    tagline: "From first sketch to working page.",
+    director: "Mohammad Yafi Akhtar",
+    resources: ["Figma explorations", "components", "source code"],
+    theme: "web",
+    project: { title: "ACM website refresh", preview: { kind: "wireframe", headline: "A place to belong." } },
   },
   {
     id: "acm-ai",
@@ -46,22 +92,19 @@ export const COMMITTEES: Committee[] = [
     logo: "/logos/ai.png",
     description:
       "Explores machine learning, modern AI tooling, and responsible applications through workshops, reading groups, and hands-on projects that meet members where they are",
-  },
-  {
-    id: "acm-hack",
-    name: "acm.hack",
-    shortName: "Hackathon",
-    logo: "/logos/hack.png",
-    description:
-      "Runs and prepares members for hackathons—rapid prototyping, team formation, and demo-ready builds, plus the workshops that get first-timers shipping their first project",
-  },
-  {
-    id: "acm-data",
-    name: "acm.data",
-    shortName: "Data",
-    logo: "/logos/data.png",
-    description:
-      "Focuses on data engineering, analytics, and visualization—turning raw information into clear stories and reliable pipelines with practical, industry-relevant skills",
+    tagline: "Ask questions. Run experiments.",
+    director: "Sri Nikhil Bandi",
+    resources: ["Repository", "evaluation notes", "demo"],
+    theme: "ai",
+    project: {
+      title: "Campus Copilot",
+      preview: {
+        kind: "qa",
+        question: "Where can I find ACM workshop materials?",
+        answer: "A useful starting point, with clear source links.",
+        sources: ["Source 01", "Source 02", "Source 03"],
+      },
+    },
   },
   {
     id: "acm-quantum",
@@ -70,6 +113,54 @@ export const COMMITTEES: Committee[] = [
     logo: "/logos/quantum.png",
     description:
       "Introduces quantum computing concepts, tools, and research directions—bridging linear algebra and programming with curiosity-first learning",
+    tagline: "Explore a different kind of computing.",
+    director: "Ben Nguyen",
+    resources: ["Circuit files", "reading lists", "workshop slides"],
+    theme: "quantum",
+    project: {
+      title: "Quantum circuit playground",
+      preview: {
+        kind: "circuit",
+        qubits: 3,
+        gates: [
+          { label: "H", qubit: 0, at: 0.21 },
+          { label: "X", qubit: 1, at: 0.52, link: [0, 2] },
+          { label: "H", qubit: 2, at: 0.81 },
+        ],
+      },
+    },
+  },
+  {
+    id: "acm-dev",
+    name: "acm.dev",
+    shortName: "Dev",
+    logo: "/logos/dev.png",
+    description:
+      "Builds real software as a team—members pick up project briefs, work in a shared repository, and ship tools for ACM and the campus, with onboarding guides for first-time contributors",
+    tagline: "Build things that matter.",
+    director: "Khai Ta",
+    resources: ["Repository", "project briefs", "onboarding guides"],
+    theme: "dev",
+    project: {
+      title: "Developer workspace",
+      preview: { kind: "steps", items: ["Plan", "Build", "Ship"], caption: "Demo slot" },
+    },
+  },
+  {
+    id: "acm-data",
+    name: "acm.data",
+    shortName: "Data",
+    logo: "/logos/data.png",
+    description:
+      "Focuses on data engineering, analytics, and visualization—turning raw information into clear stories and reliable pipelines with practical, industry-relevant skills",
+    tagline: "Find the story in the data.",
+    director: "Aryaman Ajmera",
+    resources: ["Datasets", "notebooks", "visualizations"],
+    theme: "data",
+    project: {
+      title: "Campus data explorer",
+      preview: { kind: "chart", label: "Illustrative visualization", values: [70, 108, 84, 145, 124, 170] },
+    },
   },
 ];
 

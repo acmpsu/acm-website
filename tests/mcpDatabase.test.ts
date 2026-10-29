@@ -39,6 +39,7 @@ test("actual Postgres policies and RPCs enforce officer-only, scoped, idempotent
     await db.exec(schema);
     await db.exec(migration);
     await db.exec(migration); // Deployment retries must be harmless.
+    await db.exec(await readFile(new URL("../supabase/migrations/202610290001_committee_roster.sql", import.meta.url), "utf8"));
     await db.query("insert into auth.users (id, email) values ($1, 'officer@example.test'), ($2, 'member@example.test'), ($3, 'other@example.test')", [officer, member, other]);
     await db.query("update public.profiles set is_officer = true where id in ($1, $2)", [officer, other]);
 
@@ -97,7 +98,7 @@ test("actual Postgres policies and RPCs enforce officer-only, scoped, idempotent
     });
 
     await t.test("database rejects invalid input even if the application validator is bypassed", async () => {
-      for (const data of [null, {}, { ...payload, title: " " }, { ...payload, starts_at: "invalid" }, { ...payload, category: "unknown" }, { ...payload, committee_id: "admin" }, { ...payload, ends_at: "2020-01-01" }]) {
+      for (const data of [null, {}, { ...payload, title: " " }, { ...payload, starts_at: "invalid" }, { ...payload, category: "unknown" }, { ...payload, committee_id: "admin" }, { ...payload, committee_id: "acm-hack" }, { ...payload, ends_at: "2020-01-01" }]) {
         await assert.rejects(create(data), { code: "PT400" });
       }
     });
