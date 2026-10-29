@@ -21,6 +21,27 @@
 .pane:first-of-type { border-radius: 0; }
 .pane:last-of-type { margin-bottom: 0; }
 
+/* Darkens a pane as the next one slides over it (--cover is set by CommitteeStack). */
+.pane::after {
+  position: absolute;
+  inset: 0;
+  background: #000;
+  opacity: calc(var(--cover, 0) * 0.35);
+  pointer-events: none;
+  content: "";
+}
+
+/* ===== Stacking scroll (enabled by CommitteeStack once panes are measured) ===== */
+.stack { position: relative; }
+.anchor { display: block; }
+
+.stacked .pane {
+  position: sticky;
+  top: var(--stick-top, 0px);
+  transform: scale(calc(1 - var(--cover, 0) * 0.04));
+  transform-origin: center bottom;
+}
+
 .atmosphere {
   position: absolute;
   inset: 0;
@@ -587,6 +608,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .stacked .pane { transform: none; }
   .next { transition: none; }
   .next:hover { transform: none; }
 }
