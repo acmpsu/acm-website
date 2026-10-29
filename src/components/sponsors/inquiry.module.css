@@ -1,0 +1,169 @@
+/* Sponsor inquiry panel: Figma 494:193. Colors are the Figma azure scale:
+   --azure-12 (#00243f) and --ticket-ink (#1c4866); the placeholder grey is from the design. */
+.panel {
+  --inquiry-placeholder: #758f9c;
+  gap: 30px;
+  width: 100%;
+  max-width: 1100px;
+  padding: 48px 56px 44px;
+}
+
+.intro {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.overline {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem 1rem;
+  font-family: var(--font-ticket-mono), monospace;
+  line-height: 18px;
+  text-transform: uppercase;
+}
+
+.eyebrow { font-size: 12px; letter-spacing: 1.5px; }
+.mark { font-size: 11px; letter-spacing: 1px; }
+
+.title {
+  font: italic 400 clamp(3rem, 4.06vw, 4.875rem) / 1.15 var(--font-instrument-serif), serif;
+  color: var(--azure-12);
+}
+
+.lede {
+  font-size: clamp(1rem, 0.94vw, 1.125rem);
+  line-height: 28px;
+}
+
+.rule {
+  height: 1px;
+  margin: 0;
+  border: 0;
+  background: var(--ticket-ink);
+  opacity: 0.25;
+}
+
+/* ===== Form ===== */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.label {
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 16px;
+  letter-spacing: 0.7px;
+  text-transform: uppercase;
+}
+
+.input {
+  width: 100%;
+  min-height: 58px;
+  padding: 17px 20px;
+  border: 1px solid var(--ticket-ink);
+  border-radius: 12px;
+  background: #fff;
+  color: var(--azure-12);
+  font: inherit;
+  font-size: 1rem;
+  line-height: 24px;
+}
+
+.input::placeholder { color: var(--inquiry-placeholder); opacity: 1; }
+
+.input:focus-visible {
+  outline: 2px solid var(--ticket-ink);
+  outline-offset: 2px;
+}
+
+.textarea {
+  height: 220px;
+  resize: vertical;
+}
+
+.trap {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.error {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #e11d48;
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.note {
+  font-size: 0.875rem;
+  line-height: 22px;
+}
+
+.send {
+  min-width: 218px;
+  min-height: 56px;
+  padding: 12px 24px;
+  border-radius: 999px;
+  background: var(--azure-12);
+  color: #fff;
+  font: inherit;
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 24px;
+  cursor: pointer;
+  transition: transform 200ms cubic-bezier(0.4, 0, 0.2, 1), box-shadow 200ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.send:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgb(0 36 63 / 0.25);
+}
+
+.send:focus-visible {
+  outline: 2px solid var(--azure-12);
+  outline-offset: 3px;
+}
+
+.send:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.sent {
+  padding: 24px;
+  border: 1px solid var(--ticket-ink);
+  border-radius: 12px;
+  background: #fff;
+  font-size: 1.125rem;
+  line-height: 28px;
+}
+
+@media (max-width: 767px) {
+  .panel { gap: 24px; padding: 32px 20px; }
+  .send { width: 100%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .send { transition: none; }
+  .send:hover:not(:disabled) { transform: none; }
+}

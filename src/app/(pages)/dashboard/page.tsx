@@ -11,6 +11,8 @@ import { toggleCommittee } from "./actions";
 
 export const metadata = { title: "My membership — Penn State ACM" };
 
+type InquiryRow = { id: string; email: string; message: string; created_at: string };
+
 type AttendanceRow = {
   checked_in_at: string;
   events: { title: string; starts_at: string; location: string | null } | null;
@@ -38,6 +40,16 @@ export default async function DashboardPage() {
   ]);
 
   const joined = new Set((memberships ?? []).map((row) => row.committee_id));
+
+  // RLS only returns inquiries to officers; skip the request for everyone else.
+  const { data: inquiries } = profile?.is_officer
+    ? await supabase
+        .from("sponsor_inquiries")
+        .select("id, email, message, created_at")
+        .order("created_at", { ascending: false })
+        .limit(50)
+        .returns<InquiryRow[]>()
+    : { data: null };
 
   return (
     <div className="space-y-16">
@@ -118,6 +130,34 @@ export default async function DashboardPage() {
           <Link href="/dashboard/agents" className="mt-6 inline-flex min-h-11 items-center text-sm font-semibold text-[var(--navy)] underline">
             Connect calendar assistant
           </Link>
+        </section>
+      ) : null}
+
+      {profile?.is_officer ? (
+        <section id="sponsor-inquiries">
+          <h2 className="mb-2 text-[18px] font-semibold text-[var(--navy-dk)]">Sponsor inquiries</h2>
+          <p className="mb-6 text-[15px] leading-[1.75] text-[var(--slate)]">
+            Messages sent from the Sponsor ACM page, newest first
+          </p>
+          {inquiries && inquiries.length > 0 ? (
+            <ul className="divide-y divide-[var(--border)] border-y border-[var(--border)]">
+              {inquiries.map((inquiry) => (
+                <li key={inquiry.id} className="py-4">
+                  <div className="flex flex-wrap items-baseline justify-between gap-2">
+                    <a href={`mailto:${inquiry.email}`} className="text-[14px] font-semibold text-[var(--navy)] underline-offset-2 hover:underline">
+                      {inquiry.email}
+                    </a>
+                    <span className="text-[13px] text-[var(--slate)]">
+                      {new Date(inquiry.created_at).toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" })}
+                    </span>
+                  </div>
+                  <p className="mt-2 whitespace-pre-line text-[14px] leading-[1.6] text-[var(--navy-dk)]">{inquiry.message}</p>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p className="text-[14px] text-[var(--slate)]">No inquiries yet</p>
+          )}
         </section>
       ) : null}
 

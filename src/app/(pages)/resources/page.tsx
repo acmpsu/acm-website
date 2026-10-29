@@ -1,6 +1,8 @@
 import Image from "next/image";
 
 import { CONTACT_LINKS } from "@/lib/constants";
+import { activeSponsors } from "@/lib/sponsors";
+import { SponsorLogo } from "@/components/sponsors/SponsorLogo";
 import {
   DiscordIcon,
   GroupMeIcon,
@@ -21,20 +23,6 @@ type Organization = {
   name: string;
   logo: string;
 };
-
-const SPONSORS: Organization[] = [
-  { name: "Boeing", logo: "/sponsors/1.jpg" },
-  { name: "Capital One", logo: "/sponsors/cap1.jpg" },
-  { name: "Lockheed Martin", logo: "/sponsors/Lockheed.webp" },
-  { name: "Nittany AI Advance", logo: "/sponsors/nittanyai.jpg" },
-  { name: "Textron", logo: "/sponsors/textron.png" },
-  { name: "Penn State College of Engineering", logo: "/sponsors/EECS-header-mobile.png" },
-  { name: "ArcelorMittal", logo: "/sponsors/arcelor_mittal.png" },
-  { name: "Kattis", logo: "/sponsors/kattis.png" },
-  { name: "MathWorks", logo: "/sponsors/MathWorks-Logo-square-e1661708582572.jpg" },
-  { name: "Optum", logo: "/sponsors/optum.png" },
-  { name: "Rockwell Automation", logo: "/sponsors/rockwell.png" },
-];
 
 const PARTNERS: Organization[] = [
   { name: "AWS Cloud Club at Penn State", logo: "/partners/awspsu.jpg" },
@@ -67,18 +55,14 @@ export default function ResourcesPage() {
             We partner with industry leaders to support ACM at Penn State and provide opportunities for our members
           </p>
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {SPONSORS.map((sponsor) => (
-              <div key={sponsor.name} className="flex items-center justify-center h-24">
-                <div className="relative w-full h-full">
-                  <Image
-                    src={sponsor.logo}
-                    alt={sponsor.name}
-                    fill
-                    className="object-contain"
-                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                  />
-                </div>
-              </div>
+            {activeSponsors().map((sponsor) => (
+              <SponsorLogo
+                key={sponsor.id}
+                sponsor={sponsor}
+                surface="light"
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                className="relative block h-24 rounded text-[var(--navy-dk)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--navy)]"
+              />
             ))}
           </div>
         </section>

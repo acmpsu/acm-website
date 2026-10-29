@@ -1,42 +1,10 @@
-/* Meet Us: Figma frame 466:83. Uses the Figma azure scale already defined for
-   tickets: --ticket-ink (#1c4866), --ticket-muted (#1f6a9b), --ticket-soft (#e8f4fa). */
-.scene {
+/* Meet Us: Figma frame 466:83. The photo, tint and panel come from BackdropScene;
+   colors are the Figma azure scale defined for tickets (--ticket-ink, --ticket-muted). */
+.directory {
   --team-badge: #e8f2fa;
-  position: relative;
-  isolation: isolate;
-  overflow: hidden;
-  padding: clamp(2rem, 4vw, 4rem) 1rem clamp(4rem, 10vw, 12rem);
-  background: var(--ticket-ink);
-  color: var(--ticket-ink);
-  font-family: var(--font-red-hat), sans-serif;
-}
-
-.meadow {
-  z-index: -2;
-  object-fit: cover;
-  filter: blur(14px);
-  transform: scale(1.04);
-}
-
-.tint {
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background: var(--ticket-ink);
-  opacity: 0.28;
-}
-
-.panel {
-  display: flex;
-  flex-direction: column;
   gap: 40px;
   max-width: 1240px;
-  margin-inline: auto;
   padding: 56px 72px 44px;
-  border: 1px solid #fff;
-  border-radius: 28px;
-  background: var(--ticket-soft);
-  box-shadow: 0 20px 64px rgb(0 26 51 / 0.22);
 }
 
 .intro {
@@ -193,7 +161,7 @@
 }
 
 @media (max-width: 767px) {
-  .panel { gap: 32px; padding: 36px 24px 32px; border-radius: 20px; }
+  .directory { gap: 32px; padding: 36px 24px 32px; }
   .card { flex-wrap: wrap; gap: 16px; padding: 18px 16px; min-height: 112px; }
   .avatar { width: 56px; height: 56px; font-size: 25px; }
   /* Icons move under the name so they don't squeeze the text column. */
@@ -201,7 +169,7 @@
 }
 
 @media (max-width: 374px) {
-  .panel { padding-inline: 16px; }
+  .directory { padding-inline: 16px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

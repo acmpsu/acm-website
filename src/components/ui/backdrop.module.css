@@ -1,0 +1,40 @@
+/* Blurred photo + tint + frosted panel (Figma 466:83 and 494:169). Uses the Figma azure
+   scale already defined for tickets: --ticket-ink (#1c4866), --ticket-soft (#e8f4fa). */
+.scene {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding: clamp(2rem, 4vw, 4rem) 1rem clamp(4rem, 10vw, 12rem);
+  background: var(--ticket-ink);
+  color: var(--ticket-ink);
+  font-family: var(--font-red-hat), sans-serif;
+}
+
+.photo {
+  z-index: -2;
+  object-fit: cover;
+  filter: blur(14px);
+  transform: scale(1.04);
+}
+
+.tint {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--ticket-ink);
+  opacity: 0.28;
+}
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  margin-inline: auto;
+  border: 1px solid #fff;
+  border-radius: 28px;
+  background: var(--ticket-soft);
+  box-shadow: 0 20px 64px rgb(0 26 51 / 0.22);
+}
+
+@media (max-width: 767px) {
+  .panel { border-radius: 20px; }
+}

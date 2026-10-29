@@ -1,0 +1,152 @@
+/* Home sponsors band: Figma 50:493 (1920 wide). Motion from 406:70 (clouds) and 406:73 (rail). */
+.section {
+  --sponsor-blue: #004175;
+  --sponsor-accent: #80c8fe;
+  --sponsor-button: #e6eefb;
+  --logo-width: clamp(240px, 28.125vw, 540px);
+  --logo-gap: 20px;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding-block: clamp(4rem, 10.7vw, 205px);
+  border-radius: var(--events-radius) var(--events-radius) 0 0;
+  background: url("/resources/sponsor/section-texture.png") top left / 96px 96px, var(--sponsor-blue);
+  color: var(--events-heading);
+}
+
+.content {
+  position: relative;
+  width: 84%;
+  max-width: var(--events-content-width);
+  margin-inline: auto;
+}
+
+.clouds {
+  position: absolute;
+  z-index: -1;
+  top: clamp(0.5rem, 2.2vw, 42px);
+  left: 31.67%;
+  width: 64.17%;
+  height: auto;
+  opacity: 0.95;
+  pointer-events: none;
+  animation: sponsor-cloud-drift 40s infinite;
+}
+
+.heading {
+  font: 400 clamp(2.25rem, 2.5vw, 3rem) / 1.05 var(--font-instrument-serif), serif;
+  letter-spacing: -0.72px;
+}
+
+.flourish {
+  margin-left: 0.25em;
+  font: 500 clamp(0.875rem, 1.05vw, 1.26rem) / 1 var(--font-ticket-mono), monospace;
+  letter-spacing: 1.6px;
+  color: rgb(225 234 242 / 0.6);
+  vertical-align: middle;
+}
+
+/* ===== Logo carousel ===== */
+.carousel {
+  margin-block: clamp(3rem, 13.5vw, 260px) clamp(3rem, 8.4vw, 161px);
+  overflow: hidden;
+}
+
+.rail {
+  display: flex;
+  gap: var(--logo-gap);
+  width: max-content;
+  padding-right: var(--logo-gap); /* Makes -50% land exactly on the start of the copy. */
+  animation: sponsor-rail 40s linear infinite;
+}
+
+.carousel:hover .rail,
+.carousel:focus-within .rail { animation-play-state: paused; }
+
+.logo {
+  position: relative;
+  display: block;
+  width: var(--logo-width);
+  aspect-ratio: 3 / 1;
+  border-radius: 12px;
+}
+
+a.logo:focus-visible {
+  outline: 2px solid var(--events-heading);
+  outline-offset: 4px;
+}
+
+/* ===== Call to action ===== */
+.cta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem 2rem;
+  padding: 36px 35px;
+  border: 1px solid rgb(225 234 242 / 0.25);
+  border-radius: 8px;
+  background: rgb(0 36 63 / 0.25);
+}
+
+.ctaHeading {
+  font: italic 400 2rem / 1.1 var(--font-instrument-serif), serif;
+  letter-spacing: -0.32px;
+}
+
+.ctaText {
+  margin-top: 0.5rem;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: var(--sponsor-accent);
+}
+
+.ctaButton {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 12px 24px;
+  border-radius: 8px;
+  background: var(--sponsor-button);
+  color: var(--ticket-ink);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  line-height: 1.5;
+  transition: transform 200ms cubic-bezier(0.4, 0, 0.2, 1), box-shadow 200ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.ctaButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgb(0 0 0 / 0.2);
+}
+
+.ctaButton:focus-visible {
+  outline: 2px solid var(--events-heading);
+  outline-offset: 3px;
+}
+
+@keyframes sponsor-rail {
+  to { transform: translateX(-50%); }
+}
+
+@keyframes sponsor-cloud-drift {
+  0%, 15.25%, 100% { transform: none; animation-timing-function: ease-in-out; }
+  7.63% { transform: translate(18px, -7px) rotate(-0.8deg); animation-timing-function: ease-in-out; }
+}
+
+@media (max-width: 639px) {
+  .section { border-radius: 1.5rem 1.5rem 0 0; }
+  .content { width: auto; margin-inline: 1rem; }
+  .cta { padding: 24px 20px; }
+  .ctaButton { justify-content: center; width: 100%; }
+}
+
+/* Without motion the rail becomes a plain horizontal scroller with a single set. */
+@media (prefers-reduced-motion: reduce) {
+  .clouds,
+  .rail { animation: none; }
+  .carousel { overflow-x: auto; }
+  .loopCopy { display: none; }
+  .ctaButton { transition: none; }
+  .ctaButton:hover { transform: none; }
+}
