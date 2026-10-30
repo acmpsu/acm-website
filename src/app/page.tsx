@@ -1,3 +1,4 @@
+import { Footer } from "@/components/Footer";
 import { AboutSection } from "@/components/home/AboutSection";
 import { ContactSection } from "@/components/home/ContactSection";
 import { HomeHero } from "@/components/home/HomeHero";
@@ -9,7 +10,7 @@ import { ScrollStack, StackAnchor } from "@/components/ui/ScrollStack";
 // Section order follows the Figma "ACM 2026 Website Frame" (50:325); Events lives on /events.
 export default function Home() {
   return (
-    <SiteShell layout="full-bleed" footerCredits>
+    <SiteShell layout="full-bleed">
       <ScrollStack overlap="figma" fullScreen>
         <HomeHero />
         <StackAnchor id="about" />
@@ -20,6 +21,8 @@ export default function Home() {
         <PartnersSection />
         <StackAnchor id="contact" />
         <ContactSection />
+        {/* The footer is the last panel, so it slides over Contact like the others. */}
+        <Footer credits />
       </ScrollStack>
     </SiteShell>
   );

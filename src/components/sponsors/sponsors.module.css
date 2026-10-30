@@ -10,7 +10,7 @@
   --logo-gap: 20px;
   position: relative;
   isolation: isolate;
-  overflow: hidden;
+  overflow: clip; /* not hidden: that would break scroll-linked animations inside */
   padding-block: calc(var(--site-header-height) + clamp(1rem, 3vw, 56px))
     clamp(2.5rem, 4vw, 72px);
   border-radius: var(--events-radius) var(--events-radius) 0 0;
@@ -30,35 +30,33 @@
 .clouds {
   position: absolute;
   z-index: -1;
-  /* Large ribbon to the right of the heading (it also drifts right to left on scroll). */
-  top: calc(var(--site-header-height) + clamp(0rem, 2vw, 40px));
-  left: 34%;
-  width: 72%;
+  /* Ribbon to the right of the heading; it slides in from the right on scroll. */
+  top: calc(var(--site-header-height) + clamp(0rem, 1vw, 20px));
+  left: 40%;
+  width: 60%;
   height: auto;
   opacity: 0.95;
 }
 
 .heading {
-  font:
-    400 clamp(2.25rem, 2.9vw, 3.5rem) / 1.05 var(--font-instrument-serif),
-    serif;
-  letter-spacing: -0.72px;
+  font: var(--ds-type-section);
+  letter-spacing: var(--ds-type-section-tracking);
 }
 
 .flourish {
-  margin-left: 0.25em;
-  font:
-    500 clamp(0.875rem, 1.05vw, 1.26rem) / 1 var(--font-ticket-mono),
-    monospace;
+  margin-left: 0.3em;
+  font: var(--ds-type-flourish);
   letter-spacing: 1.6px;
-  color: rgb(225 234 242 / 0.6);
+  color: #fff;
   vertical-align: middle;
 }
 
 /* ===== Logo carousel ===== */
+/* Starts below the cloud ribbon (its bottom sits ~20vw under the heading). */
 .carousel {
-  margin-block: auto; /* centered between the heading and the call to action */
-  padding-block: clamp(2rem, 4vw, 64px);
+  margin-top: clamp(5rem, 16vw, 320px);
+  margin-bottom: auto;
+  padding-block: clamp(1.5rem, 3vw, 48px);
   overflow: hidden;
 }
 

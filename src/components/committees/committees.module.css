@@ -10,7 +10,7 @@
 .pane {
   position: relative;
   isolation: isolate;
-  overflow: hidden;
+  overflow: clip; /* not hidden: that would break scroll-linked animations inside */
   margin-bottom: calc(-1 * var(--pane-overlap));
   border-radius: var(--pane-radius) var(--pane-radius) 0 0;
   background: linear-gradient(

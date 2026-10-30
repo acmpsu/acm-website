@@ -11,7 +11,7 @@ Exported from the ACM Figma file `HFRT30R89UUHyUL5GaTfSh`, frame
 - `logos/*.png`: committee wordmarks from the About carousel (`50:483`). Only the six
   current committees are used (the Figma also shows retired ones).
 - `partners/*.png`: partner marks (`160:61`–`160:65`).
-- `windmill.webp`: the 52 transparent frames of `410:57` (577 × 720 each) encoded as a
+- `windmill.webp`: the 52 transparent frames of `410:57`, exported at 2× and scaled to 920 × 1148 (transparency from the 1× frames), encoded as a
   looping animated WebP at 20 fps; `windmill-still.png` is frame 0, used under
   `prefers-reduced-motion`.
 - `contact/`: airplane window parts from `358:66` (sky, frame, bleed-hole crop,

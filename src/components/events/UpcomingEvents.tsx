@@ -14,7 +14,10 @@ export async function UpcomingEvents({
   const { events, status } = await getCalendarEvents();
   const Heading = headingLevel;
   return (
-    <section aria-labelledby="events-heading" className={styles.section}>
+    <section
+      aria-labelledby="events-heading"
+      className={`${styles.section} ${headingLevel === "h1" ? styles.page : ""}`}
+    >
       <Image
         src="/resources/events/background.png"
         alt=""

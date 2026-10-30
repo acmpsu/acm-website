@@ -3,12 +3,17 @@
   position: relative;
 }
 
+/* Sections are full-screen panels drawn under the floating nav, so a link to one lands it
+   at the very top. The site-wide header offset on [id] would leave the previous (pinned)
+   section showing above it. */
 .anchor {
   display: block;
+  scroll-margin-top: 0;
 }
 
-/* Only the first section sits under the floating header; the rest don't need its clearance. */
-.stack > section:not(:first-of-type) {
+/* Panels are the stack's <section>s plus an optional closing <footer>.
+   Only the first sits under the floating header; the rest don't need its clearance. */
+.stack > :is(section, footer):not(:first-of-type) {
   --page-top: 0px;
 }
 
@@ -16,18 +21,23 @@
 .overlap {
   --stack-overlap: 80px;
 }
-.overlap > section:not(:last-of-type) {
+.overlap > :is(section, footer):not(:last-child) {
   margin-bottom: calc(-1 * var(--stack-overlap));
 }
 
 /* Each section is at least one screen tall; a section can ask for more with --pane-h (in screens). */
-.fullScreen > section {
+.fullScreen > :is(section, footer) {
   min-height: calc(var(--pane-h, 1) * 100svh);
 }
 
-.stacked > section {
+.stacked > :is(section, footer) {
   position: sticky;
   top: var(--stick-top, 0px);
+}
+
+/* A footer inside the stack overlaps through the stack, not its own negative margin. */
+.overlap > footer {
+  margin-top: 0;
 }
 
 @media (max-width: 639px) {

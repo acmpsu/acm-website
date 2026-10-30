@@ -33,9 +33,26 @@
   --ds-glass: rgb(232 242 250 / 0.55);
   --ds-glass-border: rgb(255 255 255 / 0.45);
 
+  /* Every nav control (glass pill, pill buttons, account button) shares these. */
+  --ds-nav-h: clamp(44px, 2.88vw, 55px);
+  --ds-nav-font: clamp(15px, 0.92vw, 17.7px);
+  --ds-nav-bg: rgb(232 242 250 / 0.92);
+  --ds-nav-border: rgb(0 36 63 / 0.1);
+  --ds-nav-shadow: 0 6px 24px rgb(0 36 63 / 0.14);
+
   --ds-container: 1612.8px; /* 84% of the 1920 frame */
   --ds-panel: 1240px;
   --ds-section-space: clamp(4rem, 8vw, 8rem);
+  /* Type scale: every section/page uses these so headings and copy match site-wide. */
+  --ds-type-page: italic 400 clamp(3rem, 4.8vw, 5.75rem) / 1.1
+    var(--ds-font-display);
+  --ds-type-section: 400 clamp(2.5rem, 3.6vw, 4.25rem) / 1.1
+    var(--ds-font-display);
+  --ds-type-section-tracking: -0.015em;
+  --ds-type-body: 400 clamp(15px, 1.05vw, 18px) / 1.6 var(--ds-font-body);
+  --ds-type-flourish: 700 clamp(1.25rem, 1.7vw, 2rem) / 1 var(--ds-font-mono);
+  --ds-on-dark: var(--ds-grey-92); /* text colour on every dark section */
+
   --ds-gap-sm: 12px;
   --ds-gap-md: 24px;
   --ds-gap-lg: 48px;
@@ -76,7 +93,6 @@
   --events-section-height: 1244px;
   --events-heading-height: 90px;
   --events-heading-gap: 176px;
-  --events-heading-tracking: -0.72px;
   --events-cloud-top: 1.58px;
   --events-vignette: radial-gradient(
     ellipse 120% 90% at 50% 35%,

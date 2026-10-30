@@ -54,7 +54,7 @@ export function CommitteePane({ committee, next }: CommitteePaneProps) {
 
             <div className={styles.projectColumn}>
               <div className={styles.clouds} aria-hidden="true">
-                <Clouds drift sizes="(min-width: 1024px) 21vw, 60vw" />
+                <Clouds drift scroll sizes="(min-width: 1024px) 21vw, 60vw" />
               </div>
               {project ? (
                 <figure className={styles.window}>

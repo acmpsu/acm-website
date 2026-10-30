@@ -1,4 +1,3 @@
-import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 
 type SiteShellProps = {
@@ -9,16 +8,10 @@ type SiteShellProps = {
    * that starts below the header.
    */
   layout: "full-bleed" | "contained";
-  /** Show the footer's credits terminal (home page only). */
-  footerCredits?: boolean;
 };
 
-/** Header + main + footer used by every route group, so the shell is identical site-wide. */
-export function SiteShell({
-  children,
-  layout,
-  footerCredits = false,
-}: SiteShellProps) {
+/** Header + main, used by every route group so the shell is identical site-wide. The home page adds the footer inside its scroll stack. */
+export function SiteShell({ children, layout }: SiteShellProps) {
   return (
     <div className="flex min-h-screen flex-col">
       <Header />
@@ -31,7 +24,6 @@ export function SiteShell({
       >
         {children}
       </main>
-      <Footer credits={footerCredits} />
     </div>
   );
 }

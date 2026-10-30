@@ -35,10 +35,8 @@
 }
 
 .title {
-  font:
-    italic 400 clamp(3rem, 4.06vw, 4.875rem) / 1.15 var(--font-instrument-serif),
-    serif;
-  color: var(--azure-12);
+  font: var(--ds-type-page);
+  color: var(--ds-azure-25); /* same ink as the Meet Us title */
 }
 
 .lede {

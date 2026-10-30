@@ -12,6 +12,7 @@ import { Button } from "@/components/ui/Button";
 import { IconButton } from "@/components/ui/IconButton";
 import {
   COMMITTEES,
+  EVENTS_LINK,
   MEET_US_LINK,
   PRIMARY_NAV,
   SPONSOR_US_LINK,
@@ -167,6 +168,13 @@ export function SiteNav({ account }: { account: NavAccount | null }) {
         <div className={styles.utility}>
           <Button
             variant="pill"
+            href={EVENTS_LINK.href}
+            aria-current={current(EVENTS_LINK.href)}
+          >
+            {EVENTS_LINK.label}
+          </Button>
+          <Button
+            variant="pill"
             href={MEET_US_LINK.href}
             aria-current={current(MEET_US_LINK.href)}
           >
@@ -232,7 +240,7 @@ export function SiteNav({ account }: { account: NavAccount | null }) {
               <nav aria-label="Site">
                 {sheetLinks(
                   "Explore",
-                  [...PRIMARY_NAV, MEET_US_LINK, SPONSOR_US_LINK],
+                  [...PRIMARY_NAV, EVENTS_LINK, MEET_US_LINK, SPONSOR_US_LINK],
                   true,
                 )}
                 {sheetLinks(
