@@ -83,13 +83,6 @@ export const TEAM: TeamMember[] = [
     photo: "/team/nikita-kiselov.jpg",
   },
   {
-    id: "tejasv-agarwal",
-    name: "Tejasv Agarwal",
-    role: "Outreach Director",
-    group: "directors",
-    photo: "/team/tejasv-agarwal.jpg",
-  },
-  {
     id: "sri-nikhil-bandi",
     name: "Sri Nikhil Bandi",
     role: "AI Director",
@@ -106,19 +99,26 @@ export const TEAM: TeamMember[] = [
     photo: "/team/aryaman-ajmera.jpg",
   },
   {
-    id: "ethan-elemento",
-    name: "Ethan Elemento",
-    role: "Outreach Director",
-    group: "directors",
-    photo: "/team/ethan-elemento.jpg",
-  },
-  {
     id: "younsoo-park",
     name: "Younsoo Park",
     role: "Web Director",
     group: "directors",
     committee: "acm-web",
     photo: "/team/younsoo-park.jpg",
+  },
+  {
+    id: "tejasv-agarwal",
+    name: "Tejasv Agarwal",
+    role: "Outreach Director",
+    group: "directors",
+    photo: "/team/tejasv-agarwal.jpg",
+  },
+  {
+    id: "ethan-elemento",
+    name: "Ethan Elemento",
+    role: "Outreach Director",
+    group: "directors",
+    photo: "/team/ethan-elemento.jpg",
   },
 ];
 

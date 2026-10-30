@@ -42,7 +42,7 @@ export default function MeetUsPage() {
                 {pad(members.length)} members
               </span>
             </div>
-            <div className={styles.grid}>
+            <div className={`${styles.grid} ${styles.trio}`}>
               {members.map((member) => (
                 <PersonCard key={member.id} member={member} />
               ))}
