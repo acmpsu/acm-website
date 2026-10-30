@@ -28,6 +28,8 @@
 /* Each section is at least one screen tall; a section can ask for more with --pane-h (in screens). */
 .fullScreen > :is(section, footer) {
   min-height: calc(var(--pane-h, 1) * 100svh);
+  /* lvh: still a full screen when a phone browser hides its toolbar while scrolling. */
+  min-height: calc(var(--pane-h, 1) * 100lvh);
 }
 
 .stacked > :is(section, footer) {

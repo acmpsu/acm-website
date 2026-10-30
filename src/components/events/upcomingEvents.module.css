@@ -8,6 +8,7 @@
   background-color: var(--events-sky);
   background-image: var(--events-vignette);
   min-height: 100svh;
+  min-height: 100lvh;
 }
 
 /* On its own page the band starts at the top of the window, so no rounded corners

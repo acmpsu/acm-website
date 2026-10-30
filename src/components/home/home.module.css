@@ -63,8 +63,8 @@
   top: 0;
   z-index: -1;
   isolation: isolate;
-  height: 100svh;
-  margin-bottom: -100svh;
+  height: 100lvh;
+  margin-bottom: -100lvh;
   overflow: hidden;
 }
 
@@ -151,8 +151,8 @@
 .heroContent {
   position: sticky;
   top: 0;
-  height: 100svh;
-  margin-bottom: -100svh;
+  height: 100lvh;
+  margin-bottom: -100lvh;
   padding-inline: 1rem;
   display: flex;
   flex-direction: column;
@@ -724,20 +724,14 @@
 }
 
 .window:hover .shade,
-.window:focus-visible .shade {
+.window:focus-visible .shade,
+.window[data-open] .shade {
   transform: translateY(-77%);
 }
 
 .window:focus-visible {
   outline: 3px solid #fff;
   outline-offset: 6px;
-}
-
-/* Touch screens can't hover, so their shades start open. */
-@media (hover: none) {
-  .shade {
-    transform: translateY(-77%);
-  }
 }
 
 @media (max-width: 1023px) {
@@ -747,8 +741,55 @@
     text-align: center;
     max-width: none;
   }
+  /* Below 1024px the windmill stands under the logos instead of beside them. */
+  .partners {
+    --windmill-w: min(80vw, 460px);
+    padding-bottom: calc(var(--windmill-w) * 720 / 577 * 0.92);
+  }
   .windmill {
-    opacity: 0.5;
+    left: calc(50% - var(--windmill-w) * 0.62);
+  }
+}
+
+/* Phones and tablets (portrait iPads too): at 108vw the vine is a thin strip hidden behind
+   the nav, so it grows past both edges and drapes below the header, with the copy and logos
+   centered as one block in the space under it. */
+@media (max-width: 1023px), (orientation: portrait) and (max-width: 1366px) {
+  .about {
+    gap: 2.25rem;
+    padding-block: calc(var(--site-header-height) + 30vw) 3rem;
+  }
+  .garland {
+    top: calc(var(--site-header-height) - 8vw);
+    left: -25vw;
+    width: 150vw;
+  }
+  .aboutIntro {
+    gap: 1.25rem;
+    padding-inline: 1.5rem;
+  }
+  .aboutCopy {
+    max-width: 34rem;
+  }
+  .aboutCopy > span {
+    display: inline;
+  }
+  .logoLink {
+    width: clamp(170px, 40vw, 260px);
+  }
+  .carouselControls {
+    justify-content: center;
+    margin-top: 1.5rem;
+  }
+}
+
+@media (max-width: 639px) {
+  .about {
+    padding-top: calc(var(--site-header-height) + 46vw);
+  }
+  .garland {
+    left: -42vw;
+    width: 184vw;
   }
 }
 

@@ -67,13 +67,6 @@ export function SiteNav({ account }: { account: NavAccount | null }) {
   const [menuOpen, setMenuOpen] = useState(false);
   // Once the page scrolls, the compact (phone/tablet) bar gets a frosted backing so
   // content passing underneath doesn't collide with the logo and buttons.
-  const [scrolled, setScrolled] = useState(false);
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 8);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
   const toggleRef = useRef<HTMLButtonElement>(null);
   const sheetRef = useRef<HTMLDivElement>(null);
   const reduceMotion = useReducedMotion();
@@ -141,7 +134,7 @@ export function SiteNav({ account }: { account: NavAccount | null }) {
 
   return (
     <header
-      className={`${styles.header} ${scrolled || menuOpen ? styles.scrolled : ""}`}
+      className={styles.header}
     >
       <div className={styles.bar}>
         <Link

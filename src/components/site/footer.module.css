@@ -11,6 +11,7 @@
   display: flex;
   flex-direction: column;
   min-height: 100svh; /* a full screen of sky to end the page */
+  min-height: 100lvh;
   margin-top: calc(-1 * var(--ds-radius-section));
   padding-top: clamp(48px, 7vh, 96px);
   border-radius: var(--ds-radius-section) var(--ds-radius-section) 0 0;

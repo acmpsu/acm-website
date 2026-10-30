@@ -1,6 +1,7 @@
 import Image from "next/image";
 
 import { CONTACT_LINKS } from "@/lib/constants";
+import { WindowLink } from "./WindowLink";
 import styles from "./home.module.css";
 
 // Window order and cloud logos from the Figma "Contact windows" (361:98).
@@ -13,7 +14,8 @@ const WINDOWS = [
 
 /**
  * Figma "Contact Section" (50:649): airplane windows whose shades lift on hover or focus
- * (and stay up on touch screens) to reveal each platform drawn in clouds.
+ * to reveal each platform drawn in clouds. On touch screens a tap lifts
+ * the shade first, then opens the link.
  */
 export function ContactSection() {
   return (
@@ -58,10 +60,8 @@ export function ContactSection() {
           if (!href) return null;
           return (
             <li key={window.label}>
-              <a
+              <WindowLink
                 href={href}
-                target="_blank"
-                rel="noopener noreferrer"
                 aria-label={`ACM on ${window.label} (opens in a new tab)`}
                 className={styles.window}
               >
@@ -102,7 +102,7 @@ export function ContactSection() {
                     className={styles.shade}
                   />
                 </span>
-              </a>
+              </WindowLink>
             </li>
           );
         })}
