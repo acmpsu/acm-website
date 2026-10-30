@@ -20,29 +20,43 @@ export const TEAM_GROUPS: { id: TeamGroup; title: string }[] = [
   { id: "directors", title: "Directors" },
 ];
 
-// Layout and order follow the Meet Us frame (466:83) in Figma; the roster is the
-// current one (Design merged into Web, Hackathon retired, Relations became Outreach).
+// Layout follows the Meet Us frame (466:83) in Figma; roster, order and headshots come from
+// the 2026–27 officer board. Photos live in /public/team (square crops).
 export const TEAM: TeamMember[] = [
-  { id: "david-youm", name: "David Youm", role: "President", group: "eboard" },
+  {
+    id: "dylan-mcdonnell",
+    name: "Dylan McDonnell",
+    role: "President",
+    group: "eboard",
+    photo: "/team/dylan-mcdonnell.jpg",
+  },
   {
     id: "coen-mcferson",
     name: "Coen McFerson",
     role: "Vice President",
     group: "eboard",
+    photo: "/team/coen-mcferson.jpg",
   },
-  { id: "rishi-raj", name: "Rishi Raj", role: "Secretary", group: "eboard" },
-  { id: "ayan-ospan", name: "Ayan Ospan", role: "Treasurer", group: "eboard" },
+  {
+    id: "rishi-raj",
+    name: "Rishi Raj",
+    role: "Secretary",
+    group: "eboard",
+    photo: "/team/rishi-raj.jpg",
+  },
+  {
+    id: "ayan-ospan",
+    name: "Ayan Ospan",
+    role: "Treasurer",
+    group: "eboard",
+    photo: "/team/ayan-ospan.jpg",
+  },
   {
     id: "khai-ta-publicity",
     name: "Khai Ta",
     role: "Publicity",
     group: "eboard",
-  },
-  {
-    id: "ethan-elemento",
-    name: "Ethan Elemento",
-    role: "Outreach",
-    group: "eboard",
+    photo: "/team/khai-ta.jpg",
   },
   {
     id: "khai-ta",
@@ -50,6 +64,7 @@ export const TEAM: TeamMember[] = [
     role: "Dev Team Director",
     group: "directors",
     committee: "acm-dev",
+    photo: "/team/khai-ta.jpg",
   },
   {
     id: "ben-nguyen",
@@ -57,6 +72,7 @@ export const TEAM: TeamMember[] = [
     role: "Quantum Director",
     group: "directors",
     committee: "acm-quantum",
+    photo: "/team/ben-nguyen.jpg",
   },
   {
     id: "nikita-kiselov",
@@ -64,13 +80,14 @@ export const TEAM: TeamMember[] = [
     role: "ICPC Director",
     group: "directors",
     committee: "acm-icpc",
+    photo: "/team/nikita-kiselov.jpg",
   },
   {
-    id: "younsoo-park",
-    name: "Younsoo Park",
-    role: "Web Director",
+    id: "tejasv-agarwal",
+    name: "Tejasv Agarwal",
+    role: "Outreach Director",
     group: "directors",
-    committee: "acm-web",
+    photo: "/team/tejasv-agarwal.jpg",
   },
   {
     id: "sri-nikhil-bandi",
@@ -78,6 +95,7 @@ export const TEAM: TeamMember[] = [
     role: "AI Director",
     group: "directors",
     committee: "acm-ai",
+    photo: "/team/sri-nikhil-bandi.jpg",
   },
   {
     id: "aryaman-ajmera",
@@ -85,6 +103,22 @@ export const TEAM: TeamMember[] = [
     role: "Data Director",
     group: "directors",
     committee: "acm-data",
+    photo: "/team/aryaman-ajmera.jpg",
+  },
+  {
+    id: "ethan-elemento",
+    name: "Ethan Elemento",
+    role: "Outreach Director",
+    group: "directors",
+    photo: "/team/ethan-elemento.jpg",
+  },
+  {
+    id: "younsoo-park",
+    name: "Younsoo Park",
+    role: "Web Director",
+    group: "directors",
+    committee: "acm-web",
+    photo: "/team/younsoo-park.jpg",
   },
 ];
 

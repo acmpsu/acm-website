@@ -22,7 +22,7 @@ export function Footer({ credits = false }: { credits?: boolean }) {
       />
 
       <div className={styles.cloudBand} aria-hidden="true">
-        <Clouds art="bank" sizes="100vw" className={styles.clouds} />
+        <Clouds art="bank" sizes="82vw" className={styles.clouds} />
       </div>
 
       {credits ? (
