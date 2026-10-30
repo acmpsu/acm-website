@@ -1,8 +1,8 @@
 name: CodeQL
 
 # Static analysis of the code in this repository. Results land in the Security
-# tab, not in the merge gate: CodeQL is deliberately kept out of ci-ok's needs so
-# a new query release cannot block unrelated pull requests.
+# tab. Deliberately NOT one of the required status checks, so a newly published
+# query set cannot block unrelated pull requests.
 
 on:
   pull_request:
@@ -12,6 +12,7 @@ on:
     # Weekly, Monday 07:24 UTC. Catches newly published queries against code
     # that has not changed.
     - cron: "24 7 * * 1"
+  workflow_dispatch:
 
 permissions:
   contents: read

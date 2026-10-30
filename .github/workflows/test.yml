@@ -1,0 +1,57 @@
+name: Test
+
+# node:test over tests/*.test.ts.
+#
+# No database service, container or secret here: PGlite runs Postgres in-process
+# and loads supabase/schema.sql plus the migrations, so the suite exercises the
+# real row-level security policies locally to the runner.
+#
+# The job always runs to completion and always reports a status. A docs-only
+# change skips the STEPS, not the job.
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  test:
+    name: test
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+      pull-requests: read
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+
+      - id: changes
+        if: github.event_name != 'workflow_dispatch'
+        uses: ./.github/actions/changes
+
+      - if: github.event_name == 'workflow_dispatch' || steps.changes.outputs.code == 'true'
+        uses: ./.github/actions/setup
+
+      - if: github.event_name == 'workflow_dispatch' || steps.changes.outputs.code == 'true'
+        run: npm test
+
+      - name: Summary
+        env:
+          EVENT: ${{ github.event_name }}
+          CODE: ${{ steps.changes.outputs.code }}
+        run: |
+          if [ "$EVENT" = "workflow_dispatch" ]; then
+            echo "Ran: manual dispatch."
+          elif [ "$CODE" = "true" ]; then
+            echo "Ran: code changed."
+          else
+            echo "Skipped: docs-only change."
+          fi

@@ -1,0 +1,38 @@
+name: Detect what changed
+description: >-
+  Single source of truth for "is this a documentation-only change?". Outputs
+  code=true when at least one changed file is not documentation, and ci=true
+  when anything under .github/ changed. Callers must run actions/checkout first,
+  and the calling job needs `pull-requests: read`.
+
+outputs:
+  code:
+    description: "true when a file outside docs/, *.md and LICENSE changed"
+    value: ${{ steps.filter.outputs.code }}
+  ci:
+    description: "true when anything under .github/ changed"
+    value: ${{ steps.filter.outputs.ci }}
+
+runs:
+  using: composite
+  steps:
+    - id: filter
+      uses: dorny/paths-filter@0e4a8c6effa4802afeda77dc8d303f8176d7dfad # v3.0.4
+      with:
+        # Ignored for pull_request events, where the action diffs against the
+        # PR base through the API. On push it names the branch pushed to, which
+        # makes the action diff against the commit before the push.
+        base: ${{ github.ref_name }}
+        # 'every' means a file must match ALL of a filter's patterns to count.
+        # With the default 'some', a markdown file matches '**' and the `code`
+        # filter would always be true, so nothing would ever skip. For the
+        # single-pattern `ci` filter the two quantifiers are equivalent.
+        predicate-quantifier: every
+        filters: |
+          code:
+            - '**'
+            - '!docs/**'
+            - '!**/*.md'
+            - '!LICENSE'
+          ci:
+            - '.github/**'
