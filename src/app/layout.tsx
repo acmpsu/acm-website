@@ -47,6 +47,11 @@ export const metadata: Metadata = {
   title: "Penn State ACM",
   description:
     "ACM at Penn State — the largest computer science student organization on campus.",
+  icons: {
+    icon: "/logos/acm.png",
+    shortcut: "/logos/acm.png",
+    apple: "/logos/acm.png",
+  },
 };
 
 export default function RootLayout({
