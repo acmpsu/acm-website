@@ -49,6 +49,9 @@
 .hero {
   position: relative;
   isolation: isolate;
+  /* Contain the pinned layers' negative margins; otherwise they collapse through the
+     hero and pull About up over it (on phones it covered the hero entirely). */
+  display: flow-root;
   overflow: clip; /* not hidden: that would break scroll-linked animations inside */
   background: var(--ds-azure-16);
   color: #fff;
