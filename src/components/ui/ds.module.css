@@ -53,12 +53,17 @@
 
 /* Nav pills: pale, fully rounded; current page shows as white. */
 .pill {
-  min-height: clamp(44px, 2.88vw, 55px);
+  height: var(--ds-nav-h);
+  min-height: 0;
+  padding-block: 0;
   padding-inline: clamp(18px, 1.47vw, 28px);
+  border-color: var(--ds-nav-border);
   border-radius: var(--ds-radius-pill);
-  background: var(--ds-grey-95-2);
+  background: var(--ds-nav-bg);
+  box-shadow: var(--ds-nav-shadow);
+  backdrop-filter: blur(13px);
   color: var(--ds-azure-12);
-  font-size: clamp(15px, 0.92vw, 17.7px);
+  font-size: var(--ds-nav-font);
 }
 
 .pill:hover,
@@ -180,8 +185,8 @@
 }
 
 .sectionTitle {
-  font: 400 clamp(2.25rem, 2.5vw, 3rem) / 1.05 var(--ds-font-display);
-  letter-spacing: -0.72px;
+  font: var(--ds-type-section);
+  letter-spacing: var(--ds-type-section-tracking);
 }
 
 .sectionDescription {
@@ -197,7 +202,7 @@
 }
 
 .pageTitle {
-  font: italic 400 clamp(3rem, 5.83vw, 7rem) / 1.1 var(--ds-font-display);
+  font: var(--ds-type-page);
 }
 
 .pageSubtitle {
@@ -243,12 +248,13 @@
   }
 }
 
-/* Clouds travel right to left as their section scrolls through the viewport. It animates
+/* Clouds glide in from off-screen right as their section scrolls into view. It animates
    `transform`, so it composes with the `translate` float above. */
 @supports (animation-timeline: view()) {
   .scrollDrift {
     animation: ds-scroll-drift linear both;
     animation-timeline: view();
+    animation-range: entry 0% entry 100%;
   }
 
   .drift.scrollDrift {
@@ -256,15 +262,18 @@
       ds-scroll-drift linear both,
       ds-cloud-drift 12s ease-in-out infinite;
     animation-timeline: view(), auto;
+    animation-range:
+      entry 0% entry 100%,
+      normal;
   }
 }
 
 @keyframes ds-scroll-drift {
   from {
-    transform: translateX(14%);
+    transform: translateX(75vw);
   }
   to {
-    transform: translateX(-14%);
+    transform: none;
   }
 }
 

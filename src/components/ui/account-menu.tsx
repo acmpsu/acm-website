@@ -54,7 +54,7 @@ export function AccountMenu({ email, fullName }: AccountMenuProps) {
         aria-expanded={open}
         aria-label="Account menu"
         onClick={() => setOpen((prev) => !prev)}
-        className="flex size-11 items-center justify-center rounded-full bg-azure-12 font-body text-[14px] font-semibold text-white shadow-lift transition duration-200 ease-ds hover:bg-azure-25 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-azure-12 xl:size-[55px] xl:text-[16px]"
+        className="flex size-[var(--ds-nav-h)] items-center justify-center rounded-full bg-azure-12 font-body text-[14px] font-semibold text-white shadow-lift transition duration-200 ease-ds hover:bg-azure-25 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-azure-12 xl:text-[16px]"
       >
         {initialsFor(fullName, email)}
       </button>

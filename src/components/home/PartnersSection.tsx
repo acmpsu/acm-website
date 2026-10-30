@@ -18,8 +18,8 @@ export function PartnersSection() {
         <img
           src="/resources/home/windmill.webp"
           alt=""
-          width={577}
-          height={720}
+          width={920}
+          height={1148}
           loading="lazy"
         />
       </picture>
@@ -27,7 +27,7 @@ export function PartnersSection() {
       <h2 id="partners-heading" className={styles.partnersTitle}>
         Our Partners{" "}
         <span className={styles.flourish} aria-hidden="true">
-          °｡⋆
+          ⋆｡°
         </span>
       </h2>
 

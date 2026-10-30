@@ -6,12 +6,12 @@ export type NavLink = { label: string; href: string };
 export const PRIMARY_NAV: NavLink[] = [
   { label: "About", href: "/#about" },
   { label: "Sponsors", href: "/#sponsors" },
-  { label: "Events", href: "/events" },
   { label: "Partners", href: "/#partners" },
   { label: "Contact", href: "/#contact" },
 ];
 
 /** Right-hand pills on desktop (the Committees dropdown sits between them). */
+export const EVENTS_LINK: NavLink = { label: "Events", href: "/events" };
 export const MEET_US_LINK: NavLink = { label: "Meet Us", href: "/meet-us" };
 export const SPONSOR_US_LINK: NavLink = {
   label: "Sponsor us",

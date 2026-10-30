@@ -3,11 +3,17 @@
 .section {
   position: relative;
   isolation: isolate;
-  overflow: hidden;
+  overflow: clip; /* not hidden: that would break scroll-linked animations inside */
   border-radius: var(--events-radius) var(--events-radius) 0 0;
   background-color: var(--events-sky);
   background-image: var(--events-vignette);
   min-height: 100svh;
+}
+
+/* On its own page the band starts at the top of the window, so no rounded corners
+   (they showed the white page behind them). */
+.section.page {
+  border-radius: 0;
 }
 
 .background {
@@ -24,24 +30,6 @@
   height: auto;
   pointer-events: none;
   animation: events-cloud-drift 12s ease-in-out infinite;
-}
-/* Float on `translate`; travel right to left with scroll on `transform` (where supported). */
-@supports (animation-timeline: view()) {
-  .clouds {
-    animation:
-      events-cloud-drift 12s ease-in-out infinite,
-      events-cloud-scroll linear both;
-    animation-timeline: auto, view();
-  }
-}
-
-@keyframes events-cloud-scroll {
-  from {
-    transform: translateX(14%);
-  }
-  to {
-    transform: translateX(-14%);
-  }
 }
 
 .content {
@@ -62,12 +50,8 @@
 }
 
 .heading {
-  font-family: var(--font-instrument-serif), serif;
-  font-size: clamp(2.25rem, 3.334vw, 4rem);
-  font-weight: 400;
-  font-style: normal;
-  line-height: 1.1;
-  letter-spacing: var(--events-heading-tracking);
+  font: var(--ds-type-section);
+  letter-spacing: var(--ds-type-section-tracking);
   color: var(--events-heading);
 }
 

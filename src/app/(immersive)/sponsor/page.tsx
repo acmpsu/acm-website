@@ -10,6 +10,14 @@ export default function SponsorPage() {
     <BackdropScene
       image="/resources/sponsor/windmill.png"
       panelClassName={styles.panel}
+      motion
+      rotor={{
+        width: 1344,
+        height: 768,
+        cx: 667,
+        cy: 186,
+        plane: [-340, 35, 178, 173],
+      }}
     >
       <header className={styles.intro}>
         <div className={styles.overline}>

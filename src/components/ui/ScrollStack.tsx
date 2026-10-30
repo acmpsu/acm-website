@@ -33,7 +33,7 @@ export function ScrollStack({
     const root = ref.current;
     if (!root) return;
     const sections = Array.from(
-      root.querySelectorAll<HTMLElement>(":scope > section"),
+      root.querySelectorAll<HTMLElement>(":scope > section, :scope > footer"),
     );
 
     const measure = () => {

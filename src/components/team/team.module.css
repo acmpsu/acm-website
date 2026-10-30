@@ -28,9 +28,8 @@
 
 .groupTitle {
   flex: 1;
-  font:
-    400 clamp(2rem, 2.5vw, 3rem) / 1.2 var(--font-instrument-serif),
-    serif;
+  font: var(--ds-type-section);
+  letter-spacing: var(--ds-type-section-tracking);
 }
 
 .mono,

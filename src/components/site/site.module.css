@@ -62,21 +62,22 @@
   position: relative;
   display: flex;
   align-items: center;
-  padding: 4px clamp(12px, 1.25vw, 24px);
-  border: 1px solid var(--ds-glass-border);
+  /* Same height, colour, border and shadow as the pill buttons beside it. */
+  height: var(--ds-nav-h);
+  padding: 0 clamp(12px, 1.25vw, 24px);
+  border: 1px solid var(--ds-nav-border);
   border-radius: var(--ds-radius-pill);
-  background: var(--ds-glass);
-  box-shadow:
-    var(--ds-shadow-pill),
-    inset 0 -1px 1px rgb(0 36 63 / 0.16),
-    inset 0 1px 0 rgb(255 255 255 / 0.6);
+  background: var(--ds-nav-bg);
+  box-shadow: var(--ds-nav-shadow);
   backdrop-filter: blur(13px);
 }
 
 .glassLink {
-  min-height: 49px;
-  padding-inline: 8px;
-  font-size: clamp(15px, 0.875vw, 16.8px);
+  height: 100%;
+  min-height: 0;
+  padding-block: 0;
+  padding-inline: 10px;
+  font-size: var(--ds-nav-font);
 }
 
 /* Inside the glass pill the current page or section is underlined, not filled. */
