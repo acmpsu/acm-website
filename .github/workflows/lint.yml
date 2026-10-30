@@ -1,0 +1,59 @@
+name: Lint
+
+# ESLint, via eslint-config-next. `--max-warnings=0` lives in package.json's
+# lint script rather than here, so a local `npm run lint` is exactly as strict
+# as CI.
+#
+# The job always runs to completion and always reports a status. A docs-only
+# change skips the STEPS, not the job: a required status check that never
+# reports leaves a pull request pending forever.
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  lint:
+    name: lint
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      # The change detector reads the pull request's file list through the API.
+      pull-requests: read
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+
+      # Skipped on a manual run: there is no diff to compute, and someone
+      # pressing "Run workflow" wants the check to actually execute.
+      - id: changes
+        if: github.event_name != 'workflow_dispatch'
+        uses: ./.github/actions/changes
+
+      - if: github.event_name == 'workflow_dispatch' || steps.changes.outputs.code == 'true'
+        uses: ./.github/actions/setup
+
+      - if: github.event_name == 'workflow_dispatch' || steps.changes.outputs.code == 'true'
+        run: npm run lint
+
+      - name: Summary
+        env:
+          EVENT: ${{ github.event_name }}
+          CODE: ${{ steps.changes.outputs.code }}
+        run: |
+          if [ "$EVENT" = "workflow_dispatch" ]; then
+            echo "Ran: manual dispatch."
+          elif [ "$CODE" = "true" ]; then
+            echo "Ran: code changed."
+          else
+            echo "Skipped: docs-only change."
+          fi

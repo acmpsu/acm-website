@@ -1,0 +1,82 @@
+name: Actionlint
+
+# Lints the CI configuration itself, and guards the SHA-pinning strategy.
+#
+# Without this, a malformed `needs:` entry or an action pinned to a mutable tag
+# would only be discovered on a push. Pinning that silently stops being enforced
+# is worse than not pinning, because it looks maintained.
+#
+# The job always runs to completion and always reports a status. It only does
+# work when .github/** changes.
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  actionlint:
+    name: actionlint
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      pull-requests: read
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+
+      - id: changes
+        if: github.event_name != 'workflow_dispatch'
+        uses: ./.github/actions/changes
+
+      # actionlint runs as a container rather than an action, so there is no
+      # extra `uses:` to pin. The image tag is the version.
+      - name: actionlint
+        if: github.event_name == 'workflow_dispatch' || steps.changes.outputs.ci == 'true'
+        run: |
+          docker run --rm -v "$PWD:/repo" --workdir /repo \
+            rhysd/actionlint:1.7.7 -color
+
+      - name: Assert third-party actions are SHA-pinned
+        if: github.event_name == 'workflow_dispatch' || steps.changes.outputs.ci == 'true'
+        run: |
+          # Every `uses:` in .github must either be a local ./ action or pinned
+          # to a full 40-character commit SHA.
+          unpinned=$(grep -rnoE '^[[:space:]]*(-[[:space:]]+)?uses:[[:space:]]*[^[:space:]]+' \
+              .github --include='*.yml' --include='*.yaml' \
+            | grep -vE 'uses:[[:space:]]*\./' \
+            | grep -vE 'uses:[[:space:]]*[^[:space:]@]+@[0-9a-f]{40}$' || true)
+
+          if [ -n "$unpinned" ]; then
+            echo "::error::Action reference(s) not pinned to a full commit SHA:"
+            echo "$unpinned" | while IFS= read -r line; do
+              echo "::error::  $line"
+            done
+            echo
+            echo "Pin with the 40-character commit SHA and keep the version in a trailing comment:"
+            echo "  uses: owner/repo@<40-char-sha> # v1.2.3"
+            exit 1
+          fi
+
+          echo "All third-party action references are pinned to full commit SHAs."
+
+      - name: Summary
+        env:
+          EVENT: ${{ github.event_name }}
+          CI_CHANGED: ${{ steps.changes.outputs.ci }}
+        run: |
+          if [ "$EVENT" = "workflow_dispatch" ]; then
+            echo "Ran: manual dispatch."
+          elif [ "$CI_CHANGED" = "true" ]; then
+            echo "Ran: .github changed."
+          else
+            echo "Skipped: no CI configuration changed."
+          fi

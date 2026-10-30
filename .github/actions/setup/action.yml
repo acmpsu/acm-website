@@ -1,0 +1,19 @@
+name: Setup Node and dependencies
+description: >-
+  Installs the Node version pinned in .nvmrc, restores the npm download cache,
+  and installs dependencies with npm ci. Does not check out the repository —
+  callers must run actions/checkout first.
+
+runs:
+  using: composite
+  steps:
+    - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6.5.0
+      with:
+        node-version-file: .nvmrc
+        cache: npm
+
+    # npm ci always rebuilds node_modules from package-lock.json; the cache above
+    # only avoids re-downloading tarballs. postinstall runs patch-package here,
+    # which applies patches/@react-three+fiber+9.6.0.patch.
+    - run: npm ci
+      shell: bash

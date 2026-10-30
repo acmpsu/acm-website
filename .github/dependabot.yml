@@ -1,0 +1,47 @@
+version: 2
+
+updates:
+  - package-ecosystem: npm
+    directory: "/"
+    schedule:
+      interval: weekly
+      day: monday
+    open-pull-requests-limit: 5
+    groups:
+      # One pull request for all minor and patch bumps. Majors are not in the
+      # group, so each one arrives on its own branch and can be reviewed alone.
+      npm-minor-and-patch:
+        applies-to: version-updates
+        patterns:
+          - "*"
+        update-types:
+          - minor
+          - patch
+    ignore:
+      # patches/@react-three+fiber+9.6.0.patch carries the version in its
+      # filename. patch-package matches patches by that name during postinstall,
+      # so any bump makes `npm ci` fail until the patch is regenerated against
+      # the new version. Upgrades here are a deliberate manual step.
+      - dependency-name: "@react-three/fiber"
+
+  - package-ecosystem: github-actions
+    # "/" covers .github/workflows. The composite action is a separate manifest
+    # in its own directory and needs its own entry, or the setup-node pin that
+    # every job depends on would never be bumped.
+    directories:
+      - "/"
+      - "/.github/actions/setup"
+    schedule:
+      interval: weekly
+      day: monday
+    open-pull-requests-limit: 5
+    groups:
+      # Keeps the SHA pins in .github/workflows current. Pinning to a SHA means
+      # nothing updates on its own, so this is the mechanism that does it.
+      actions-minor-and-patch:
+        applies-to: version-updates
+        patterns:
+          - "*"
+        update-types:
+          - minor
+          - patch

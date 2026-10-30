@@ -1,0 +1,28 @@
+name: Security
+
+# Checks installed dependencies against the npm advisory database.
+#
+# This is a scheduled report, NOT a pull request gate. An advisory can be
+# published for a transitive dependency with no fix available, which would block
+# every unrelated pull request until upstream patches it. Running on a cron keeps
+# the signal without coupling it to merges. For the same reason there is no
+# continue-on-error here: a red run should be visible, not hidden.
+
+on:
+  schedule:
+    # Daily, 09:17 UTC. The advisory database changes even when the lockfile does not.
+    - cron: "17 9 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    name: npm audit
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+      - uses: ./.github/actions/setup
+      - run: npm audit --audit-level=high

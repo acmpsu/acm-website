@@ -1,0 +1,58 @@
+name: Typecheck
+
+# tsc --noEmit over the whole project, test files included.
+#
+# Known asymmetry with a local run: tsconfig.json includes .next/types/**, which
+# does not exist in a fresh checkout. So this job checks slightly LESS than a
+# local `npm run typecheck` after a build, and route-signature breakage surfaces
+# in the Build workflow instead.
+#
+# The job always runs to completion and always reports a status. A docs-only
+# change skips the STEPS, not the job.
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  typecheck:
+    name: typecheck
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      pull-requests: read
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+
+      - id: changes
+        if: github.event_name != 'workflow_dispatch'
+        uses: ./.github/actions/changes
+
+      - if: github.event_name == 'workflow_dispatch' || steps.changes.outputs.code == 'true'
+        uses: ./.github/actions/setup
+
+      - if: github.event_name == 'workflow_dispatch' || steps.changes.outputs.code == 'true'
+        run: npm run typecheck
+
+      - name: Summary
+        env:
+          EVENT: ${{ github.event_name }}
+          CODE: ${{ steps.changes.outputs.code }}
+        run: |
+          if [ "$EVENT" = "workflow_dispatch" ]; then
+            echo "Ran: manual dispatch."
+          elif [ "$CODE" = "true" ]; then
+            echo "Ran: code changed."
+          else
+            echo "Skipped: docs-only change."
+          fi

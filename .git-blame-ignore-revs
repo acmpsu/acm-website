@@ -1,0 +1,9 @@
+# Commits listed here are skipped by `git blame`, so a bulk reformat does not
+# show up as the last author of every line. GitHub reads this file automatically.
+#
+# Enable it locally once:
+#   git config blame.ignoreRevsFile .git-blame-ignore-revs
+#
+# Adopting Prettier takes one repo-wide reformat commit (`npm run format`).
+# That commit does not exist yet. After making it, append its full 40-character
+# SHA below, one per line, with a comment naming the commit.

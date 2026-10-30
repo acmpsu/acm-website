@@ -58,3 +58,9 @@ supabase/.branches/
 
 # Project-local runtimes, caches, and browser tooling
 /.local-tooling/
+
+# git worktrees
+.worktrees/
+
+# agent task state
+.agents/

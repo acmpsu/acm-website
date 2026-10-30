@@ -1,0 +1,18 @@
+# Build output
+.next/
+out/
+build/
+
+# Dependencies
+node_modules/
+
+# Generated or externally owned files — formatting these creates churn or breaks tooling
+package-lock.json
+patches/
+public/
+
+# Local git worktrees
+.worktrees/
+
+# Agent task state — not source, and rewriting it mid-task is churn
+.agents/

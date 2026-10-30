@@ -6,7 +6,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint",
+    "lint": "eslint --max-warnings=0",
+    "typecheck": "tsc --noEmit",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
     "postinstall": "patch-package",
     "test": "node --import tsx --test tests/*.test.ts"
   },
@@ -28,12 +31,13 @@
   "devDependencies": {
     "@electric-sql/pglite": "^0.5.13",
     "@tailwindcss/postcss": "^4",
-    "@types/node": "^20",
+    "@types/node": "^24.19.2",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.2.2",
     "patch-package": "^8.0.1",
+    "prettier": "^3.6.2",
     "tailwindcss": "^4",
     "tsx": "^4.23.15",
     "typescript": "5.9.3"

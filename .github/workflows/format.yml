@@ -1,0 +1,30 @@
+name: Format
+
+# Prettier formatting gate. Unlike the other checks this one has no docs-only
+# skip, because Prettier formats Markdown too — a docs change is exactly the
+# kind of change it should inspect.
+#
+# This workflow only CHECKS. Run `npm run format` locally to fix.
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  format:
+    name: format
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+      - uses: ./.github/actions/setup
+      - run: npm run format:check
