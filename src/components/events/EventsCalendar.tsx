@@ -56,11 +56,15 @@ function EventDayView({
 
   return (
     <div className="space-y-4">
-      <p className="font-ds-mono text-[12px] uppercase tracking-[0.18em] text-[var(--slate)]">Your next stop</p>
+      <p className="font-ds-mono text-[12px] uppercase tracking-[0.18em] text-[var(--slate)]">
+        Your next stop
+      </p>
       <h3 className="text-xl font-semibold text-[var(--navy-dk)]">{label}</h3>
       {dayEvents.length === 0 ? (
         <div className="space-y-12">
-          <p className="text-base text-[var(--slate)]">No events scheduled for this day.</p>
+          <p className="text-base text-[var(--slate)]">
+            No events scheduled for this day.
+          </p>
           <p className="text-base leading-relaxed text-[var(--slate-lt)]">
             A little room for your next idea.
             {nextEvent ? (
@@ -72,7 +76,10 @@ function EventDayView({
                   onClick={() => onJump(nextEvent.date)}
                   className="underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-[var(--navy)]"
                 >
-                  {new Date(`${nextEvent.date}T12:00:00`).toLocaleDateString("en-US", { month: "long", day: "numeric" })}
+                  {new Date(`${nextEvent.date}T12:00:00`).toLocaleDateString(
+                    "en-US",
+                    { month: "long", day: "numeric" },
+                  )}
                 </button>{" "}
                 for {nextEvent.title}.
               </>
@@ -82,16 +89,27 @@ function EventDayView({
       ) : (
         <div className="space-y-3">
           {dayEvents.map((event) => {
-            const styles = event.category ? categoryStyles[event.category] : null;
+            const styles = event.category
+              ? categoryStyles[event.category]
+              : null;
             return (
               <div
                 key={event.id}
                 className={`rounded-lg border border-[var(--border)] p-4 ${styles?.bg ?? "bg-[#f0f4f8]"}`}
               >
                 <div className="mb-2 flex items-start justify-between gap-3">
-                  <h4 className="font-semibold text-[var(--navy-dk)]"><Link href={`/events/${event.id}`} className="underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-[var(--navy)]">{event.title}</Link></h4>
+                  <h4 className="font-semibold text-[var(--navy-dk)]">
+                    <Link
+                      href={`/events/${event.id}`}
+                      className="underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-[var(--navy)]"
+                    >
+                      {event.title}
+                    </Link>
+                  </h4>
                   {styles && (
-                    <span className={`rounded-full px-2 py-1 text-xs font-medium ${styles.badge}`}>
+                    <span
+                      className={`rounded-full px-2 py-1 text-xs font-medium ${styles.badge}`}
+                    >
                       {styles.label}
                     </span>
                   )}
@@ -99,7 +117,12 @@ function EventDayView({
                 <div className="space-y-1 text-[14px] text-[var(--slate)]">
                   <p>⏰ {event.time}</p>
                   <p>📍 {event.location}</p>
-                  <Link href={`/events/${event.id}`} className="inline-flex min-h-11 items-center font-semibold text-[var(--navy)] underline">View invitation &amp; RSVP →</Link>
+                  <Link
+                    href={`/events/${event.id}`}
+                    className="inline-flex min-h-11 items-center font-semibold text-[var(--navy)] underline"
+                  >
+                    View invitation &amp; RSVP →
+                  </Link>
                 </div>
               </div>
             );
@@ -114,12 +137,19 @@ export function EventsCalendar({ events }: { events: CalendarEvent[] }) {
   const [today] = useState(() => new Date());
   const [viewYear, setViewYear] = useState(today.getFullYear());
   const [viewMonth, setViewMonth] = useState(today.getMonth());
-  const todayIso = toIsoDate(today.getFullYear(), today.getMonth(), today.getDate());
+  const todayIso = toIsoDate(
+    today.getFullYear(),
+    today.getMonth(),
+    today.getDate(),
+  );
   const [selectedDate, setSelectedDate] = useState(todayIso);
   const [filter, setFilter] = useState<EventCategory | "all">("all");
   const visible = useMemo(
-    () => (filter === "all" ? events : events.filter((event) => event.category === filter)),
-    [events, filter]
+    () =>
+      filter === "all"
+        ? events
+        : events.filter((event) => event.category === filter),
+    [events, filter],
   );
 
   const minIndex = monthIndex(today.getFullYear(), today.getMonth()) - 12;
@@ -134,14 +164,18 @@ export function EventsCalendar({ events }: { events: CalendarEvent[] }) {
 
   const eventsByDate = useMemo(() => {
     const map = new Map<string, CalendarEvent[]>();
-    for (const event of visible) map.set(event.date, [...(map.get(event.date) ?? []), event]);
+    for (const event of visible)
+      map.set(event.date, [...(map.get(event.date) ?? []), event]);
     return map;
   }, [visible]);
 
   const selectedDayEvents = eventsByDate.get(selectedDate) ?? [];
   const nextEvent = useMemo(
-    () => [...visible].filter((e) => e.date > selectedDate).sort((a, b) => a.date.localeCompare(b.date))[0] ?? null,
-    [visible, selectedDate]
+    () =>
+      [...visible]
+        .filter((e) => e.date > selectedDate)
+        .sort((a, b) => a.date.localeCompare(b.date))[0] ?? null,
+    [visible, selectedDate],
   );
 
   function jumpTo(iso: string) {
@@ -178,7 +212,9 @@ export function EventsCalendar({ events }: { events: CalendarEvent[] }) {
       <div className="lg:col-span-2">
         <div className="rounded-xl border border-[var(--border)] bg-white p-4 sm:p-8">
           <div className="mb-6 flex items-center justify-between">
-            <h2 className="text-lg font-semibold text-[var(--navy-dk)] sm:text-2xl">{monthLabel}</h2>
+            <h2 className="text-lg font-semibold text-[var(--navy-dk)] sm:text-2xl">
+              {monthLabel}
+            </h2>
             <div className="flex gap-2">
               <button
                 type="button"
@@ -208,7 +244,11 @@ export function EventsCalendar({ events }: { events: CalendarEvent[] }) {
             </div>
           </div>
 
-          <div className="mb-4 flex flex-wrap gap-1.5" role="group" aria-label="Filter events by type">
+          <div
+            className="mb-4 flex flex-wrap gap-1.5"
+            role="group"
+            aria-label="Filter events by type"
+          >
             {(["all", ...EVENT_CATEGORIES] as const).map((value) => (
               <button
                 key={value}
@@ -216,10 +256,16 @@ export function EventsCalendar({ events }: { events: CalendarEvent[] }) {
                 aria-pressed={filter === value}
                 onClick={() => setFilter(value)}
                 className={`flex min-h-9 items-center gap-1.5 rounded-lg px-2.5 text-sm transition focus-visible:outline-2 focus-visible:outline-[var(--navy)] ${
-                  filter === value ? "bg-[#eef2f7] font-medium text-[var(--navy-dk)]" : "text-[var(--slate)] hover:bg-[var(--bg-alt)]"
+                  filter === value
+                    ? "bg-[#eef2f7] font-medium text-[var(--navy-dk)]"
+                    : "text-[var(--slate)] hover:bg-[var(--bg-alt)]"
                 }`}
               >
-                {value !== "all" && <span className={`h-1.5 w-1.5 rounded-full ${categoryStyles[value].dot}`} />}
+                {value !== "all" && (
+                  <span
+                    className={`h-1.5 w-1.5 rounded-full ${categoryStyles[value].dot}`}
+                  />
+                )}
                 {value === "all" ? "All" : categoryStyles[value].label}
               </button>
             ))}
@@ -227,7 +273,10 @@ export function EventsCalendar({ events }: { events: CalendarEvent[] }) {
 
           <div className="mb-6 grid grid-cols-7 text-center sm:gap-2">
             {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((day) => (
-              <div key={day} className="py-2 text-sm font-semibold text-[var(--slate)]">
+              <div
+                key={day}
+                className="py-2 text-sm font-semibold text-[var(--slate)]"
+              >
                 {day}
               </div>
             ))}
@@ -261,17 +310,31 @@ export function EventsCalendar({ events }: { events: CalendarEvent[] }) {
                 >
                   <span
                     className={`ml-auto grid h-7 min-w-7 place-items-center rounded-full px-1 text-sm ${
-                      isToday ? "bg-[var(--navy-dk)] font-semibold text-white" : hasEvent ? "font-medium text-[var(--navy-dk)]" : "text-[var(--slate)]"
+                      isToday
+                        ? "bg-[var(--navy-dk)] font-semibold text-white"
+                        : hasEvent
+                          ? "font-medium text-[var(--navy-dk)]"
+                          : "text-[var(--slate)]"
                     }`}
                   >
                     {day}
                   </span>
                   {hasEvent && (
-                    <span className="mt-auto flex flex-col gap-0.5 overflow-hidden" aria-hidden="true">
+                    <span
+                      className="mt-auto flex flex-col gap-0.5 overflow-hidden"
+                      aria-hidden="true"
+                    >
                       {dayEvents.slice(0, 2).map((event) => (
-                        <span key={event.id} className="flex items-center gap-1 text-[10px] leading-tight text-[var(--navy-dk)]">
-                          <span className={`h-1.5 w-1.5 shrink-0 rounded-full ${event.category ? categoryStyles[event.category].dot : "bg-[var(--navy-lt)]"}`} />
-                          <span className="hidden truncate sm:inline">{event.title}</span>
+                        <span
+                          key={event.id}
+                          className="flex items-center gap-1 text-[10px] leading-tight text-[var(--navy-dk)]"
+                        >
+                          <span
+                            className={`h-1.5 w-1.5 shrink-0 rounded-full ${event.category ? categoryStyles[event.category].dot : "bg-[var(--navy-lt)]"}`}
+                          />
+                          <span className="hidden truncate sm:inline">
+                            {event.title}
+                          </span>
                         </span>
                       ))}
                     </span>

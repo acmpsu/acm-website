@@ -13,7 +13,10 @@ export const PRIMARY_NAV: NavLink[] = [
 
 /** Right-hand pills on desktop (the Committees dropdown sits between them). */
 export const MEET_US_LINK: NavLink = { label: "Meet Us", href: "/meet-us" };
-export const SPONSOR_US_LINK: NavLink = { label: "Sponsor us", href: "/sponsor" };
+export const SPONSOR_US_LINK: NavLink = {
+  label: "Sponsor us",
+  href: "/sponsor",
+};
 
 export const FOOTER_NAV: NavLink[] = [
   { label: "About ACM", href: "/#about" },
@@ -35,7 +38,12 @@ export type CommitteePreview =
       kind: "circuit";
       qubits: number;
       /** `at` is the gate's position along the wires, 0–1; `link` draws a wire between two qubits. */
-      gates: { label: string; qubit: number; at: number; link?: [number, number] }[];
+      gates: {
+        label: string;
+        qubit: number;
+        at: number;
+        link?: [number, number];
+      }[];
     }
   | { kind: "steps"; items: string[]; caption: string }
   | { kind: "chart"; label: string; values: number[] };
@@ -92,7 +100,10 @@ export const COMMITTEES: Committee[] = [
     tagline: "From first sketch to working page.",
     resources: ["Figma explorations", "components", "source code"],
     theme: "web",
-    project: { title: "ACM website refresh", preview: { kind: "wireframe", headline: "A place to belong." } },
+    project: {
+      title: "ACM website refresh",
+      preview: { kind: "wireframe", headline: "A place to belong." },
+    },
   },
   {
     id: "acm-ai",
@@ -149,7 +160,11 @@ export const COMMITTEES: Committee[] = [
     theme: "dev",
     project: {
       title: "Developer workspace",
-      preview: { kind: "steps", items: ["Plan", "Build", "Ship"], caption: "Demo slot" },
+      preview: {
+        kind: "steps",
+        items: ["Plan", "Build", "Ship"],
+        caption: "Demo slot",
+      },
     },
   },
   {
@@ -164,7 +179,11 @@ export const COMMITTEES: Committee[] = [
     theme: "data",
     project: {
       title: "Campus data explorer",
-      preview: { kind: "chart", label: "Illustrative visualization", values: [70, 108, 84, 145, 124, 170] },
+      preview: {
+        kind: "chart",
+        label: "Illustrative visualization",
+        values: [70, 108, 84, 145, 124, 170],
+      },
     },
   },
 ];
@@ -209,4 +228,3 @@ export const CONTACT_LINKS: ContactLink[] = [
     group: "social",
   },
 ];
-

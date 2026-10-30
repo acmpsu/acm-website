@@ -13,21 +13,39 @@
   overflow: hidden;
   margin-bottom: calc(-1 * var(--pane-overlap));
   border-radius: var(--pane-radius) var(--pane-radius) 0 0;
-  background: linear-gradient(144.53deg, var(--pane-from) 12.587%, var(--pane-mid) 51.748%, var(--pane-to) 82.517%);
+  background: linear-gradient(
+    144.53deg,
+    var(--pane-from) 12.587%,
+    var(--pane-mid) 51.748%,
+    var(--pane-to) 82.517%
+  );
   color: var(--pane-text);
   font-family: var(--font-red-hat), sans-serif;
 }
 
-.pane:first-of-type { border-radius: 0; }
-.pane:first-of-type .content { padding-top: max(clamp(4rem, 6.875vw, 8.25rem), calc(var(--page-top, 0px) + 1.5rem)); }
-.pane:last-of-type { margin-bottom: 0; }
+.pane:first-of-type {
+  border-radius: 0;
+}
+.pane:first-of-type .content {
+  padding-top: max(
+    clamp(4rem, 6.875vw, 8.25rem),
+    calc(var(--page-top, 0px) + 1.5rem)
+  );
+}
+.pane:last-of-type {
+  margin-bottom: 0;
+}
 
 .atmosphere {
   position: absolute;
   inset: 0;
   z-index: -1;
   overflow: hidden;
-  background: linear-gradient(to bottom, transparent, rgb(0 0 0 / var(--pane-vignette, 0.16)));
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    rgb(0 0 0 / var(--pane-vignette, 0.16))
+  );
   pointer-events: none;
 }
 
@@ -82,8 +100,13 @@
   content: "";
 }
 
-.motif::before { inset: var(--motif-inset, 0); }
-.motif::after { inset: var(--motif-inset-2, 0); background-image: var(--motif-art-2, none); }
+.motif::before {
+  inset: var(--motif-inset, 0);
+}
+.motif::after {
+  inset: var(--motif-inset-2, 0);
+  background-image: var(--motif-art-2, none);
+}
 
 /* ===== Layout ===== */
 .content {
@@ -106,7 +129,9 @@
   gap: 1.5rem;
 }
 
-.info > :not(.title) { max-width: 95.4%; }
+.info > :not(.title) {
+  max-width: 95.4%;
+}
 
 .title,
 .tagline,
@@ -118,8 +143,12 @@
   line-height: 1.1;
 }
 
-.title { font-size: clamp(3.5rem, 5.21vw, 6.25rem); }
-.tagline { font-size: clamp(1.75rem, 2.19vw, 2.625rem); }
+.title {
+  font-size: clamp(3.5rem, 5.21vw, 6.25rem);
+}
+.tagline {
+  font-size: clamp(1.75rem, 2.19vw, 2.625rem);
+}
 
 .description {
   font-size: clamp(1rem, 1.094vw, 1.3125rem);
@@ -132,7 +161,9 @@
   line-height: 1.45;
 }
 
-.meta { font-size: 0.9375rem; }
+.meta {
+  font-size: 0.9375rem;
+}
 
 .label {
   font-size: 11px;
@@ -140,8 +171,12 @@
   color: var(--pane-accent);
 }
 
-.caps { text-transform: uppercase; }
-.small { font-size: 10px; }
+.caps {
+  text-transform: uppercase;
+}
+.small {
+  font-size: 10px;
+}
 
 .projectColumn {
   display: flex;
@@ -200,7 +235,9 @@
   font-size: 1rem;
   font-weight: 500;
   line-height: 1.45;
-  transition: transform 200ms cubic-bezier(0.4, 0, 0.2, 1), box-shadow 200ms cubic-bezier(0.4, 0, 0.2, 1);
+  transition:
+    transform 200ms cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 200ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .next:hover {
@@ -222,7 +259,12 @@
   padding: 24px 32px 28px;
   border: 1px solid var(--pane-border);
   border-radius: 16px;
-  background: linear-gradient(148.57deg, var(--pane-soft) 12.587%, #fff 51.748%, var(--pane-soft) 82.517%);
+  background: linear-gradient(
+    148.57deg,
+    var(--pane-soft) 12.587%,
+    #fff 51.748%,
+    var(--pane-soft) 82.517%
+  );
 }
 
 .toolbar {
@@ -275,8 +317,12 @@
   line-height: 1.45;
 }
 
-.checkRow .label:first-child { font-size: 12px; }
-.checkLabel { font-size: 18px; }
+.checkRow .label:first-child {
+  font-size: 12px;
+}
+.checkLabel {
+  font-size: 18px;
+}
 
 /* Wireframe (Web) */
 .wireframe {
@@ -288,7 +334,9 @@
 
 .wireNav,
 .wireSide,
-.wireTile { background: var(--pane-soft); }
+.wireTile {
+  background: var(--pane-soft);
+}
 
 .wireNav {
   height: 28px;
@@ -310,7 +358,9 @@
   font-size: clamp(1.25rem, 1.67vw, 2rem);
 }
 
-.wireSide { border-radius: 8px; }
+.wireSide {
+  border-radius: 8px;
+}
 
 .wireTiles {
   display: grid;
@@ -332,9 +382,15 @@
   line-height: 1.45;
 }
 
-.qa .label:not(:last-child) { font-size: 12px; }
-.question { font-size: 20px; }
-.answer { font-size: 18px; }
+.qa .label:not(:last-child) {
+  font-size: 12px;
+}
+.question {
+  font-size: 20px;
+}
+.answer {
+  font-size: 18px;
+}
 
 /* Circuit (Quantum): wires at 60, 124 and 188px; the wire spans 14%–94% of the width. */
 .circuit {
@@ -407,11 +463,17 @@
   background: var(--pane-soft);
 }
 
-.step .label:first-child { font-size: 12px; }
-.stepTitle { font-size: clamp(1.75rem, 2.19vw, 2.625rem); }
+.step .label:first-child {
+  font-size: 12px;
+}
+.stepTitle {
+  font-size: clamp(1.75rem, 2.19vw, 2.625rem);
+}
 
 /* Bar chart (Data): bars sit 4px above a baseline spanning 9%–91% of the width. */
-.chart { padding: 14px 32px; }
+.chart {
+  padding: 14px 32px;
+}
 
 .bars {
   position: absolute;
@@ -433,7 +495,9 @@
   background: var(--pane-chart-a);
 }
 
-.bar:nth-child(even) { background: var(--pane-chart-b); }
+.bar:nth-child(even) {
+  background: var(--pane-chart-b);
+}
 
 /* ===== Themes (exact Figma colors per pane) ===== */
 .icpc {
@@ -451,7 +515,9 @@
   --motif-inset: 0 0 2.94% -33.33%;
 }
 
-.icpc .motif { width: 46.875%; }
+.icpc .motif {
+  width: 46.875%;
+}
 
 .web {
   --pane-from: rgb(69 33 63);
@@ -528,7 +594,9 @@
   --motif-inset-2: 23.13% 4% 29.38% 1.65%;
 }
 
-.dev .motif { height: 28.07%; }
+.dev .motif {
+  height: 28.07%;
+}
 
 .data {
   --pane-from: rgb(248 232 193);
@@ -558,13 +626,22 @@
 }
 
 @media (min-width: 1280px) {
-  .pane { min-height: min(1140px, 59.375vw); }
+  .pane {
+    min-height: min(1140px, 59.375vw);
+  }
 }
 
 @media (max-width: 1023px) {
-  .projectColumn { align-items: stretch; }
-  .clouds { align-self: flex-end; width: min(62.65%, 340px); }
-  .resources { flex-basis: 100%; }
+  .projectColumn {
+    align-items: stretch;
+  }
+  .clouds {
+    align-self: flex-end;
+    width: min(62.65%, 340px);
+  }
+  .resources {
+    flex-basis: 100%;
+  }
 }
 
 @media (max-width: 639px) {
@@ -573,21 +650,47 @@
     --pane-overlap: 2rem;
   }
 
-  .content { width: auto; margin-inline: 1rem; }
-  .window { padding: 20px 16px 24px; }
+  .content {
+    width: auto;
+    margin-inline: 1rem;
+  }
+  .window {
+    padding: 20px 16px 24px;
+  }
   .checklist,
-  .qa { padding: 20px 16px; }
-  .checkRow { gap: 16px; }
+  .qa {
+    padding: 20px 16px;
+  }
+  .checkRow {
+    gap: 16px;
+  }
   .wireframe,
-  .steps { gap: 10px; padding: 20px 16px; }
-  .wireRow { gap: 10px; }
-  .wireTiles { gap: 10px; }
-  .step { padding: 20px 0 20px 12px; }
-  .chart { padding: 14px 16px; }
-  .bars { top: 40px; }
+  .steps {
+    gap: 10px;
+    padding: 20px 16px;
+  }
+  .wireRow {
+    gap: 10px;
+  }
+  .wireTiles {
+    gap: 10px;
+  }
+  .step {
+    padding: 20px 0 20px 12px;
+  }
+  .chart {
+    padding: 14px 16px;
+  }
+  .bars {
+    top: 40px;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .next { transition: none; }
-  .next:hover { transform: none; }
+  .next {
+    transition: none;
+  }
+  .next:hover {
+    transform: none;
+  }
 }

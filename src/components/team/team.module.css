@@ -28,7 +28,9 @@
 
 .groupTitle {
   flex: 1;
-  font: 400 clamp(2rem, 2.5vw, 3rem) / 1.2 var(--font-instrument-serif), serif;
+  font:
+    400 clamp(2rem, 2.5vw, 3rem) / 1.2 var(--font-instrument-serif),
+    serif;
 }
 
 .mono,
@@ -38,8 +40,13 @@
   color: var(--ticket-muted);
 }
 
-.mono { font-size: 12px; }
-.count { font-size: 11px; text-transform: uppercase; }
+.mono {
+  font-size: 12px;
+}
+.count {
+  font-size: 11px;
+  text-transform: uppercase;
+}
 
 .grid {
   display: grid;
@@ -67,7 +74,9 @@
   border-radius: 50%;
   background: var(--team-badge);
   object-fit: cover;
-  font: italic 400 29px / 1.2 var(--font-instrument-serif), serif;
+  font:
+    italic 400 29px / 1.2 var(--font-instrument-serif),
+    serif;
 }
 
 .identity {
@@ -88,7 +97,9 @@
   text-underline-offset: 3px;
 }
 
-.role a:hover { text-decoration: underline; }
+.role a:hover {
+  text-decoration: underline;
+}
 
 .name {
   font-size: clamp(1.25rem, 1.25vw, 1.5rem);
@@ -116,7 +127,9 @@
   height: 44px;
   border-radius: 999px;
   color: var(--ticket-muted);
-  transition: background-color 150ms cubic-bezier(0.4, 0, 0.2, 1), color 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  transition:
+    background-color 150ms cubic-bezier(0.4, 0, 0.2, 1),
+    color 150ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .social:hover {
@@ -135,24 +148,47 @@
   outline-offset: 2px;
 }
 
-.footer { text-transform: uppercase; }
+.footer {
+  text-transform: uppercase;
+}
 
 @media (min-width: 768px) {
-  .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 @media (max-width: 767px) {
-  .directory { gap: 32px; padding: 36px 24px 32px; }
-  .card { flex-wrap: wrap; gap: 16px; padding: 18px 16px; min-height: 112px; }
-  .avatar { width: 56px; height: 56px; font-size: 25px; }
+  .directory {
+    gap: 32px;
+    padding: 36px 24px 32px;
+  }
+  .card {
+    flex-wrap: wrap;
+    gap: 16px;
+    padding: 18px 16px;
+    min-height: 112px;
+  }
+  .avatar {
+    width: 56px;
+    height: 56px;
+    font-size: 25px;
+  }
   /* Icons move under the name so they don't squeeze the text column. */
-  .socials { flex-basis: 100%; margin: -8px 0 -8px 60px; }
+  .socials {
+    flex-basis: 100%;
+    margin: -8px 0 -8px 60px;
+  }
 }
 
 @media (max-width: 374px) {
-  .directory { padding-inline: 16px; }
+  .directory {
+    padding-inline: 16px;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .social { transition: none; }
+  .social {
+    transition: none;
+  }
 }

@@ -5,6 +5,7 @@ Design source: Figma `HFRT30R89UUHyUL5GaTfSh` ("ACM — New Page"). Where this f
 Tokens: `--ds-*` in `src/app/globals.css` · Constants: `src/lib/constants.ts` · Shared components: `src/components/ui/` · Shell: `src/components/site/`
 
 ## Laws
+
 1. Reuse before create. Search codebase first.
 2. Tokens only — no magic numbers, no inline styles.
 3. One pattern per problem. No duplicate variants.
@@ -31,14 +32,14 @@ Use the `--ds-*` variables (or their Tailwind utilities: `bg-azure-25`, `text-gr
 
 One H1 per page. Never skip levels.
 
-| Level | Font | Mobile | Desktop (1920) | Weight |
-|---|---|---|---|---|
-| Page title (H1) | Instrument Serif italic | 48px | 112px | 400 |
-| Section title (H2) | Instrument Serif | 36px | 48px | 400 |
-| Card/window title (H3) | Instrument Serif or Red Hat Display | 20px | 24–40px | 400–500 |
-| Body | Red Hat Display | 16px | 18–21px | 400 |
-| Small | Red Hat Display | 14px | 14–15px | 400 |
-| Eyebrow / label | Red Hat Mono, uppercase | 12px | 12px | 400 |
+| Level                  | Font                                | Mobile | Desktop (1920) | Weight  |
+| ---------------------- | ----------------------------------- | ------ | -------------- | ------- |
+| Page title (H1)        | Instrument Serif italic             | 48px   | 112px          | 400     |
+| Section title (H2)     | Instrument Serif                    | 36px   | 48px           | 400     |
+| Card/window title (H3) | Instrument Serif or Red Hat Display | 20px   | 24–40px        | 400–500 |
+| Body                   | Red Hat Display                     | 16px   | 18–21px        | 400     |
+| Small                  | Red Hat Display                     | 14px   | 14–15px        | 400     |
+| Eyebrow / label        | Red Hat Mono, uppercase             | 12px   | 12px           | 400     |
 
 Use `clamp()` between the mobile and 1920 sizes. Mono labels may go to 11–12px as in the Figma; keep running text at 14px or more.
 

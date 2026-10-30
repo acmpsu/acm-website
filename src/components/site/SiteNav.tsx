@@ -10,7 +10,13 @@ import { Menu, X } from "lucide-react";
 import { AccountMenu } from "@/components/ui/account-menu";
 import { Button } from "@/components/ui/Button";
 import { IconButton } from "@/components/ui/IconButton";
-import { COMMITTEES, MEET_US_LINK, PRIMARY_NAV, SPONSOR_US_LINK, type NavLink } from "@/lib/constants";
+import {
+  COMMITTEES,
+  MEET_US_LINK,
+  PRIMARY_NAV,
+  SPONSOR_US_LINK,
+  type NavLink,
+} from "@/lib/constants";
 import { CommitteesMenu } from "./CommitteesMenu";
 import styles from "./site.module.css";
 
@@ -21,7 +27,9 @@ function useActiveSection(enabled: boolean) {
   const [active, setActive] = useState<string | null>(null);
   useEffect(() => {
     if (!enabled) return;
-    const ids = PRIMARY_NAV.filter((link) => link.href.startsWith("/#")).map((link) => link.href.slice(2));
+    const ids = PRIMARY_NAV.filter((link) => link.href.startsWith("/#")).map(
+      (link) => link.href.slice(2),
+    );
     let frame = 0;
     const update = () => {
       frame = 0;
@@ -29,7 +37,11 @@ function useActiveSection(enabled: boolean) {
       let next: string | null = null;
       for (const id of ids) {
         const anchor = document.getElementById(id);
-        if (anchor && anchor.getBoundingClientRect().top + window.scrollY <= line) next = id;
+        if (
+          anchor &&
+          anchor.getBoundingClientRect().top + window.scrollY <= line
+        )
+          next = id;
       }
       setActive(next);
     };
@@ -60,7 +72,10 @@ export function SiteNav({ account }: { account: NavAccount | null }) {
   // current location (scroll spy), shown as an underline in the glass pill.
   const activeSection = useActiveSection(pathname === "/");
   const current = (href: string): "page" | "location" | undefined => {
-    if (href.startsWith("/#")) return pathname === "/" && href.slice(2) === activeSection ? "location" : undefined;
+    if (href.startsWith("/#"))
+      return pathname === "/" && href.slice(2) === activeSection
+        ? "location"
+        : undefined;
     return href === pathname ? "page" : undefined;
   };
 
@@ -90,7 +105,9 @@ export function SiteNav({ account }: { account: NavAccount | null }) {
   const account_ = account ? (
     <AccountMenu email={account.email} fullName={account.fullName} />
   ) : (
-    <Button variant="pill" href="/login" aria-current={current("/login")}>Login</Button>
+    <Button variant="pill" href="/login" aria-current={current("/login")}>
+      Login
+    </Button>
   );
 
   const sheetLinks = (title: string, links: NavLink[], twoColumns = false) => (
@@ -99,7 +116,11 @@ export function SiteNav({ account }: { account: NavAccount | null }) {
       <ul className={twoColumns ? styles.sheetGrid : styles.sheetList}>
         {links.map((link) => (
           <li key={link.href}>
-            <Link href={link.href} aria-current={current(link.href)} className={styles.sheetLink}>
+            <Link
+              href={link.href}
+              aria-current={current(link.href)}
+              className={styles.sheetLink}
+            >
               {link.label}
             </Link>
           </li>
@@ -111,15 +132,31 @@ export function SiteNav({ account }: { account: NavAccount | null }) {
   return (
     <header className={styles.header}>
       <div className={styles.bar}>
-        <Link href="/" className={styles.brand} aria-label="Penn State ACM home">
-          <Image src="/logos/acm.png" alt="" width={80} height={80} priority sizes="80px" />
+        <Link
+          href="/"
+          className={styles.brand}
+          aria-label="Penn State ACM home"
+        >
+          <Image
+            src="/logos/acm.png"
+            alt=""
+            width={80}
+            height={80}
+            priority
+            sizes="80px"
+          />
         </Link>
 
         <nav aria-label="Primary" className={styles.primary}>
           <ul className={styles.glass}>
             {PRIMARY_NAV.map((link) => (
               <li key={link.href}>
-                <Button variant="ghost" href={link.href} aria-current={current(link.href)} className={styles.glassLink}>
+                <Button
+                  variant="ghost"
+                  href={link.href}
+                  aria-current={current(link.href)}
+                  className={styles.glassLink}
+                >
                   {link.label}
                 </Button>
               </li>
@@ -128,9 +165,21 @@ export function SiteNav({ account }: { account: NavAccount | null }) {
         </nav>
 
         <div className={styles.utility}>
-          <Button variant="pill" href={MEET_US_LINK.href} aria-current={current(MEET_US_LINK.href)}>{MEET_US_LINK.label}</Button>
+          <Button
+            variant="pill"
+            href={MEET_US_LINK.href}
+            aria-current={current(MEET_US_LINK.href)}
+          >
+            {MEET_US_LINK.label}
+          </Button>
           <CommitteesMenu />
-          <Button variant="pill" href={SPONSOR_US_LINK.href} aria-current={current(SPONSOR_US_LINK.href)}>{SPONSOR_US_LINK.label}</Button>
+          <Button
+            variant="pill"
+            href={SPONSOR_US_LINK.href}
+            aria-current={current(SPONSOR_US_LINK.href)}
+          >
+            {SPONSOR_US_LINK.label}
+          </Button>
           <span className={styles.loginGap} aria-hidden="true" />
           {account_}
         </div>
@@ -143,7 +192,13 @@ export function SiteNav({ account }: { account: NavAccount | null }) {
             aria-expanded={menuOpen}
             aria-controls="site-menu"
             onClick={() => (menuOpen ? closeMenu() : setMenuOpen(true))}
-            icon={menuOpen ? <X size={20} aria-hidden="true" /> : <Menu size={20} aria-hidden="true" />}
+            icon={
+              menuOpen ? (
+                <X size={20} aria-hidden="true" />
+              ) : (
+                <Menu size={20} aria-hidden="true" />
+              )
+            }
           />
         </div>
       </div>
@@ -166,7 +221,8 @@ export function SiteNav({ account }: { account: NavAccount | null }) {
               className={styles.sheet}
               // Any link click navigates (or scrolls to an anchor), so close the sheet.
               onClick={(event) => {
-                if ((event.target as HTMLElement).closest("a")) closeMenu(false);
+                if ((event.target as HTMLElement).closest("a"))
+                  closeMenu(false);
               }}
               initial={reduceMotion ? { opacity: 0 } : { opacity: 0, y: -8 }}
               animate={{ opacity: 1, y: 0 }}
@@ -174,8 +230,19 @@ export function SiteNav({ account }: { account: NavAccount | null }) {
               transition={{ duration: 0.2, ease: [0.4, 0, 0.2, 1] }}
             >
               <nav aria-label="Site">
-                {sheetLinks("Explore", [...PRIMARY_NAV, MEET_US_LINK, SPONSOR_US_LINK], true)}
-                {sheetLinks("Committees", COMMITTEES.map((c) => ({ label: c.shortName, href: `/committees#${c.id}` })), true)}
+                {sheetLinks(
+                  "Explore",
+                  [...PRIMARY_NAV, MEET_US_LINK, SPONSOR_US_LINK],
+                  true,
+                )}
+                {sheetLinks(
+                  "Committees",
+                  COMMITTEES.map((c) => ({
+                    label: c.shortName,
+                    href: `/committees#${c.id}`,
+                  })),
+                  true,
+                )}
               </nav>
             </motion.div>
           </>

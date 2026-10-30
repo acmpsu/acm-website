@@ -11,9 +11,12 @@
   position: relative;
   isolation: isolate;
   overflow: hidden;
-  padding-block: calc(var(--site-header-height) + clamp(1rem, 3vw, 56px)) clamp(2.5rem, 4vw, 72px);
+  padding-block: calc(var(--site-header-height) + clamp(1rem, 3vw, 56px))
+    clamp(2.5rem, 4vw, 72px);
   border-radius: var(--events-radius) var(--events-radius) 0 0;
-  background: url("/resources/sponsor/section-texture.png") top left / 96px 96px, var(--sponsor-blue);
+  background:
+    url("/resources/sponsor/section-texture.png") top left / 96px 96px,
+    var(--sponsor-blue);
   color: var(--events-heading);
 }
 
@@ -36,13 +39,17 @@
 }
 
 .heading {
-  font: 400 clamp(2.25rem, 2.9vw, 3.5rem) / 1.05 var(--font-instrument-serif), serif;
+  font:
+    400 clamp(2.25rem, 2.9vw, 3.5rem) / 1.05 var(--font-instrument-serif),
+    serif;
   letter-spacing: -0.72px;
 }
 
 .flourish {
   margin-left: 0.25em;
-  font: 500 clamp(0.875rem, 1.05vw, 1.26rem) / 1 var(--font-ticket-mono), monospace;
+  font:
+    500 clamp(0.875rem, 1.05vw, 1.26rem) / 1 var(--font-ticket-mono),
+    monospace;
   letter-spacing: 1.6px;
   color: rgb(225 234 242 / 0.6);
   vertical-align: middle;
@@ -59,12 +66,16 @@
   display: flex;
   gap: var(--logo-gap);
   width: max-content;
-  padding-right: var(--logo-gap); /* Makes -50% land exactly on the start of the copy. */
+  padding-right: var(
+    --logo-gap
+  ); /* Makes -50% land exactly on the start of the copy. */
   animation: sponsor-rail 40s linear infinite;
 }
 
 .carousel:hover .rail,
-.carousel:focus-within .rail { animation-play-state: paused; }
+.carousel:focus-within .rail {
+  animation-play-state: paused;
+}
 
 .logo {
   position: relative;
@@ -93,7 +104,9 @@ a.logo:focus-visible {
 }
 
 .ctaHeading {
-  font: italic 400 clamp(2rem, 2.9vw, 3.25rem) / 1.1 var(--font-instrument-serif), serif;
+  font:
+    italic 400 clamp(2rem, 2.9vw, 3.25rem) / 1.1 var(--font-instrument-serif),
+    serif;
   letter-spacing: -0.32px;
 }
 
@@ -105,19 +118,36 @@ a.logo:focus-visible {
 }
 
 @keyframes sponsor-rail {
-  to { transform: translateX(-50%); }
+  to {
+    transform: translateX(-50%);
+  }
 }
 
 @media (max-width: 639px) {
-  .section { border-radius: 1.5rem 1.5rem 0 0; }
-  .content { width: auto; margin-inline: 1rem; }
-  .cta { padding: 24px 20px; }
-  .ctaButton { width: 100%; }
+  .section {
+    border-radius: 1.5rem 1.5rem 0 0;
+  }
+  .content {
+    width: auto;
+    margin-inline: 1rem;
+  }
+  .cta {
+    padding: 24px 20px;
+  }
+  .ctaButton {
+    width: 100%;
+  }
 }
 
 /* Without motion the rail becomes a plain horizontal scroller with a single set. */
 @media (prefers-reduced-motion: reduce) {
-  .rail { animation: none; }
-  .carousel { overflow-x: auto; }
-  .loopCopy { display: none; }
+  .rail {
+    animation: none;
+  }
+  .carousel {
+    overflow-x: auto;
+  }
+  .loopCopy {
+    display: none;
+  }
 }

@@ -44,12 +44,16 @@ export function CommitteeCarousel({ logos }: { logos: Logo[] }) {
         if (step.current) {
           const t = Math.min(1, (now - step.current.start) / STEP_MS);
           const eased = 1 - (1 - t) ** 3;
-          offset.current = step.current.from + (step.current.to - step.current.from) * eased;
+          offset.current =
+            step.current.from + (step.current.to - step.current.from) * eased;
           if (t === 1) step.current = null;
         } else if (!pausedRef.current && setWidth > 0) {
           offset.current += (setWidth / (LOOP_SECONDS * 1000)) * dt;
         }
-        const wrapped = setWidth > 0 ? ((offset.current % setWidth) + setWidth) % setWidth : 0;
+        const wrapped =
+          setWidth > 0
+            ? ((offset.current % setWidth) + setWidth) % setWidth
+            : 0;
         rail.style.transform = `translateX(${-wrapped}px)`;
       }
       frame = requestAnimationFrame(tick);
@@ -63,7 +67,11 @@ export function CommitteeCarousel({ logos }: { logos: Logo[] }) {
     if (!first) return;
     const gap = parseFloat(getComputedStyle(railRef.current!).columnGap) || 0;
     const distance = first.getBoundingClientRect().width + gap;
-    step.current = { from: offset.current, to: offset.current + direction * distance, start: performance.now() };
+    step.current = {
+      from: offset.current,
+      to: offset.current + direction * distance,
+      start: performance.now(),
+    };
   };
 
   return (
@@ -78,9 +86,22 @@ export function CommitteeCarousel({ logos }: { logos: Logo[] }) {
         <ul ref={railRef} className={styles.logoRail}>
           {[false, true].map((copy) =>
             logos.map((logo) => (
-              <li key={`${logo.id}${copy ? "-loop" : ""}`} aria-hidden={copy || undefined}>
-                <a href={logo.href} tabIndex={copy ? -1 : undefined} className={styles.logoLink}>
-                  <Image src={logo.src} alt={copy ? "" : logo.label} width={2880} height={724} sizes="(min-width: 1280px) 480px, 45vw" />
+              <li
+                key={`${logo.id}${copy ? "-loop" : ""}`}
+                aria-hidden={copy || undefined}
+              >
+                <a
+                  href={logo.href}
+                  tabIndex={copy ? -1 : undefined}
+                  className={styles.logoLink}
+                >
+                  <Image
+                    src={logo.src}
+                    alt={copy ? "" : logo.label}
+                    width={2880}
+                    height={724}
+                    sizes="(min-width: 1280px) 480px, 45vw"
+                  />
                 </a>
               </li>
             )),
@@ -89,13 +110,33 @@ export function CommitteeCarousel({ logos }: { logos: Logo[] }) {
       </div>
 
       <div className={styles.carouselControls}>
-        <button type="button" className={styles.carouselButton} aria-label="Previous committee" onClick={() => move(-1)}>
+        <button
+          type="button"
+          className={styles.carouselButton}
+          aria-label="Previous committee"
+          onClick={() => move(-1)}
+        >
           <ChevronLeft size={18} aria-hidden="true" />
         </button>
-        <button type="button" className={styles.carouselButton} aria-label={paused ? "Play carousel" : "Pause carousel"} aria-pressed={paused} onClick={() => setPaused((value) => !value)}>
-          {paused ? <Play size={16} aria-hidden="true" /> : <Pause size={16} aria-hidden="true" />}
+        <button
+          type="button"
+          className={styles.carouselButton}
+          aria-label={paused ? "Play carousel" : "Pause carousel"}
+          aria-pressed={paused}
+          onClick={() => setPaused((value) => !value)}
+        >
+          {paused ? (
+            <Play size={16} aria-hidden="true" />
+          ) : (
+            <Pause size={16} aria-hidden="true" />
+          )}
         </button>
-        <button type="button" className={styles.carouselButton} aria-label="Next committee" onClick={() => move(1)}>
+        <button
+          type="button"
+          className={styles.carouselButton}
+          aria-label="Next committee"
+          onClick={() => move(1)}
+        >
           <ChevronRight size={18} aria-hidden="true" />
         </button>
       </div>

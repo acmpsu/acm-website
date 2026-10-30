@@ -62,12 +62,12 @@ website does not edit an external calendar entry.
 
 ## Data contract
 
-| Source | Ticket fields |
-| --- | --- |
-| `events` | Title, description/flight notes, start/end, location, category, committee ID, RSVP enabled flag, capacity, deadline. Eastern dates/times, month/day/year and semester label derive from the event date. |
-| `profiles` | Full name, officer/member role, generated membership number, graduation year. |
-| `committee_members` | The member’s joined committees, displayed using existing committee labels. |
-| `event_registrations` | Opaque ticket UUID, generated ticket number, profile/event foreign keys, confirmed/cancelled status, issue/cancellation dates. |
+| Source                | Ticket fields                                                                                                                                                                                           |
+| --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `events`              | Title, description/flight notes, start/end, location, category, committee ID, RSVP enabled flag, capacity, deadline. Eastern dates/times, month/day/year and semester label derive from the event date. |
+| `profiles`            | Full name, officer/member role, generated membership number, graduation year.                                                                                                                           |
+| `committee_members`   | The member’s joined committees, displayed using existing committee labels.                                                                                                                              |
+| `event_registrations` | Opaque ticket UUID, generated ticket number, profile/event foreign keys, confirmed/cancelled status, issue/cancellation dates.                                                                          |
 
 TypeScript contracts and response validation live in `src/lib/tickets/`. Missing
 optional values display as an em dash. UI components accept the same typed model for static previews and live records.

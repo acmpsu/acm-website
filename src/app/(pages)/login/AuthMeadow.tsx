@@ -114,7 +114,9 @@ export function AuthMeadow() {
         className="object-cover blur-[12px] [inset:-24px] !h-[calc(100%+48px)] !w-[calc(100%+48px)]"
       />
       <div className="auth-meadow-veil absolute inset-0" />
-      <div className="auth-meadow-glyphs absolute inset-0">{GLYPH_CONTOURS}</div>
+      <div className="auth-meadow-glyphs absolute inset-0">
+        {GLYPH_CONTOURS}
+      </div>
     </div>
   );
 }

@@ -1,6 +1,10 @@
 import { createClient } from "@/lib/supabase/server";
 import { isSupabaseConfigured } from "@/lib/supabase/env";
-import { EVENT_CATEGORIES, type CalendarEvent, type EventCategory } from "@/lib/events";
+import {
+  EVENT_CATEGORIES,
+  type CalendarEvent,
+  type EventCategory,
+} from "@/lib/events";
 import { EASTERN } from "@/lib/eastern";
 
 type EventRow = {
@@ -36,7 +40,8 @@ function formatTime(startsAt: string, endsAt: string | null) {
 }
 
 function parseCategory(value: string | null): EventCategory | null {
-  if (value && EVENT_CATEGORIES.includes(value as EventCategory)) return value as EventCategory;
+  if (value && EVENT_CATEGORIES.includes(value as EventCategory))
+    return value as EventCategory;
   return null;
 }
 
@@ -51,7 +56,10 @@ function toCalendarEvent(row: EventRow): CalendarEvent {
   };
 }
 
-export type CalendarResult = { events: CalendarEvent[]; status: "ready" | "unconfigured" | "unavailable" };
+export type CalendarResult = {
+  events: CalendarEvent[];
+  status: "ready" | "unconfigured" | "unavailable";
+};
 
 export async function getCalendarEvents(): Promise<CalendarResult> {
   if (!isSupabaseConfigured) return { events: [], status: "unconfigured" };

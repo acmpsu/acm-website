@@ -4,7 +4,8 @@
   position: relative;
   isolation: isolate;
   overflow: hidden;
-  padding: calc(var(--page-top, 0px) + clamp(1.5rem, 2vw, 2.5rem)) 1rem clamp(4rem, 10vw, 12rem);
+  padding: calc(var(--page-top, 0px) + clamp(1.5rem, 2vw, 2.5rem)) 1rem
+    clamp(4rem, 10vw, 12rem);
   background: var(--ticket-ink);
   color: var(--ticket-ink);
   font-family: var(--font-red-hat), sans-serif;
@@ -36,5 +37,7 @@
 }
 
 @media (max-width: 767px) {
-  .panel { border-radius: 20px; }
+  .panel {
+    border-radius: 20px;
+  }
 }

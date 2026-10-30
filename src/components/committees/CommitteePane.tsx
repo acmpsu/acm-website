@@ -13,14 +13,18 @@ type CommitteePaneProps = {
 
 /** One full-width committee pane from the Figma Committees frame (478:597). */
 export function CommitteePane({ committee, next }: CommitteePaneProps) {
-  const { id, shortName, tagline, description, meeting, resources, project } = committee;
+  const { id, shortName, tagline, description, meeting, resources, project } =
+    committee;
   const director = committeeDirector(id)?.name;
 
   return (
     <>
       {/* The anchor stays in normal flow: a pinned (sticky) pane would be the wrong scroll target. */}
       <StackAnchor id={id} />
-      <section aria-labelledby={`${id}-title`} className={`${styles.pane} ${styles[committee.theme]}`}>
+      <section
+        aria-labelledby={`${id}-title`}
+        className={`${styles.pane} ${styles[committee.theme]}`}
+      >
         <div className={styles.atmosphere} aria-hidden="true">
           <span className={styles.aurora} />
           <span className={styles.bloom} />
@@ -31,11 +35,21 @@ export function CommitteePane({ committee, next }: CommitteePaneProps) {
         <div className={styles.content}>
           <div className={styles.story}>
             <div className={styles.info}>
-              <h2 id={`${id}-title`} className={styles.title}>{shortName}</h2>
+              <h2 id={`${id}-title`} className={styles.title}>
+                {shortName}
+              </h2>
               <p className={styles.tagline}>{tagline}</p>
               <p className={styles.description}>{description}</p>
-              {director ? <p className={styles.meta}><span className={styles.caps}>Director</span> / {director}</p> : null}
-              {meeting ? <p className={styles.meta}><span className={styles.caps}>Meets</span> / {meeting}</p> : null}
+              {director ? (
+                <p className={styles.meta}>
+                  <span className={styles.caps}>Director</span> / {director}
+                </p>
+              ) : null}
+              {meeting ? (
+                <p className={styles.meta}>
+                  <span className={styles.caps}>Meets</span> / {meeting}
+                </p>
+              ) : null}
             </div>
 
             <div className={styles.projectColumn}>
@@ -48,11 +62,15 @@ export function CommitteePane({ committee, next }: CommitteePaneProps) {
                     <span className={styles.dot} />
                     <span className={styles.dot} />
                     <span className={styles.dot} />
-                    <span className={`${styles.label} ${styles.caps}`}>Sample project / {shortName}</span>
+                    <span className={`${styles.label} ${styles.caps}`}>
+                      Sample project / {shortName}
+                    </span>
                   </div>
                   <h3 className={styles.windowTitle}>{project.title}</h3>
                   <CommitteePreview preview={project.preview} />
-                  <figcaption className={styles.disclaimer}>Project titles and previews are illustrative.</figcaption>
+                  <figcaption className={styles.disclaimer}>
+                    Project titles and previews are illustrative.
+                  </figcaption>
                 </figure>
               ) : null}
             </div>
@@ -60,10 +78,14 @@ export function CommitteePane({ committee, next }: CommitteePaneProps) {
 
           <div className={styles.footer}>
             <div className={styles.resources}>
-              <p className={`${styles.label} ${styles.caps}`}>Content &amp; assets</p>
+              <p className={`${styles.label} ${styles.caps}`}>
+                Content &amp; assets
+              </p>
               <p className={styles.resourceList}>{resources.join(" / ")}</p>
             </div>
-            <a href={next.href} className={styles.next}>{next.label} <span aria-hidden="true">{next.up ? "↑" : "↓"}</span></a>
+            <a href={next.href} className={styles.next}>
+              {next.label} <span aria-hidden="true">{next.up ? "↑" : "↓"}</span>
+            </a>
           </div>
         </div>
       </section>

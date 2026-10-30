@@ -17,9 +17,15 @@ export default function CommitteesPage() {
             <CommitteePane
               key={committee.id}
               committee={committee}
-              next={next
-                ? { href: `#${next.id}`, label: `Next: ${next.shortName}` }
-                : { href: `#${COMMITTEES[0].id}`, label: `Back to ${COMMITTEES[0].shortName}`, up: true }}
+              next={
+                next
+                  ? { href: `#${next.id}`, label: `Next: ${next.shortName}` }
+                  : {
+                      href: `#${COMMITTEES[0].id}`,
+                      label: `Back to ${COMMITTEES[0].shortName}`,
+                      up: true,
+                    }
+              }
             />
           );
         })}

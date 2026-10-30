@@ -1,5 +1,11 @@
 import type { Metadata } from "next";
-import { Plus_Jakarta_Sans, Geist_Mono, Red_Hat_Display, Instrument_Serif, IBM_Plex_Mono } from "next/font/google";
+import {
+  Plus_Jakarta_Sans,
+  Geist_Mono,
+  Red_Hat_Display,
+  Instrument_Serif,
+  IBM_Plex_Mono,
+} from "next/font/google";
 import "./globals.css";
 import { ticketMono } from "@/components/tickets/typography";
 
@@ -37,7 +43,8 @@ const ibmPlexMono = IBM_Plex_Mono({
 
 export const metadata: Metadata = {
   title: "Penn State ACM",
-  description: "ACM at Penn State — the largest computer science student organization on campus.",
+  description:
+    "ACM at Penn State — the largest computer science student organization on campus.",
 };
 
 export default function RootLayout({

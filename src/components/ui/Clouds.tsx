@@ -21,7 +21,14 @@ type CloudsProps = {
 };
 
 /** Decorative cloud artwork (2172 × 724 exports). Hidden from assistive tech. */
-export function Clouds({ art = "ribbon", drift = false, scroll = false, sizes, className, priority }: CloudsProps) {
+export function Clouds({
+  art = "ribbon",
+  drift = false,
+  scroll = false,
+  sizes,
+  className,
+  priority,
+}: CloudsProps) {
   return (
     <Image
       src={ART[art]}
@@ -31,7 +38,14 @@ export function Clouds({ art = "ribbon", drift = false, scroll = false, sizes, c
       height={724}
       sizes={sizes}
       priority={priority}
-      className={[styles.clouds, drift && styles.drift, scroll && styles.scrollDrift, className].filter(Boolean).join(" ")}
+      className={[
+        styles.clouds,
+        drift && styles.drift,
+        scroll && styles.scrollDrift,
+        className,
+      ]
+        .filter(Boolean)
+        .join(" ")}
     />
   );
 }

@@ -11,8 +11,14 @@ const pad = (n: number) => String(n).padStart(2, "0");
 export default function MeetUsPage() {
   return (
     // Same meadow fill as the GBM boarding pass (Figma "Meet Us — duplicated stationary background").
-    <BackdropScene image="/resources/tickets/meadow.png" panelClassName={styles.directory}>
-      <PageHeading title="Meet Us" subtitle="The people behind ACM at Penn State." />
+    <BackdropScene
+      image="/resources/tickets/meadow.png"
+      panelClassName={styles.directory}
+    >
+      <PageHeading
+        title="Meet Us"
+        subtitle="The people behind ACM at Penn State."
+      />
 
       <hr className={styles.divider} />
 
@@ -20,14 +26,26 @@ export default function MeetUsPage() {
         const members = TEAM.filter((member) => member.group === group.id);
         if (members.length === 0) return null;
         return (
-          <section key={group.id} aria-labelledby={`${group.id}-heading`} className={styles.group}>
+          <section
+            key={group.id}
+            aria-labelledby={`${group.id}-heading`}
+            className={styles.group}
+          >
             <div className={styles.groupHeading}>
-              <span className={styles.mono} aria-hidden="true">{pad(index + 1)}</span>
-              <h2 id={`${group.id}-heading`} className={styles.groupTitle}>{group.title}</h2>
-              <span className={`${styles.mono} ${styles.count}`}>{pad(members.length)} members</span>
+              <span className={styles.mono} aria-hidden="true">
+                {pad(index + 1)}
+              </span>
+              <h2 id={`${group.id}-heading`} className={styles.groupTitle}>
+                {group.title}
+              </h2>
+              <span className={`${styles.mono} ${styles.count}`}>
+                {pad(members.length)} members
+              </span>
             </div>
             <div className={styles.grid}>
-              {members.map((member) => <PersonCard key={member.id} member={member} />)}
+              {members.map((member) => (
+                <PersonCard key={member.id} member={member} />
+              ))}
             </div>
           </section>
         );

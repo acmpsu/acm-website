@@ -10,7 +10,11 @@ async function currentAccount(): Promise<NavAccount | null> {
   } = await supabase.auth.getUser();
   if (!user) return null;
 
-  const { data: profile } = await supabase.from("profiles").select("full_name").eq("id", user.id).single();
+  const { data: profile } = await supabase
+    .from("profiles")
+    .select("full_name")
+    .eq("id", user.id)
+    .single();
   return { email: user.email ?? "", fullName: profile?.full_name ?? null };
 }
 

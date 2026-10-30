@@ -35,23 +35,35 @@
 }
 
 @keyframes footer-cloud-bob {
-  0%, 100% { translate: 0 0; rotate: 0deg; }
-  50% { translate: -36px 10px; rotate: 0.6deg; }
+  0%,
+  100% {
+    translate: 0 0;
+    rotate: 0deg;
+  }
+  50% {
+    translate: -36px 10px;
+    rotate: 0.6deg;
+  }
 }
 
 /* Float on `translate`; travel right to left with scroll on `transform` (where supported). */
 @supports (animation-timeline: view()) {
   .clouds {
-    animation: footer-cloud-bob 14s ease-in-out infinite, footer-cloud-scroll linear both;
+    animation:
+      footer-cloud-bob 14s ease-in-out infinite,
+      footer-cloud-scroll linear both;
     animation-timeline: auto, view();
   }
 }
 
 @keyframes footer-cloud-scroll {
-  from { transform: translateX(14%); }
-  to { transform: translateX(-14%); }
+  from {
+    transform: translateX(14%);
+  }
+  to {
+    transform: translateX(-14%);
+  }
 }
-
 
 /* ===== Credits terminal ===== */
 .credits {
@@ -101,7 +113,9 @@
 }
 
 .prompt,
-.result { color: var(--ds-azure-75); }
+.result {
+  color: var(--ds-azure-75);
+}
 
 .answer {
   padding-left: 24px;
@@ -129,7 +143,9 @@
 }
 
 @keyframes footer-cursor {
-  50% { opacity: 0; }
+  50% {
+    opacity: 0;
+  }
 }
 
 /* ===== Bottom row ===== */
@@ -147,7 +163,11 @@
   filter: drop-shadow(0 2px 7px rgb(0 0 0 / 0.45));
 }
 
-.wordmark img { display: block; width: 64px; height: auto; }
+.wordmark img {
+  display: block;
+  width: 64px;
+  height: auto;
+}
 
 .wordmark:focus-visible {
   outline: 2px solid #fff;
@@ -168,8 +188,6 @@
   gap: 8px;
 }
 
-
-
 .copyright {
   font: 400 13px / 1.5 var(--ds-font-mono);
   text-shadow: 0 1px 12px rgb(0 36 63 / 0.45);
@@ -184,14 +202,27 @@
     padding-inline: 8%;
   }
 
-  .wordmark { justify-self: start; }
-  .meta { justify-self: end; align-items: flex-end; }
+  .wordmark {
+    justify-self: start;
+  }
+  .meta {
+    justify-self: end;
+    align-items: flex-end;
+  }
 }
 
 @media (max-width: 767px) {
-  .cloudBand { width: 130%; margin-left: -15%; }
-  .credits { padding: 8px 16px 40px; justify-content: center; }
-  .answer { padding-left: 0; }
+  .cloudBand {
+    width: 130%;
+    margin-left: -15%;
+  }
+  .credits {
+    padding: 8px 16px 40px;
+    justify-content: center;
+  }
+  .answer {
+    padding-left: 0;
+  }
 }
 
 @media (max-width: 639px) {
@@ -202,5 +233,7 @@
 
 @media (prefers-reduced-motion: reduce) {
   .clouds,
-  .cursor { animation: none !important; }
+  .cursor {
+    animation: none !important;
+  }
 }

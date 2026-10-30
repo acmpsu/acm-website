@@ -21,17 +21,27 @@ type ScrollStackProps = {
  * sections simply scroll. Put in-page anchors on a <StackAnchor> before a section, not on
  * the section itself: browsers scroll to a pinned section's pinned position.
  */
-export function ScrollStack({ children, overlap = "none", fullScreen = false, className }: ScrollStackProps) {
+export function ScrollStack({
+  children,
+  overlap = "none",
+  fullScreen = false,
+  className,
+}: ScrollStackProps) {
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const root = ref.current;
     if (!root) return;
-    const sections = Array.from(root.querySelectorAll<HTMLElement>(":scope > section"));
+    const sections = Array.from(
+      root.querySelectorAll<HTMLElement>(":scope > section"),
+    );
 
     const measure = () => {
       for (const section of sections) {
-        section.style.setProperty("--stick-top", `${Math.min(0, window.innerHeight - section.offsetHeight)}px`);
+        section.style.setProperty(
+          "--stick-top",
+          `${Math.min(0, window.innerHeight - section.offsetHeight)}px`,
+        );
       }
     };
 
@@ -49,7 +59,17 @@ export function ScrollStack({ children, overlap = "none", fullScreen = false, cl
   }, []);
 
   return (
-    <div ref={ref} className={[styles.stack, overlap === "figma" && styles.overlap, fullScreen && styles.fullScreen, className].filter(Boolean).join(" ")}>
+    <div
+      ref={ref}
+      className={[
+        styles.stack,
+        overlap === "figma" && styles.overlap,
+        fullScreen && styles.fullScreen,
+        className,
+      ]
+        .filter(Boolean)
+        .join(" ")}
+    >
       {children}
     </div>
   );

@@ -1,6 +1,14 @@
 // Generated from the Figma "Hero Main Pane — HTML Sparkle Overlay" (122:64).
 // Each entry: [file, top %, right %, bottom %, left %, opacity, optional bleed % (SVG overflow)].
-export type Sparkle = [file: string, top: number, right: number, bottom: number, left: number, opacity: number, bleed?: number];
+export type Sparkle = [
+  file: string,
+  top: number,
+  right: number,
+  bottom: number,
+  left: number,
+  opacity: number,
+  bleed?: number,
+];
 
 export const HERO_SPARKLES: Sparkle[] = [
   ["sparkle-01.svg", 6.39, 95.63, 91.98, 3.13, 0.34],

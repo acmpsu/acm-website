@@ -11,23 +11,24 @@ const EMPTY: AuthState = {};
 
 type Mode = "signin" | "signup" | "emailcode";
 
-const COPY: Record<Mode, { title: string; subtitle: string; submit: string }> = {
-  signin: {
-    title: "Sign in",
-    subtitle: "Welcome back. Sign in to your ACM account.",
-    submit: "Sign in",
-  },
-  signup: {
-    title: "Create account",
-    subtitle: "Join Penn State ACM to track committees and events.",
-    submit: "Create account",
-  },
-  emailcode: {
-    title: "Email sign-in",
-    subtitle: "We'll email you a secure link to sign in.",
-    submit: "Email me a sign-in code",
-  },
-};
+const COPY: Record<Mode, { title: string; subtitle: string; submit: string }> =
+  {
+    signin: {
+      title: "Sign in",
+      subtitle: "Welcome back. Sign in to your ACM account.",
+      submit: "Sign in",
+    },
+    signup: {
+      title: "Create account",
+      subtitle: "Join Penn State ACM to track committees and events.",
+      submit: "Create account",
+    },
+    emailcode: {
+      title: "Email sign-in",
+      subtitle: "We'll email you a secure link to sign in.",
+      submit: "Email me a sign-in code",
+    },
+  };
 
 /** Shared field + label styles from the Figma (48px tall, #c9d6d6 border, 10px radius). */
 const fieldClass =
@@ -65,7 +66,14 @@ function Spinner() {
       fill="none"
       aria-hidden="true"
     >
-      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+      <circle
+        className="opacity-25"
+        cx="12"
+        cy="12"
+        r="10"
+        stroke="currentColor"
+        strokeWidth="4"
+      />
       <path
         className="opacity-90"
         fill="currentColor"
@@ -111,11 +119,17 @@ function PasswordField({ mode }: { mode: Mode }) {
           aria-pressed={visible}
           className="absolute right-2 top-1/2 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-md text-[var(--auth-muted)] transition hover:text-[var(--azure-12)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--azure-12)]"
         >
-          {visible ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+          {visible ? (
+            <EyeOff className="h-4 w-4" />
+          ) : (
+            <Eye className="h-4 w-4" />
+          )}
         </button>
       </div>
       {mode === "signup" && (
-        <p className="text-[12px] text-[var(--auth-muted)]">At least 8 characters.</p>
+        <p className="text-[12px] text-[var(--auth-muted)]">
+          At least 8 characters.
+        </p>
       )}
     </div>
   );
@@ -123,7 +137,8 @@ function PasswordField({ mode }: { mode: Mode }) {
 
 export function LoginForm({ next }: { next: string }) {
   const [mode, setMode] = useState<Mode>("signin");
-  const action = mode === "signin" ? signIn : mode === "signup" ? signUp : sendEmailCode;
+  const action =
+    mode === "signin" ? signIn : mode === "signup" ? signUp : sendEmailCode;
   const [state, formAction] = useActionState(action, EMPTY);
   const copy = COPY[mode];
 
@@ -131,7 +146,14 @@ export function LoginForm({ next }: { next: string }) {
     <div className="font-[family-name:var(--font-red-hat)] w-full max-w-[420px] overflow-hidden rounded-2xl border border-white/60 bg-[var(--auth-card)] px-5 py-6 shadow-[0px_12px_46px_0px_rgba(10,28,41,0.1)]">
       {/* Identity + intro */}
       <div className="flex flex-col items-center gap-2">
-        <Image src="/logos/acm.png" alt="Penn State ACM" width={52} height={52} priority className="h-auto w-[52px]" />
+        <Image
+          src="/logos/acm.png"
+          alt="Penn State ACM"
+          width={52}
+          height={52}
+          priority
+          className="h-auto w-[52px]"
+        />
         <h1 className="font-[family-name:var(--font-instrument-serif)] text-[42px] italic leading-[50px] text-[var(--azure-12)]">
           {copy.title}
         </h1>
@@ -141,7 +163,12 @@ export function LoginForm({ next }: { next: string }) {
       </div>
 
       {/* Form */}
-      <form action={formAction} className="mt-6 flex flex-col gap-5" key={mode} noValidate>
+      <form
+        action={formAction}
+        className="mt-6 flex flex-col gap-5"
+        key={mode}
+        noValidate
+      >
         <input type="hidden" name="next" value={next} />
 
         {mode === "signup" && (

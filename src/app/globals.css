@@ -5,15 +5,15 @@
 
   /* ===== Site design system — Figma "ACM — New Page" (HFRT30R89UUHyUL5GaTfSh) =====
      Use these (or the Tailwind utilities in @theme below) instead of page-local values. */
-  --ds-azure-12: #00243f;   /* Midnight: primary text on light, dark buttons */
-  --ds-azure-16: #002052;   /* Prussian blue: night sections */
-  --ds-azure-25: #1c4866;   /* Biscay: panel text, borders */
-  --ds-azure-36: #1f6a9b;   /* Muted labels */
-  --ds-azure-38: #1077b1;   /* Denim: primary button */
-  --ds-azure-75: #80c8fe;   /* Malibu: accents on dark */
-  --ds-grey-92: #e1eaf2;    /* Catskill white: text on dark */
-  --ds-grey-95: #e8f4fa;    /* Polar: panels */
-  --ds-grey-95-2: #e8f2fa;  /* Link water: pills, secondary button */
+  --ds-azure-12: #00243f; /* Midnight: primary text on light, dark buttons */
+  --ds-azure-16: #002052; /* Prussian blue: night sections */
+  --ds-azure-25: #1c4866; /* Biscay: panel text, borders */
+  --ds-azure-36: #1f6a9b; /* Muted labels */
+  --ds-azure-38: #1077b1; /* Denim: primary button */
+  --ds-azure-75: #80c8fe; /* Malibu: accents on dark */
+  --ds-grey-92: #e1eaf2; /* Catskill white: text on dark */
+  --ds-grey-95: #e8f4fa; /* Polar: panels */
+  --ds-grey-95-2: #e8f2fa; /* Link water: pills, secondary button */
 
   --ds-font-display: var(--font-instrument-serif), serif;
   --ds-font-body: var(--font-red-hat), sans-serif;
@@ -33,7 +33,7 @@
   --ds-glass: rgb(232 242 250 / 0.55);
   --ds-glass-border: rgb(255 255 255 / 0.45);
 
-  --ds-container: 1612.8px;           /* 84% of the 1920 frame */
+  --ds-container: 1612.8px; /* 84% of the 1920 frame */
   --ds-panel: 1240px;
   --ds-section-space: clamp(4rem, 8vw, 8rem);
   --ds-gap-sm: 12px;
@@ -50,18 +50,18 @@
   --background: #ffffff;
   --foreground: #0c1b33;
 
-  --navy:     #1E3370;
-  --navy-dk:  #0f1f4a;
-  --navy-lt:  #2d4494;
-  --border:   #e2e8f0;
-  --bg-alt:   #f8f9fb;
-  --slate:    #64748b;
+  --navy: #1e3370;
+  --navy-dk: #0f1f4a;
+  --navy-lt: #2d4494;
+  --border: #e2e8f0;
+  --bg-alt: #f8f9fb;
+  --slate: #64748b;
   --slate-lt: #94a3b8;
 
   /* Login / auth design tokens (Figma) */
-  --azure-12:    var(--ds-azure-12);
-  --auth-card:   #faf9f6;
-  --auth-muted:  #7a8c8f;
+  --azure-12: var(--ds-azure-12);
+  --auth-card: #faf9f6;
+  --auth-muted: #7a8c8f;
   --auth-placeholder: #8f999e;
   --auth-input-border: #c9d6d6;
   --auth-divider: #d6dedb;
@@ -78,10 +78,15 @@
   --events-heading-gap: 176px;
   --events-heading-tracking: -0.72px;
   --events-cloud-top: 1.58px;
-  --events-vignette: radial-gradient(ellipse 120% 90% at 50% 35%,
-    rgb(225 234 242 / 5%) 0%, rgb(225 234 242 / 0%) 45%,
-    rgb(112 117 121 / 17.5%) 72.5%, rgb(56 59 61 / 26.25%) 86.25%,
-    rgb(28 29 30 / 30.625%) 93.125%, rgb(0 0 0 / 35%) 100%);
+  --events-vignette: radial-gradient(
+    ellipse 120% 90% at 50% 35%,
+    rgb(225 234 242 / 5%) 0%,
+    rgb(225 234 242 / 0%) 45%,
+    rgb(112 117 121 / 17.5%) 72.5%,
+    rgb(56 59 61 / 26.25%) 86.25%,
+    rgb(28 29 30 / 30.625%) 93.125%,
+    rgb(0 0 0 / 35%) 100%
+  );
 
   /* GBM boarding pass — Figma 503:1720 / 503:2508. */
   --ticket-ink: var(--ds-azure-25);
@@ -91,7 +96,9 @@
   --ticket-rule: #dce6ed;
   --ticket-soft: var(--ds-grey-95);
   --ticket-stamp: #973d3d;
-  --ticket-scrim: linear-gradient(rgb(232 244 250 / 16%), rgb(232 244 250 / 16%)), linear-gradient(rgb(0 36 63 / 37%), rgb(0 36 63 / 37%));
+  --ticket-scrim:
+    linear-gradient(rgb(232 244 250 / 16%), rgb(232 244 250 / 16%)),
+    linear-gradient(rgb(0 36 63 / 37%), rgb(0 36 63 / 37%));
   --ticket-scene-width: 1720px;
   --ticket-front-width: 1180px;
   --ticket-front-height: 450px;
@@ -100,19 +107,21 @@
 }
 
 @media (min-width: 1280px) {
-  :root { --site-header-height: 132px; }
+  :root {
+    --site-header-height: 132px;
+  }
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --color-navy:       var(--navy);
-  --color-navy-dk:    var(--navy-dk);
-  --color-navy-lt:    var(--navy-lt);
-  --color-border:     var(--border);
-  --color-bg-alt:     var(--bg-alt);
-  --color-slate:      var(--slate);
-  --color-slate-lt:   var(--slate-lt);
+  --color-navy: var(--navy);
+  --color-navy-dk: var(--navy-dk);
+  --color-navy-lt: var(--navy-lt);
+  --color-border: var(--border);
+  --color-bg-alt: var(--bg-alt);
+  --color-slate: var(--slate);
+  --color-slate-lt: var(--slate-lt);
   --font-sans: var(--font-sans);
   --font-mono: var(--font-mono);
 
@@ -153,7 +162,9 @@ html {
 
 /* Full-bleed layouts (SiteShell) let the page's first block run under the floating
    header; that block adds --page-top to its own top padding to clear it. */
-.page-full-bleed > :first-child { --page-top: var(--site-header-height); }
+.page-full-bleed > :first-child {
+  --page-top: var(--site-header-height);
+}
 
 [id] {
   scroll-margin-top: var(--site-header-height);
@@ -161,7 +172,9 @@ html {
 
 /* committee card hover */
 .committee-card {
-  transition: border-color 0.15s, background 0.15s;
+  transition:
+    border-color 0.15s,
+    background 0.15s;
 }
 
 .committee-3d-wrap {

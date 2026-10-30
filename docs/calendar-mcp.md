@@ -19,6 +19,7 @@ This is issue #37's calendar workflow; member boarding tickets (#38) are separat
 
    The existing legacy `NEXT_PUBLIC_SUPABASE_ANON_KEY` also works. Do not add a
    service-role key: this integration does not need one.
+
 3. Sign up and confirm an account. Promote an officer in the Supabase SQL editor:
 
    ```sql
@@ -86,24 +87,24 @@ access. The transport is stateless; each request gets a separate SDK server and
 identity. The SDK handles protocol negotiation, discovery, request validation,
 JSON-RPC errors and JSON response transport. Request bodies are limited to 32 KiB.
 
-| Tool | Input | Output / action |
-| --- | --- | --- |
-| `list_event_options` | None | Eastern timezone, supported categories, committee IDs and names. |
-| `list_events` | `from`, `through`: `YYYY-MM-DD` Eastern dates, at most 92 calendar days including both endpoints | `{events, limit: 100}` ordered by start time and ID. Narrow the range when 100 are returned. Empty results are `{events: [], limit: 100}`. |
-| `create_event` | Fields below | `{event, created}`. Publishes immediately to the existing events table and revalidates `/events` and the home page. `created: false` means an identical request already succeeded. |
+| Tool                 | Input                                                                                            | Output / action                                                                                                                                                                    |
+| -------------------- | ------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `list_event_options` | None                                                                                             | Eastern timezone, supported categories, committee IDs and names.                                                                                                                   |
+| `list_events`        | `from`, `through`: `YYYY-MM-DD` Eastern dates, at most 92 calendar days including both endpoints | `{events, limit: 100}` ordered by start time and ID. Narrow the range when 100 are returned. Empty results are `{events: [], limit: 100}`.                                         |
+| `create_event`       | Fields below                                                                                     | `{event, created}`. Publishes immediately to the existing events table and revalidates `/events` and the home page. `created: false` means an identical request already succeeded. |
 
 `create_event` accepts:
 
-| Field | Requirement |
-| --- | --- |
-| `request_id` | UUID; generate once per intended event and reuse unchanged on retries. |
-| `title` | Trimmed nonempty text, at most 160 characters. |
-| `date` | Real calendar date, `YYYY-MM-DD`, years 2000–2100. |
-| `start_time` | `HH:MM`, 24-hour Eastern time. |
-| `end_time` | Optional same-day Eastern time, strictly later than start. |
-| `location` | Optional nonempty text, at most 240 characters. |
-| `category` | Optional `workshop`, `social`, or `gbm`. |
-| `committee_id` | Optional ID from `list_event_options`. |
+| Field          | Requirement                                                                 |
+| -------------- | --------------------------------------------------------------------------- |
+| `request_id`   | UUID; generate once per intended event and reuse unchanged on retries.      |
+| `title`        | Trimmed nonempty text, at most 160 characters.                              |
+| `date`         | Real calendar date, `YYYY-MM-DD`, years 2000–2100.                          |
+| `start_time`   | `HH:MM`, 24-hour Eastern time.                                              |
+| `end_time`     | Optional same-day Eastern time, strictly later than start.                  |
+| `location`     | Optional nonempty text, at most 240 characters.                             |
+| `category`     | Optional `workshop`, `social`, or `gbm`.                                    |
+| `committee_id` | Optional ID from `list_event_options`.                                      |
 | `checkin_code` | 4–64 letters, numbers or hyphens; unique across events. Share at the event. |
 
 Impossible dates, spring daylight-saving gaps, unknown fields, invalid UUIDs,

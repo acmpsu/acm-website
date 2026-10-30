@@ -25,13 +25,31 @@
   outline-offset: 3px;
 }
 
-.button:disabled { opacity: 0.5; cursor: not-allowed; }
+.button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
 
-.primary { background: var(--ds-azure-38); color: #fff; }
-.primary:hover:not(:disabled) { background: var(--ds-grey-95); color: var(--ds-azure-16); box-shadow: var(--ds-shadow-lift); transform: translateY(-2px); }
+.primary {
+  background: var(--ds-azure-38);
+  color: #fff;
+}
+.primary:hover:not(:disabled) {
+  background: var(--ds-grey-95);
+  color: var(--ds-azure-16);
+  box-shadow: var(--ds-shadow-lift);
+  transform: translateY(-2px);
+}
 
-.secondary { background: var(--ds-grey-95-2); color: var(--ds-azure-12); }
-.secondary:hover:not(:disabled) { background: #fff; box-shadow: var(--ds-shadow-lift); transform: translateY(-2px); }
+.secondary {
+  background: var(--ds-grey-95-2);
+  color: var(--ds-azure-12);
+}
+.secondary:hover:not(:disabled) {
+  background: #fff;
+  box-shadow: var(--ds-shadow-lift);
+  transform: translateY(-2px);
+}
 
 /* Nav pills: pale, fully rounded; current page shows as white. */
 .pill {
@@ -45,7 +63,10 @@
 
 .pill:hover,
 .pill[aria-current="page"],
-.pill[aria-expanded="true"] { background: #fff; box-shadow: var(--ds-shadow-lift); }
+.pill[aria-expanded="true"] {
+  background: #fff;
+  box-shadow: var(--ds-shadow-lift);
+}
 
 .ghost,
 .onDark {
@@ -55,9 +76,13 @@
   font-size: 15px;
 }
 
-.ghost { color: var(--ds-azure-12); }
+.ghost {
+  color: var(--ds-azure-12);
+}
 .ghost:hover,
-.ghost[aria-current="page"] { background: #fff; }
+.ghost[aria-current="page"] {
+  background: #fff;
+}
 
 .onDark {
   color: var(--ds-grey-92);
@@ -65,8 +90,14 @@
   text-shadow: 0 1px 12px rgb(0 36 63 / 0.45);
 }
 .onDark:hover,
-.onDark[aria-current="page"] { background: #fff; color: var(--ds-azure-12); text-shadow: none; }
-.onDark:focus-visible { outline-color: #fff; }
+.onDark[aria-current="page"] {
+  background: #fff;
+  color: var(--ds-azure-12);
+  text-shadow: none;
+}
+.onDark:focus-visible {
+  outline-color: #fff;
+}
 
 /* ===== Icon button ===== */
 .iconButton {
@@ -77,14 +108,27 @@
   flex: none;
   border-radius: var(--ds-radius-pill);
   cursor: pointer;
-  transition: background-color var(--ds-duration-micro) var(--ds-ease), box-shadow var(--ds-duration-micro) var(--ds-ease);
+  transition:
+    background-color var(--ds-duration-micro) var(--ds-ease),
+    box-shadow var(--ds-duration-micro) var(--ds-ease);
 }
 
-.light { background: var(--ds-grey-95-2); color: var(--ds-azure-12); }
+.light {
+  background: var(--ds-grey-95-2);
+  color: var(--ds-azure-12);
+}
 .light:hover,
-.light[aria-expanded="true"] { background: #fff; box-shadow: var(--ds-shadow-lift); }
-.dark { background: transparent; color: var(--ds-grey-92); }
-.dark:hover { background: rgb(255 255 255 / 0.12); }
+.light[aria-expanded="true"] {
+  background: #fff;
+  box-shadow: var(--ds-shadow-lift);
+}
+.dark {
+  background: transparent;
+  color: var(--ds-grey-92);
+}
+.dark:hover {
+  background: rgb(255 255 255 / 0.12);
+}
 
 .iconButton:focus-visible {
   outline: 2px solid var(--ds-azure-12);
@@ -104,9 +148,17 @@
   padding-block: var(--ds-section-space);
 }
 
-.night { background: var(--ds-azure-16); color: var(--ds-grey-92); }
-.sky { background: var(--ds-azure-25); color: var(--ds-grey-92); }
-.plain { color: var(--ds-azure-12); }
+.night {
+  background: var(--ds-azure-16);
+  color: var(--ds-grey-92);
+}
+.sky {
+  background: var(--ds-azure-25);
+  color: var(--ds-grey-92);
+}
+.plain {
+  color: var(--ds-azure-12);
+}
 
 .rounded {
   overflow: hidden;
@@ -160,8 +212,12 @@
   color: var(--ds-azure-25);
 }
 
-.outline { border: 1px solid var(--ds-azure-25); }
-.raised { box-shadow: var(--ds-shadow-panel); }
+.outline {
+  border: 1px solid var(--ds-azure-25);
+}
+.raised {
+  box-shadow: var(--ds-shadow-panel);
+}
 
 /* ===== Decorative clouds ===== */
 .clouds {
@@ -170,12 +226,21 @@
   user-select: none;
 }
 
-.drift { animation: ds-cloud-drift 12s ease-in-out infinite; }
+.drift {
+  animation: ds-cloud-drift 12s ease-in-out infinite;
+}
 
 /* Clouds float slowly sideways and bob. Uses `translate`, so it composes with any transform. */
 @keyframes ds-cloud-drift {
-  0%, 100% { translate: 0 0; rotate: 0deg; }
-  50% { translate: 28px -10px; rotate: -0.6deg; }
+  0%,
+  100% {
+    translate: 0 0;
+    rotate: 0deg;
+  }
+  50% {
+    translate: 28px -10px;
+    rotate: -0.6deg;
+  }
 }
 
 /* Clouds travel right to left as their section scrolls through the viewport. It animates
@@ -187,25 +252,42 @@
   }
 
   .drift.scrollDrift {
-    animation: ds-scroll-drift linear both, ds-cloud-drift 12s ease-in-out infinite;
+    animation:
+      ds-scroll-drift linear both,
+      ds-cloud-drift 12s ease-in-out infinite;
     animation-timeline: view(), auto;
   }
 }
 
 @keyframes ds-scroll-drift {
-  from { transform: translateX(14%); }
-  to { transform: translateX(-14%); }
+  from {
+    transform: translateX(14%);
+  }
+  to {
+    transform: translateX(-14%);
+  }
 }
 
 @media (max-width: 639px) {
-  .container { width: auto; margin-inline: 1rem; }
-  .rounded { border-radius: 1.5rem 1.5rem 0 0; }
+  .container {
+    width: auto;
+    margin-inline: 1rem;
+  }
+  .rounded {
+    border-radius: 1.5rem 1.5rem 0 0;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .button,
-  .iconButton { transition: none; }
-  .button:hover { transform: none !important; }
+  .iconButton {
+    transition: none;
+  }
+  .button:hover {
+    transform: none !important;
+  }
   .drift,
-  .scrollDrift { animation: none !important; }
+  .scrollDrift {
+    animation: none !important;
+  }
 }
