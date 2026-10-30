@@ -41,7 +41,7 @@ jobs:
       # Only .next/cache is cached. Caching .next/types would restore stale
       # route validators and fail the build after a route is renamed.
       - if: github.event_name == 'workflow_dispatch' || steps.changes.outputs.code == 'true'
-        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           path: .next/cache
           key: next-${{ runner.os }}-${{ hashFiles('package-lock.json') }}-${{ hashFiles('src/**') }}
