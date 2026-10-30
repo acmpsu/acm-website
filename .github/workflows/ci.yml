@@ -1,0 +1,157 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+# Every job gets read-only access unless it asks for more.
+permissions:
+  contents: read
+
+# One run per ref. A second push to a pull request kills the stale run; pushes to
+# main are never cancelled, so main keeps a complete history of results.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  # Decides whether the code checks need to run at all. Docs-only changes skip
+  # them. `format` deliberately does not depend on this job.
+  changes:
+    name: changes
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+      pull-requests: read
+    outputs:
+      code: ${{ steps.filter.outputs.code }}
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+
+      - id: filter
+        uses: dorny/paths-filter@0e4a8c6effa4802afeda77dc8d303f8176d7dfad # v3.0.4
+        with:
+          # Ignored for pull_request events, where the action diffs against the
+          # PR base through the API. On push this names the branch that was
+          # pushed to, which makes the action diff against the commit before the
+          # push.
+          base: ${{ github.ref_name }}
+          # 'every' means a file must match ALL patterns below to count as code.
+          # With the default 'some', a single markdown file would match `**` and
+          # mark the change as code.
+          predicate-quantifier: every
+          filters: |
+            code:
+              - '**'
+              - '!docs/**'
+              - '!**/*.md'
+              - '!LICENSE'
+
+  format:
+    name: format
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+      - uses: ./.github/actions/setup
+      - run: npm run format:check
+
+  lint:
+    name: lint
+    needs: changes
+    if: needs.changes.outputs.code == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+      - uses: ./.github/actions/setup
+      - run: npm run lint
+
+  typecheck:
+    name: typecheck
+    needs: changes
+    if: needs.changes.outputs.code == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+      - uses: ./.github/actions/setup
+      # tsconfig.json includes .next/types/**/*.ts and .next/dev/types/**/*.ts,
+      # neither of which exists in a fresh checkout. Next's generated route
+      # validators are therefore checked by the build job, not here, so expect
+      # route-signature breakage as a green typecheck and a red build.
+      - run: npm run typecheck
+
+  test:
+    name: test
+    needs: changes
+    if: needs.changes.outputs.code == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+      - uses: ./.github/actions/setup
+      # PGlite runs Postgres in-process and loads supabase/schema.sql plus the
+      # migrations, so there is no database service, container or secret here.
+      - run: npm test
+
+  build:
+    name: build
+    needs: changes
+    if: needs.changes.outputs.code == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+      - uses: ./.github/actions/setup
+
+      # Only .next/cache is cached. Caching .next/types would restore stale
+      # route validators and fail the build after a route is renamed.
+      - uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
+        with:
+          path: .next/cache
+          key: next-${{ runner.os }}-${{ hashFiles('package-lock.json') }}-${{ hashFiles('src/**') }}
+          restore-keys: |
+            next-${{ runner.os }}-${{ hashFiles('package-lock.json') }}-
+            next-${{ runner.os }}-
+
+      # Supabase env vars are intentionally absent. src/lib/supabase/env.ts
+      # defaults them to "" and the app degrades through isSupabaseConfigured.
+      - run: npm run build
+
+  # The single required status check. Branch protection names only this job, so
+  # adding a check later means adding it to `needs` below — not editing repo
+  # settings. The result logic reads every entry of `needs` automatically.
+  ci-ok:
+    name: ci-ok
+    if: always()
+    needs: [changes, format, lint, typecheck, test, build]
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Verify every required job passed or was skipped
+        env:
+          NEEDS_JSON: ${{ toJSON(needs) }}
+        run: |
+          echo "Results:"
+          echo "$NEEDS_JSON" | jq -r 'to_entries[] | "  \(.key): \(.value.result)"'
+
+          # success -> fine. skipped -> fine, that is the docs-only path.
+          # failure or cancelled -> block the merge.
+          blocking=$(echo "$NEEDS_JSON" | jq -r '
+            to_entries[]
+            | select(.value.result == "failure" or .value.result == "cancelled")
+            | "\(.key) (\(.value.result))"
+          ')
+
+          if [ -n "$blocking" ]; then
+            echo
+            echo "::error::CI is not green. Blocking jobs:"
+            echo "$blocking" | while read -r job; do echo "::error::  $job"; done
+            exit 1
+          fi
+
+          echo
+          echo "All required jobs passed or were skipped."

@@ -1,14 +1,11 @@
 # CI Map
 
-A visual map of continuous integration in this repo. Every diagram renders natively on
-GitHub and in the Kiro IDE preview.
-
-**Platform:** GitHub Actions · **Runner:** `ubuntu-latest` · **Node:** pinned in `.nvmrc`
-**Required check to merge:** `ci-ok` · **Cost:** free (public repo = unlimited minutes, free CodeQL, free Dependabot)
+GitHub Actions · `ubuntu-latest` · Node 24 via `.nvmrc` · required check: `ci-ok`
+Free on this repo (public = unlimited minutes, CodeQL, Dependabot).
 
 ---
 
-## 1. The whole system
+## System
 
 ```mermaid
 flowchart TB
@@ -40,6 +37,8 @@ flowchart TB
 
     T1 --> CH
     T2 --> CH
+    T1 -->|"ungated"| FMT
+    T2 -->|"ungated"| FMT
     T1 --> QL
     T2 --> QL
     T4 --> QL
@@ -47,11 +46,11 @@ flowchart TB
     T6 --> AUD
     T3 -.->|"opens upgrade PR, which re-enters here"| T1
 
-    CH -->|"always"| FMT
     CH -->|"only if code changed"| LNT
     CH -->|"only if code changed"| TYP
     CH -->|"only if code changed"| TST
     CH -->|"only if code changed"| BLD
+    CH --> OKJ
 
     FMT --> OKJ
     LNT --> OKJ
@@ -81,15 +80,11 @@ flowchart TB
     class TAB,LOG info
 ```
 
-Only `ci.yml` can block a merge. The security workflows report into the Security tab
-instead, so a slow scan or a fresh advisory in some transitive package never holds up
-unrelated work.
+Only `ci.yml` blocks merges. CodeQL reports to the Security tab, `npm audit` to its run log.
 
 ---
 
-## 2. Which check catches which bug
-
-Read right to left: every arrow is a real failure mode and the job that catches it.
+## Coverage
 
 ```mermaid
 flowchart RL
@@ -111,34 +106,33 @@ flowchart RL
     B8["Missing 'use client'"] --> BLD
     B9["Prerender crash<br/>tsc will NOT catch this"] --> BLD
     B10["Import casing wrong<br/>works on Mac, dies on Linux"] --> BLD
+    B13["Route signature break<br/>.next/types exists only after a build<br/>so typecheck stays green"] --> BLD
     B11["Dependency with a CVE"] --> AUD
     B12["Unsafe pattern in our<br/>own source"] --> QL
 
     classDef chk fill:#80c8fe,stroke:#002052,stroke-width:2px,color:#00243f
     classDef bug fill:#ffffff,stroke:#1c4866,stroke-width:1px,color:#1c4866
     class FMT,LNT,TYP,TST,BLD,AUD,QL chk
-    class B1,B2,B3,B4,B5,B6,B7,B8,B9,B10,B11,B12 bug
+    class B1,B2,B3,B4,B5,B6,B7,B8,B9,B10,B11,B12,B13 bug
 ```
 
-The two "will NOT catch this" labels are why both `typecheck` and `build` exist.
-`next.config.ts` sets no `ignoreBuildErrors`, so the build does compile — but it still
-won't fail on a type error inside `tests/`, and `tsc` can't detect a prerender crash.
+The two "will NOT catch this" labels are why `typecheck` and `build` both exist.
 
 ---
 
-## 3. Inside any single job
+## Job anatomy
 
 ```mermaid
 flowchart LR
     S["Job starts<br/>ubuntu-latest<br/>timeout-minutes set"] --> C["actions/checkout<br/>pinned to SHA"]
-    C --> SU[".github/actions/setup<br/>composite action<br/>written once, used by all 5 jobs"]
+    C --> SU[".github/actions/setup<br/>composite action, no checkout<br/>used by every check job<br/>and by npm audit"]
     SU --> N["actions/setup-node<br/>node-version-file .nvmrc<br/>cache npm"]
     N --> I["npm ci<br/>from package-lock.json"]
     I --> PP["postinstall fires<br/>patch-package applies<br/>react-three-fiber 9.6.0 patch"]
     PP --> W["The actual check runs"]
     W --> R["Result reported to ci-ok"]
 
-    BC["build job only:<br/>actions/cache on .next/cache<br/>keyed on lockfile + hash of src"] -.-> W
+    BC["build job only:<br/>actions/cache on .next/cache ONLY<br/>key next-OS-lockfile-hash(src)<br/>caching .next/types would restore<br/>stale route validators"] -.-> W
 
     classDef step fill:#e8f4fa,stroke:#1c4866,stroke-width:1px,color:#00243f
     classDef hi fill:#80c8fe,stroke:#002052,stroke-width:2px,color:#00243f
@@ -148,14 +142,11 @@ flowchart LR
     class BC note
 ```
 
-`npm ci` always reinstalls `node_modules` from scratch; the npm cache only skips the
-network fetch. That keeps installs reproducible and guarantees `patch-package` runs.
+`npm ci` always reinstalls `node_modules`. The npm cache only skips the download.
 
 ---
 
-## 4. The `ci-ok` gate
-
-This is the one clever piece, so it gets its own diagram.
+## The ci-ok gate
 
 ```mermaid
 flowchart TB
@@ -175,11 +166,6 @@ flowchart TB
     class RED bad
 ```
 
-Branch protection requires *named* checks. Require `build` directly and a docs-only PR
-that skips `build` waits forever for a check that will never report. One aggregating
-job that always runs solves it — and `ci-ok` is then the only check to mark required,
-so adding a sixth check later means editing its `needs` list, not GitHub settings.
-
 ```mermaid
 flowchart LR
     S1["Normal code PR<br/>all 5 pass"] --> G1["GREEN"]
@@ -195,9 +181,13 @@ flowchart LR
     class G2 bad
 ```
 
+Branch protection requires named checks. Require `build` directly and a docs-only PR
+that skips it waits forever. `ci-ok` is the only check marked required, so adding a
+sixth check later means editing its `needs` list, not GitHub settings.
+
 ---
 
-## 5. Path filtering
+## Path filter
 
 ```mermaid
 flowchart LR
@@ -206,23 +196,24 @@ flowchart LR
     D -->|"no"| RUN["code = true<br/>run all five checks"]
     SKIP --> OK["ci-ok green either way"]
     RUN --> OK
+    M["dorny/paths-filter<br/>predicate-quantifier every<br/>patterns ** · !docs/** · !**/*.md · !LICENSE<br/>a file counts as code only if it matches ALL four"] -.-> D
 
     classDef dec fill:#e8f2fa,stroke:#1f6a9b,stroke-width:2px,color:#00243f
     classDef path fill:#80c8fe,stroke:#002052,stroke-width:2px,color:#00243f
     classDef gate fill:#00243f,stroke:#00243f,stroke-width:3px,color:#ffffff
+    classDef note fill:#fff8e1,stroke:#b8860b,stroke-width:1px,color:#3d2c00
     class D dec
     class SKIP,RUN path
     class OK gate
     class F path
+    class M note
 ```
 
-Editing a README shouldn't spend minutes compiling Next.js. `format` stays ungated
-because Prettier covers Markdown, so a docs PR still gets a real check rather than a
-vacuous green tick.
+`format` stays ungated because Prettier covers Markdown.
 
 ---
 
-## 6. Security cadence, and why three tools
+## Security
 
 ```mermaid
 flowchart TB
@@ -233,8 +224,8 @@ flowchart TB
         D1 --> DB["Dependabot<br/>weekly<br/>ACTS"]
     end
 
-    QL --> TAB["Security tab"]
-    AUD --> TAB
+    QL --> TAB["Security tab<br/>code scanning alerts"]
+    AUD --> LOG["Run log only<br/>no Security tab entry"]
     DB --> PR["Opens an upgrade PR"]
     PR --> CI["Runs the full ci.yml gate"]
     CI --> REV["You review and merge"]
@@ -246,22 +237,18 @@ flowchart TB
     class O,D1 src
     class QL,AUD tool
     class DB act
-    class TAB info
+    class TAB,LOG info
     class PR,CI,REV act
 ```
 
-CodeQL is the only one that analyses our own source. `npm audit` only reports.
-Dependabot is the only one that *acts* — and its PRs face the same five checks as human
-work.
+CodeQL is the only one that reads our source. Dependabot is the only one that acts.
 
-**Why `npm audit` is a cron, not a PR gate:** an advisory on a transitive package with
-no fix available would block every unrelated PR in the repo until upstream ships a
-patch. On a schedule it informs without holding the team hostage.
+`npm audit` runs on a cron, not as a PR gate: an advisory on a transitive package with
+no fix available would block every unrelated PR until upstream patches it.
 
-**Why there's no nightly re-run of lint/test/build:** `npm ci` installs from a committed
-lockfile, so an unchanged `main` yields a byte-identical dependency tree and identical
-results. The only inputs that change on their own are the CVE database and CodeQL's
-query set — exactly what the two scheduled scans cover.
+There is no nightly re-run of lint/test/build. `npm ci` installs from a committed
+lockfile, so an unchanged `main` produces identical results. Only the CVE database and
+CodeQL's queries change on their own, and the two scheduled scans cover those.
 
 ```mermaid
 flowchart LR
@@ -283,7 +270,7 @@ flowchart LR
 
 ---
 
-## 7. Hygiene applied to every workflow
+## Workflow hygiene
 
 ```mermaid
 flowchart LR
@@ -298,11 +285,11 @@ flowchart LR
     class W1,W2,W3,W4 why
 ```
 
-Dependabot's `github-actions` ecosystem is what keeps those SHA pins from going stale.
+Dependabot's `github-actions` ecosystem keeps those SHA pins current.
 
 ---
 
-## 8. When it goes red
+## When it goes red
 
 ```mermaid
 flowchart LR
@@ -325,7 +312,7 @@ flowchart LR
 
 ---
 
-## 9. Local commands, mirrored exactly by CI
+## Commands
 
 ```bash
 npm run format:check   # the format job
@@ -335,29 +322,24 @@ npm test               # the test job
 npm run build          # the build job
 ```
 
-`lint` carries `--max-warnings=0` in `package.json` itself rather than CI passing a
-stricter flag, so local strictness and CI strictness cannot drift. All five green on
-your machine means CI agrees.
-
-Tests need no secrets: PGlite runs Postgres in-process and loads `supabase/schema.sql`
-plus the migrations to exercise real RLS policies. No server, no containers, no
-credentials.
+`--max-warnings=0` lives in `package.json`, not in CI, so local and CI strictness can't
+drift. Tests need no secrets: PGlite runs Postgres in-process and loads
+`supabase/schema.sql` plus the migrations to exercise real RLS policies.
 
 ---
 
-## 10. One-time local setup
+## One-time local config
 
 ```bash
 git config blame.ignoreRevsFile .git-blame-ignore-revs
 ```
 
-Prettier adoption required one repo-wide reformat commit, which would otherwise make
-`git blame` attribute every line to it. `.git-blame-ignore-revs` records that SHA.
-GitHub honors the file automatically; locally it takes the config above.
+`format` stays red until one repo-wide `npm run format` commit lands. `.git-blame-ignore-revs`
+holds comments only until then — add that commit's SHA to it so `git blame` skips it.
 
 ---
 
-## 11. Why Ubuntu only, no OS or Node matrix
+## Ubuntu only
 
 ```mermaid
 flowchart LR
@@ -373,14 +355,12 @@ flowchart LR
     class M,W useless
 ```
 
-Production runs on Linux regardless of host, so Linux is the only platform that tests
-anything a user hits. Adding Mac or Windows runners would be worse than redundant: they
-are precisely the environments that hide the main portability bug. Consistency across
-developer machines comes from `.nvmrc` plus the committed lockfile, not from runners.
+Production is Linux, so Linux is what CI tests. `.nvmrc` plus the lockfile keeps
+developer machines consistent, which is what a Node matrix would otherwise be for.
 
 ---
 
-## 12. Branch protection — set these in the GitHub UI
+## Branch protection
 
 ```mermaid
 flowchart TB
@@ -394,12 +374,10 @@ flowchart TB
     class R1,R2,R3 rule
 ```
 
-These are repo settings, not files — they have to be clicked.
+Repo settings, not files. Someone has to click these.
 
 ---
 
-## 13. Not set up yet
+## Deployment
 
-Continuous **deployment** is deliberately out of scope. See
-[`CD_job.md`](./CD_job.md) for what wiring it up involves, including the rule that any
-deploy job must depend on `ci-ok`.
+Not set up. See [`CD_job.md`](./CD_job.md).
