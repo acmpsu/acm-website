@@ -1,6 +1,8 @@
-import { Red_Hat_Mono } from "next/font/google";
-export const ticketMono = Red_Hat_Mono({
+import localFont from "next/font/local";
+
+// Self-hosted like the fonts in src/app/layout.tsx (see src/app/fonts/README.md).
+export const ticketMono = localFont({
   variable: "--font-ticket-mono",
-  subsets: ["latin"],
-  weight: ["400", "500"],
+  src: "../../app/fonts/red-hat-mono.woff2",
+  weight: "400 500",
 });

@@ -1,44 +1,46 @@
 import type { Metadata } from "next";
-import {
-  Plus_Jakarta_Sans,
-  Geist_Mono,
-  Red_Hat_Display,
-  Instrument_Serif,
-  IBM_Plex_Mono,
-} from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 import { ticketMono } from "@/components/tickets/typography";
 
-const plusJakarta = Plus_Jakarta_Sans({
+// Fonts are self-hosted (src/app/fonts) rather than loaded with next/font/google, whose
+// build-time download intermittently fails under Turbopack. See src/app/fonts/README.md.
+const plusJakarta = localFont({
   variable: "--font-sans",
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800"],
+  src: "./fonts/plus-jakarta-sans.woff2",
+  weight: "400 800",
 });
 
-const geistMono = Geist_Mono({
+const geistMono = localFont({
   variable: "--font-mono",
-  subsets: ["latin"],
+  src: "./fonts/geist-mono.woff2",
+  weight: "100 900",
 });
 
 // Login/auth typography from the Figma design.
-const redHatDisplay = Red_Hat_Display({
+const redHatDisplay = localFont({
   variable: "--font-red-hat",
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+  src: "./fonts/red-hat-display.woff2",
+  weight: "400 700",
 });
 
-const instrumentSerif = Instrument_Serif({
+const instrumentSerif = localFont({
   variable: "--font-instrument-serif",
-  subsets: ["latin"],
-  weight: ["400"],
-  style: ["normal", "italic"],
+  src: [
+    { path: "./fonts/instrument-serif.woff2", weight: "400", style: "normal" },
+    {
+      path: "./fonts/instrument-serif-italic.woff2",
+      weight: "400",
+      style: "italic",
+    },
+  ],
 });
 
 // Monospace glyph layer behind the login card (Figma "ASCII Meadow").
-const ibmPlexMono = IBM_Plex_Mono({
+const ibmPlexMono = localFont({
   variable: "--font-ibm-plex-mono",
-  subsets: ["latin"],
-  weight: ["400"],
+  src: "./fonts/ibm-plex-mono.woff2",
+  weight: "400",
 });
 
 export const metadata: Metadata = {
