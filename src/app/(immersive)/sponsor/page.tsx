@@ -7,11 +7,16 @@ export const metadata = { title: "Sponsor ACM — Penn State ACM" };
 export default function SponsorPage() {
   return (
     // Figma "ACM — Sponsors / Contact Us" (494:169), using its background poster.
-    <BackdropScene image="/resources/sponsor/windmill.png" panelClassName={styles.panel}>
+    <BackdropScene
+      image="/resources/sponsor/windmill.png"
+      panelClassName={styles.panel}
+    >
       <header className={styles.intro}>
         <div className={styles.overline}>
           <p className={styles.eyebrow}>Sponsor inquiries</p>
-          <p className={styles.mark} aria-hidden="true">ACM / Penn State</p>
+          <p className={styles.mark} aria-hidden="true">
+            ACM / Penn State
+          </p>
         </div>
         <h1 className={styles.title}>Sponsor ACM</h1>
         <p className={styles.lede}>

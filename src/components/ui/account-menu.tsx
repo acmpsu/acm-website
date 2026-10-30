@@ -13,7 +13,8 @@ type AccountMenuProps = {
 
 /** Initials from a full name, falling back to the first letters of the email. */
 function initialsFor(fullName: string | null, email: string) {
-  const source = fullName?.trim() || email.split("@")[0].replace(/[._-]+/g, " ");
+  const source =
+    fullName?.trim() || email.split("@")[0].replace(/[._-]+/g, " ");
   const parts = source.split(/\s+/).filter(Boolean).slice(0, 2);
   return parts.map((part) => part[0]?.toUpperCase() ?? "").join("") || "?";
 }
@@ -69,7 +70,9 @@ export function AccountMenu({ email, fullName }: AccountMenuProps) {
             className="absolute right-0 top-[calc(100%+12px)] w-64 overflow-hidden rounded-[20px] border border-azure-12/12 bg-grey-95-2 p-3 font-body text-azure-12 shadow-[var(--ds-shadow-menu)]"
           >
             <div className="mb-1 border-b border-azure-12/10 px-4 pb-3 pt-1">
-              {fullName && <p className="truncate text-[15px] font-semibold">{fullName}</p>}
+              {fullName && (
+                <p className="truncate text-[15px] font-semibold">{fullName}</p>
+              )}
               <p className="truncate text-[13px] text-azure-36">{email}</p>
             </div>
 
@@ -82,9 +85,19 @@ export function AccountMenu({ email, fullName }: AccountMenuProps) {
               My membership
             </Link>
 
-            <Link href="/my-events" role="menuitem" onClick={() => setOpen(false)} className="flex min-h-11 items-center rounded-xl px-4 text-[15px] font-medium transition duration-150 hover:bg-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-azure-12">My events</Link>
+            <Link
+              href="/my-events"
+              role="menuitem"
+              onClick={() => setOpen(false)}
+              className="flex min-h-11 items-center rounded-xl px-4 text-[15px] font-medium transition duration-150 hover:bg-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-azure-12"
+            >
+              My events
+            </Link>
 
-            <form action={signOut} className="mt-1 border-t border-azure-12/10 pt-1">
+            <form
+              action={signOut}
+              className="mt-1 border-t border-azure-12/10 pt-1"
+            >
               <button
                 type="submit"
                 role="menuitem"

@@ -1,2 +1,4 @@
 import { redirect } from "next/navigation";
-export default function TicketsPage() { redirect("/my-events"); }
+export default function TicketsPage() {
+  redirect("/my-events");
+}

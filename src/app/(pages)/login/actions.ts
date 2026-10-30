@@ -42,7 +42,10 @@ function toUserError(message: string): string {
   return "Something went wrong signing you in. Please try again.";
 }
 
-export async function signIn(_prev: AuthState, formData: FormData): Promise<AuthState> {
+export async function signIn(
+  _prev: AuthState,
+  formData: FormData,
+): Promise<AuthState> {
   if (!isSupabaseConfigured) return NOT_CONFIGURED;
   const { email, password, next } = readCredentials(formData);
   if (!email || !password) return { error: "Enter your email and password." };
@@ -55,11 +58,15 @@ export async function signIn(_prev: AuthState, formData: FormData): Promise<Auth
   redirect(safeNextPath(next));
 }
 
-export async function signUp(_prev: AuthState, formData: FormData): Promise<AuthState> {
+export async function signUp(
+  _prev: AuthState,
+  formData: FormData,
+): Promise<AuthState> {
   if (!isSupabaseConfigured) return NOT_CONFIGURED;
   const { email, password, fullName, next } = readCredentials(formData);
   if (!email || !password) return { error: "Enter your email and password." };
-  if (password.length < 8) return { error: "Password must be at least 8 characters." };
+  if (password.length < 8)
+    return { error: "Password must be at least 8 characters." };
 
   const supabase = await createClient();
   const { data, error } = await supabase.auth.signUp({
@@ -69,15 +76,25 @@ export async function signUp(_prev: AuthState, formData: FormData): Promise<Auth
   });
   if (error) {
     const normalized = error.message.toLowerCase();
-    if (normalized.includes("already registered") || normalized.includes("already been registered")) {
-      return { error: "An account with this email already exists. Try signing in instead." };
+    if (
+      normalized.includes("already registered") ||
+      normalized.includes("already been registered")
+    ) {
+      return {
+        error:
+          "An account with this email already exists. Try signing in instead.",
+      };
     }
-    return { error: "Something went wrong creating your account. Please try again." };
+    return {
+      error: "Something went wrong creating your account. Please try again.",
+    };
   }
 
   // With email confirmation on, Supabase returns a user but no session.
   if (!data.session) {
-    return { message: "Check your email to confirm your account, then sign in." };
+    return {
+      message: "Check your email to confirm your account, then sign in.",
+    };
   }
 
   revalidatePath("/", "layout");
@@ -85,7 +102,10 @@ export async function signUp(_prev: AuthState, formData: FormData): Promise<Auth
 }
 
 /** Sends a one-time sign-in code / magic link to the given email. */
-export async function sendEmailCode(_prev: AuthState, formData: FormData): Promise<AuthState> {
+export async function sendEmailCode(
+  _prev: AuthState,
+  formData: FormData,
+): Promise<AuthState> {
   if (!isSupabaseConfigured) return NOT_CONFIGURED;
   const { email } = readCredentials(formData);
   if (!email) return { error: "Enter your email address." };
@@ -98,7 +118,9 @@ export async function sendEmailCode(_prev: AuthState, formData: FormData): Promi
   if (error) {
     const normalized = error.message.toLowerCase();
     if (normalized.includes("rate limit") || normalized.includes("too many")) {
-      return { error: "Too many attempts. Please wait a moment and try again." };
+      return {
+        error: "Too many attempts. Please wait a moment and try again.",
+      };
     }
     return { error: "We couldn't send a sign-in code. Please try again." };
   }
@@ -107,7 +129,10 @@ export async function sendEmailCode(_prev: AuthState, formData: FormData): Promi
 }
 
 /** Sends a password-reset email to the given address. */
-export async function sendPasswordReset(_prev: AuthState, formData: FormData): Promise<AuthState> {
+export async function sendPasswordReset(
+  _prev: AuthState,
+  formData: FormData,
+): Promise<AuthState> {
   if (!isSupabaseConfigured) return NOT_CONFIGURED;
   const { email } = readCredentials(formData);
   if (!email) return { error: "Enter your email address." };
@@ -117,12 +142,16 @@ export async function sendPasswordReset(_prev: AuthState, formData: FormData): P
   if (error) {
     const normalized = error.message.toLowerCase();
     if (normalized.includes("rate limit") || normalized.includes("too many")) {
-      return { error: "Too many attempts. Please wait a moment and try again." };
+      return {
+        error: "Too many attempts. Please wait a moment and try again.",
+      };
     }
     return { error: "We couldn't send a reset email. Please try again." };
   }
 
-  return { message: "If that email has an account, a reset link is on its way." };
+  return {
+    message: "If that email has an account, a reset link is on its way.",
+  };
 }
 
 export async function signOut() {

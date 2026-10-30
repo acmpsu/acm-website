@@ -15,7 +15,9 @@ export default function ForgotPasswordPage() {
           <ForgotPasswordForm />
         ) : (
           <div className="font-[family-name:var(--font-red-hat)] w-full max-w-[420px] rounded-2xl border border-white/60 bg-[var(--auth-card)] p-6 shadow-[0px_12px_46px_0px_rgba(10,28,41,0.1)]">
-            <p className="text-[14px] font-semibold text-[var(--azure-12)]">Login is not configured yet</p>
+            <p className="text-[14px] font-semibold text-[var(--azure-12)]">
+              Login is not configured yet
+            </p>
           </div>
         )}
       </div>

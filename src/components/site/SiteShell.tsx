@@ -14,7 +14,11 @@ type SiteShellProps = {
 };
 
 /** Header + main + footer used by every route group, so the shell is identical site-wide. */
-export function SiteShell({ children, layout, footerCredits = false }: SiteShellProps) {
+export function SiteShell({
+  children,
+  layout,
+  footerCredits = false,
+}: SiteShellProps) {
   return (
     <div className="flex min-h-screen flex-col">
       <Header />

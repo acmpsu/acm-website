@@ -16,7 +16,10 @@ export function SponsorsSection() {
 
       <div className={styles.content}>
         <h2 id="sponsors-heading" className={styles.heading}>
-          Our Sponsors <span className={styles.flourish} aria-hidden="true">ᯓ★ˎˊ˗</span>
+          Our Sponsors{" "}
+          <span className={styles.flourish} aria-hidden="true">
+            ᯓ★ˎˊ˗
+          </span>
         </h2>
       </div>
 
@@ -25,12 +28,27 @@ export function SponsorsSection() {
         <ul className={styles.rail}>
           {sponsors.map((sponsor) => (
             <li key={sponsor.id}>
-              <SponsorLogo sponsor={sponsor} surface="dark" sizes="(min-width: 1280px) 540px, 36vw" className={styles.logo} />
+              <SponsorLogo
+                sponsor={sponsor}
+                surface="dark"
+                sizes="(min-width: 1280px) 540px, 36vw"
+                className={styles.logo}
+              />
             </li>
           ))}
           {sponsors.map((sponsor) => (
-            <li key={`${sponsor.id}-loop`} aria-hidden="true" className={styles.loopCopy}>
-              <SponsorLogo sponsor={sponsor} surface="dark" sizes="(min-width: 1280px) 540px, 36vw" className={styles.logo} decorative />
+            <li
+              key={`${sponsor.id}-loop`}
+              aria-hidden="true"
+              className={styles.loopCopy}
+            >
+              <SponsorLogo
+                sponsor={sponsor}
+                surface="dark"
+                sizes="(min-width: 1280px) 540px, 36vw"
+                className={styles.logo}
+                decorative
+              />
             </li>
           ))}
         </ul>
@@ -40,10 +58,17 @@ export function SponsorsSection() {
         <div className={styles.cta}>
           <div>
             <p className={styles.ctaHeading}>Sponsor ACM 2026.</p>
-            <p className={styles.ctaText}>Build connections with the next generation of technical talent.</p>
+            <p className={styles.ctaText}>
+              Build connections with the next generation of technical talent.
+            </p>
           </div>
-          <Button variant="secondary" href="/sponsor" className={styles.ctaButton}>
-            Interested in sponsoring? Contact us <ArrowUpRight size={18} strokeWidth={1.5} aria-hidden="true" />
+          <Button
+            variant="secondary"
+            href="/sponsor"
+            className={styles.ctaButton}
+          >
+            Interested in sponsoring? Contact us{" "}
+            <ArrowUpRight size={18} strokeWidth={1.5} aria-hidden="true" />
           </Button>
         </div>
       </div>

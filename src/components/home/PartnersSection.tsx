@@ -10,13 +10,25 @@ export function PartnersSection() {
     <section aria-labelledby="partners-heading" className={styles.partners}>
       {/* 52-frame turning windmill from the Figma video frames (410:57); still frame for reduced motion. */}
       <picture className={styles.windmill}>
-        <source srcSet="/resources/home/windmill-still.png" media="(prefers-reduced-motion: reduce)" />
+        <source
+          srcSet="/resources/home/windmill-still.png"
+          media="(prefers-reduced-motion: reduce)"
+        />
         {/* A plain <img>: the image optimizer would flatten the animated WebP. */}
-        <img src="/resources/home/windmill.webp" alt="" width={577} height={720} loading="lazy" />
+        <img
+          src="/resources/home/windmill.webp"
+          alt=""
+          width={577}
+          height={720}
+          loading="lazy"
+        />
       </picture>
 
       <h2 id="partners-heading" className={styles.partnersTitle}>
-        Our Partners <span className={styles.flourish} aria-hidden="true">°｡⋆</span>
+        Our Partners{" "}
+        <span className={styles.flourish} aria-hidden="true">
+          °｡⋆
+        </span>
       </h2>
 
       <ul className={styles.partnerLogos}>
@@ -24,9 +36,19 @@ export function PartnersSection() {
           <li
             key={partner.id}
             className={styles.partnerLogo}
-            style={{ "--logo-w": partner.box.width, "--logo-h": partner.box.height } as CSSProperties}
+            style={
+              {
+                "--logo-w": partner.box.width,
+                "--logo-h": partner.box.height,
+              } as CSSProperties
+            }
           >
-            <Image src={partner.logo} alt={partner.name} fill sizes="(min-width: 1024px) 280px, 40vw" />
+            <Image
+              src={partner.logo}
+              alt={partner.name}
+              fill
+              sizes="(min-width: 1024px) 280px, 40vw"
+            />
           </li>
         ))}
       </ul>

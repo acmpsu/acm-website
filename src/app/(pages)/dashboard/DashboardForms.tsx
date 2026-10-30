@@ -3,7 +3,12 @@
 import { useActionState } from "react";
 import { useFormStatus } from "react-dom";
 
-import { checkIn, createEvent, updateProfile, type ActionState } from "./actions";
+import {
+  checkIn,
+  createEvent,
+  updateProfile,
+  type ActionState,
+} from "./actions";
 import { COMMITTEES } from "@/lib/constants";
 import { EVENT_CATEGORIES, categoryStyles } from "@/lib/events";
 import { EventRsvpFields } from "@/components/events/EventRsvpFields";
@@ -13,9 +18,16 @@ const EMPTY: ActionState = {};
 const fieldClass =
   "h-11 w-full rounded-md border border-[var(--border)] bg-white px-3 text-[14px] text-[var(--navy-dk)] transition focus:border-[var(--navy)] focus:outline focus:outline-2 focus:outline-offset-0 focus:outline-[var(--navy)]";
 
-const labelClass = "mb-1.5 block text-[13px] font-semibold text-[var(--navy-dk)]";
+const labelClass =
+  "mb-1.5 block text-[13px] font-semibold text-[var(--navy-dk)]";
 
-function Submit({ label, variant = "primary" }: { label: string; variant?: "primary" | "secondary" }) {
+function Submit({
+  label,
+  variant = "primary",
+}: {
+  label: string;
+  variant?: "primary" | "secondary";
+}) {
   const { pending } = useFormStatus();
   const styles =
     variant === "primary"
@@ -149,7 +161,14 @@ export function CreateEventForm() {
         <label htmlFor="event_title" className={labelClass}>
           Title <span aria-hidden="true">*</span>
         </label>
-        <input id="event_title" name="title" type="text" required aria-required="true" className={fieldClass} />
+        <input
+          id="event_title"
+          name="title"
+          type="text"
+          required
+          aria-required="true"
+          className={fieldClass}
+        />
       </div>
 
       <div className="grid gap-4 sm:grid-cols-3">
@@ -157,19 +176,38 @@ export function CreateEventForm() {
           <label htmlFor="event_date" className={labelClass}>
             Date <span aria-hidden="true">*</span>
           </label>
-          <input id="event_date" name="date" type="date" required aria-required="true" className={fieldClass} />
+          <input
+            id="event_date"
+            name="date"
+            type="date"
+            required
+            aria-required="true"
+            className={fieldClass}
+          />
         </div>
         <div>
           <label htmlFor="event_start" className={labelClass}>
             Start <span aria-hidden="true">*</span>
           </label>
-          <input id="event_start" name="start_time" type="time" required aria-required="true" className={fieldClass} />
+          <input
+            id="event_start"
+            name="start_time"
+            type="time"
+            required
+            aria-required="true"
+            className={fieldClass}
+          />
         </div>
         <div>
           <label htmlFor="event_end" className={labelClass}>
             End
           </label>
-          <input id="event_end" name="end_time" type="time" className={fieldClass} />
+          <input
+            id="event_end"
+            name="end_time"
+            type="time"
+            className={fieldClass}
+          />
         </div>
       </div>
       <p className="text-[12px] text-[var(--slate)]">Times are Eastern</p>
@@ -178,7 +216,13 @@ export function CreateEventForm() {
         <label htmlFor="event_location" className={labelClass}>
           Location
         </label>
-        <input id="event_location" name="location" type="text" placeholder="Westgate E243" className={fieldClass} />
+        <input
+          id="event_location"
+          name="location"
+          type="text"
+          placeholder="Westgate E243"
+          className={fieldClass}
+        />
       </div>
 
       <div className="grid gap-4 sm:grid-cols-2">
@@ -186,7 +230,12 @@ export function CreateEventForm() {
           <label htmlFor="event_category" className={labelClass}>
             Category
           </label>
-          <select id="event_category" name="category" defaultValue="" className={fieldClass}>
+          <select
+            id="event_category"
+            name="category"
+            defaultValue=""
+            className={fieldClass}
+          >
             <option value="">None</option>
             {EVENT_CATEGORIES.map((category) => (
               <option key={category} value={category}>
@@ -199,7 +248,12 @@ export function CreateEventForm() {
           <label htmlFor="event_committee" className={labelClass}>
             Committee
           </label>
-          <select id="event_committee" name="committee_id" defaultValue="" className={fieldClass}>
+          <select
+            id="event_committee"
+            name="committee_id"
+            defaultValue=""
+            className={fieldClass}
+          >
             <option value="">None</option>
             {COMMITTEES.map((committee) => (
               <option key={committee.id} value={committee.id}>

@@ -1,17 +1,29 @@
 /* Stacked scrolling sections (see ScrollStack.tsx). */
-.stack { position: relative; }
+.stack {
+  position: relative;
+}
 
-.anchor { display: block; }
+.anchor {
+  display: block;
+}
 
 /* Only the first section sits under the floating header; the rest don't need its clearance. */
-.stack > section:not(:first-of-type) { --page-top: 0px; }
+.stack > section:not(:first-of-type) {
+  --page-top: 0px;
+}
 
 /* Rounded tops overlap the section above by 80px, as in the Figma home frame. */
-.overlap { --stack-overlap: 80px; }
-.overlap > section:not(:last-of-type) { margin-bottom: calc(-1 * var(--stack-overlap)); }
+.overlap {
+  --stack-overlap: 80px;
+}
+.overlap > section:not(:last-of-type) {
+  margin-bottom: calc(-1 * var(--stack-overlap));
+}
 
 /* Each section is at least one screen tall; a section can ask for more with --pane-h (in screens). */
-.fullScreen > section { min-height: calc(var(--pane-h, 1) * 100svh); }
+.fullScreen > section {
+  min-height: calc(var(--pane-h, 1) * 100svh);
+}
 
 .stacked > section {
   position: sticky;
@@ -19,6 +31,7 @@
 }
 
 @media (max-width: 639px) {
-  .overlap { --stack-overlap: 2rem; }
+  .overlap {
+    --stack-overlap: 2rem;
+  }
 }
-

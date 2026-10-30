@@ -1,124 +1,638 @@
 /* GBM mockups 503:1720 / 503:2508. Original graphics retain their SVG roots. */
-.scene { position: relative; isolation: isolate; overflow: hidden; min-height: calc(100svh - 4rem); background: var(--ticket-ink); color: white; font-family: var(--font-red-hat), sans-serif; }
-.meadow { z-index: -2; object-fit: cover; filter: blur(14px); transform: scale(1.04); }
-.veil { position: absolute; inset: 0; z-index: -1; background: var(--ticket-scrim); }
-.sceneContent { max-width: var(--ticket-scene-width); margin-inline: auto; padding: max(6rem, calc(var(--page-top, 0px) + 2rem)) 4rem 6rem; }
-.sceneHeading { margin: 0 auto 6rem; max-width: var(--ticket-scene-width); text-align: center; font: italic 400 clamp(2rem, 3vw, 3.5rem)/1.2 var(--font-instrument-serif), serif; text-wrap: balance; }
-.sceneMessage { max-width: 48rem; margin: -3rem auto 6rem; text-align: center; font-size: 1rem; line-height: 1.6; }
-.passWrap { position: relative; max-width: var(--ticket-front-width); margin: 0 auto; padding-block: 2rem; }
-.pass { position: relative; isolation: isolate; display: grid; grid-template-columns: minmax(0, 900fr) minmax(0, 280fr); min-height: var(--ticket-front-height); color: var(--ticket-ink); transform: rotate(4deg); }
-.paperArt { position: absolute; z-index: -1; left: -3.3898%; top: -3.5556%; width: 108.136%; height: 121.333%; pointer-events: none; background: url("/resources/tickets/paper.svg") 0 0 / 100% 100% no-repeat; }
-.passMain { min-width: 0; padding: 1.75rem 2.5rem 2rem; }
-.airline { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; padding-bottom: 1rem; }
-.airline strong { font-size: 1.3125rem; }
-.airline span, .eyebrow, .field dt, .notes > span, .destination > span { font: 400 0.875rem/1.5 var(--font-ticket-mono), monospace; color: var(--ticket-muted); }
-.rule { display: block; max-width: 100%; height: auto; margin: 0; }
-.route { display: grid; grid-template-columns: minmax(0, 1fr) 98px minmax(0, 1.1fr) minmax(0, 1.9fr); align-items: center; gap: 1.75rem; min-height: 9rem; padding-block: 1.5rem; }
-.route .field dd { font-size: clamp(2rem, 4vw, 3.625rem); font-weight: 500; }
-.airplane { max-width: 100%; height: auto; }
-.destination p { font: 400 clamp(1.5rem, 2.2vw, 2.25rem)/1.15 var(--font-instrument-serif), serif; overflow-wrap: anywhere; }
-.destination > span { display: block; margin-top: 0.5rem; }
-.eventFields { display: grid; grid-template-columns: 1fr 1.1fr 1.2fr; gap: 1.5rem; padding-block: 1.5rem; }
-.field { min-width: 0; }
-.field dt { margin-bottom: 0.5rem; letter-spacing: 0.04em; }
-.field dd { font-size: clamp(1rem, 1.5vw, 1.5625rem); line-height: 1.35; overflow-wrap: anywhere; }
-.notes { padding-top: 1rem; }
-.notes p { margin-top: 0.5rem; font-size: 1.1875rem; line-height: 1.5; overflow-wrap: anywhere; white-space: pre-line; }
-.stub { min-width: 0; display: flex; flex-direction: column; align-items: flex-start; gap: 0.5rem; margin-block: 1.75rem; padding: 0 2rem; border-left: 1px dashed var(--ticket-rule); }
-.stubMonth { text-transform: uppercase; font-family: var(--font-ticket-mono), monospace; font-size: 1rem; }
-.stubDay { font: 400 6.25rem/1 var(--font-instrument-serif), serif; }
-.barcode { max-width: 100%; height: auto; margin-top: 1rem; transform: rotate(-4deg); mix-blend-mode: multiply; }
-.memberFields { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; margin-top: 1.5rem; padding-top: 1rem; border-top: 1px dashed var(--ticket-rule); }
-.memberFields .field dd { font-size: 1rem; }
-.stampTarget { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; border-radius: 1rem; cursor: pointer; background: transparent; }
-.stampTarget:focus-visible { outline: 3px solid white; outline-offset: 0.5rem; }
-.rubberStamp { position: absolute; top: -2rem; right: -1rem; width: min(22%, 254px); height: auto; pointer-events: none; transition: transform 200ms ease; }
-.passWrap:has(.stampTarget:hover) .rubberStamp { transform: translate(-0.5rem, 0.5rem) rotate(-8deg); }
-.passWrap:has(.stampTarget:active) .rubberStamp { transform: translate(-1rem, 1rem) rotate(-8deg) scale(0.94); }
-.reverse { display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 1fr); max-width: var(--ticket-reverse-width); margin: 0 auto; min-height: var(--ticket-reverse-height); border-radius: 1.5rem; background: var(--ticket-paper); color: var(--ticket-ink); box-shadow: 0 7px 0 var(--ticket-edge), 0 28px 45px rgb(0 10 26 / 25%); transform: rotate(-2deg); animation: ticket-turn 300ms ease-out; }
-.reverse:focus { outline: none; }
-.reverseMain { display: flex; flex-direction: column; align-items: flex-start; gap: 1.25rem; min-width: 0; padding: 2.25rem 3rem; }
-.confirmHeading { font: italic 400 clamp(2.25rem, 3.3vw, 3.875rem)/1.1 var(--font-instrument-serif), serif; }
-.reverseMain > p:not(.eyebrow, .finePrint, .feedback) { font-size: 1.3125rem; line-height: 1.5; white-space: pre-line; overflow-wrap: anywhere; }
-.summary { display: grid; gap: 0.5rem; font-size: 1.125rem; line-height: 1.5; }
-.summary strong { font-size: 1.4375rem; overflow-wrap: anywhere; }
-.summary p { color: var(--ticket-muted); }
-.actions { display: flex; align-items: center; justify-content: center; gap: 1rem; flex-wrap: wrap; }
-.primary, .secondary { display: inline-flex; align-items: center; justify-content: center; min-height: 3rem; padding: 1rem 1.5rem; border: 1px solid var(--ticket-ink); border-radius: 999px; font: 500 1.125rem/1.3 var(--font-red-hat), sans-serif; text-align: center; text-decoration: none; cursor: pointer; transition: background 200ms ease; }
-.primary { background: var(--ticket-ink); color: white; }
-.primary:hover { background: var(--azure-12); }
-.secondary { background: var(--ticket-soft); color: var(--ticket-ink); }
-.secondary:hover { background: white; }
-.primary:disabled, .secondary:disabled { opacity: 0.5; cursor: not-allowed; }
-.primary:focus-visible, .secondary:focus-visible, .textButton:focus-visible, .dismiss:focus-visible, .calendarMenu a:focus-visible { outline: 3px solid var(--ticket-muted); outline-offset: 4px; }
-.finePrint { font-size: 0.875rem; line-height: 1.5; color: var(--ticket-muted); }
-.reverseStub { display: flex; flex-direction: column; gap: 1rem; align-items: center; margin-block: 2rem; padding-inline: 2rem; border-left: 1px dashed var(--ticket-rule); }
-.reverseStub > p { font: italic 400 3rem/1.2 var(--font-instrument-serif), serif; }
-.seal { position: relative; flex: 0 0 auto; width: 180px; height: 180px; margin-block: 1rem; transform: rotate(14deg); color: var(--ticket-stamp); opacity: 0.86; font-family: var(--font-ticket-mono), monospace; }
-.sealOuter { position: absolute; top: 0; left: 0; }
-.sealInner { position: absolute; top: 8px; left: 8px; }
-.sealBrand, .sealDate, .sealLabel { position: absolute; left: 0; width: 180px; text-align: center; font-size: 0.875rem; }
-.sealBrand { top: 35px; }
-.sealLabel { top: 63px; font-size: 2.25rem; line-height: 1.2; }
-.sealDate { top: 115px; }
-.controls { max-width: var(--ticket-front-width); margin: 6rem auto 0; text-align: center; font-size: 1rem; }
-.controls > p { margin-top: 1.5rem; }
-.textButton, .dismiss { display: inline-flex; min-height: 2.75rem; align-items: center; justify-content: center; gap: 1rem; margin-top: 1.5rem; padding: 0.5rem; color: white; cursor: pointer; text-decoration: underline; }
-.dismiss { display: flex; margin: 5rem auto 0; width: fit-content; font-size: 1.375rem; text-decoration: none; }
-.cancelForm { margin-top: 1.5rem; }
-.cancelForm p { margin-bottom: 1rem; }
-.calendarMenu { position: relative; }
-.calendarMenu summary { list-style: none; }
-.calendarMenu summary::-webkit-details-marker { display: none; }
-.calendarMenu ul { margin-top: 0.5rem; border-radius: 0.75rem; background: var(--ticket-paper); color: var(--ticket-ink); padding: 0.5rem; box-shadow: 0 8px 24px rgb(0 36 63 / 20%); }
-.calendarMenu a { display: flex; min-height: 2.75rem; align-items: center; padding: 0.5rem; text-decoration: underline; font-size: 1rem; }
-.feedback { font-size: 1rem; font-weight: 600; line-height: 1.5; }
-.ticketList { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr)); gap: 1.5rem; max-width: var(--ticket-front-width); margin: 0 auto; }
-.ticketList a { display: flex; min-height: 10rem; flex-direction: column; gap: 1rem; padding: 2rem; border-radius: 1rem; background: var(--ticket-paper); color: var(--ticket-ink); text-decoration: none; transition: transform 200ms ease; }
-.ticketList a:hover { transform: translateY(-2px); }
-.ticketList a:focus-visible { outline: 3px solid white; outline-offset: 4px; }
-.ticketList strong { font-size: 1.5rem; overflow-wrap: anywhere; }
-@keyframes ticket-turn { from { opacity: 0; transform: perspective(1000px) rotateY(-12deg) rotate(-2deg); } to { opacity: 1; transform: perspective(1000px) rotateY(0) rotate(-2deg); } }
+.scene {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  min-height: calc(100svh - 4rem);
+  background: var(--ticket-ink);
+  color: white;
+  font-family: var(--font-red-hat), sans-serif;
+}
+.meadow {
+  z-index: -2;
+  object-fit: cover;
+  filter: blur(14px);
+  transform: scale(1.04);
+}
+.veil {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--ticket-scrim);
+}
+.sceneContent {
+  max-width: var(--ticket-scene-width);
+  margin-inline: auto;
+  padding: max(6rem, calc(var(--page-top, 0px) + 2rem)) 4rem 6rem;
+}
+.sceneHeading {
+  margin: 0 auto 6rem;
+  max-width: var(--ticket-scene-width);
+  text-align: center;
+  font:
+    italic 400 clamp(2rem, 3vw, 3.5rem)/1.2 var(--font-instrument-serif),
+    serif;
+  text-wrap: balance;
+}
+.sceneMessage {
+  max-width: 48rem;
+  margin: -3rem auto 6rem;
+  text-align: center;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+.passWrap {
+  position: relative;
+  max-width: var(--ticket-front-width);
+  margin: 0 auto;
+  padding-block: 2rem;
+}
+.pass {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  grid-template-columns: minmax(0, 900fr) minmax(0, 280fr);
+  min-height: var(--ticket-front-height);
+  color: var(--ticket-ink);
+  transform: rotate(4deg);
+}
+.paperArt {
+  position: absolute;
+  z-index: -1;
+  left: -3.3898%;
+  top: -3.5556%;
+  width: 108.136%;
+  height: 121.333%;
+  pointer-events: none;
+  background: url("/resources/tickets/paper.svg") 0 0 / 100% 100% no-repeat;
+}
+.passMain {
+  min-width: 0;
+  padding: 1.75rem 2.5rem 2rem;
+}
+.airline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding-bottom: 1rem;
+}
+.airline strong {
+  font-size: 1.3125rem;
+}
+.airline span,
+.eyebrow,
+.field dt,
+.notes > span,
+.destination > span {
+  font:
+    400 0.875rem/1.5 var(--font-ticket-mono),
+    monospace;
+  color: var(--ticket-muted);
+}
+.rule {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 0;
+}
+.route {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 98px minmax(0, 1.1fr) minmax(0, 1.9fr);
+  align-items: center;
+  gap: 1.75rem;
+  min-height: 9rem;
+  padding-block: 1.5rem;
+}
+.route .field dd {
+  font-size: clamp(2rem, 4vw, 3.625rem);
+  font-weight: 500;
+}
+.airplane {
+  max-width: 100%;
+  height: auto;
+}
+.destination p {
+  font:
+    400 clamp(1.5rem, 2.2vw, 2.25rem)/1.15 var(--font-instrument-serif),
+    serif;
+  overflow-wrap: anywhere;
+}
+.destination > span {
+  display: block;
+  margin-top: 0.5rem;
+}
+.eventFields {
+  display: grid;
+  grid-template-columns: 1fr 1.1fr 1.2fr;
+  gap: 1.5rem;
+  padding-block: 1.5rem;
+}
+.field {
+  min-width: 0;
+}
+.field dt {
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.04em;
+}
+.field dd {
+  font-size: clamp(1rem, 1.5vw, 1.5625rem);
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+.notes {
+  padding-top: 1rem;
+}
+.notes p {
+  margin-top: 0.5rem;
+  font-size: 1.1875rem;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+  white-space: pre-line;
+}
+.stub {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5rem;
+  margin-block: 1.75rem;
+  padding: 0 2rem;
+  border-left: 1px dashed var(--ticket-rule);
+}
+.stubMonth {
+  text-transform: uppercase;
+  font-family: var(--font-ticket-mono), monospace;
+  font-size: 1rem;
+}
+.stubDay {
+  font:
+    400 6.25rem/1 var(--font-instrument-serif),
+    serif;
+}
+.barcode {
+  max-width: 100%;
+  height: auto;
+  margin-top: 1rem;
+  transform: rotate(-4deg);
+  mix-blend-mode: multiply;
+}
+.memberFields {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px dashed var(--ticket-rule);
+}
+.memberFields .field dd {
+  font-size: 1rem;
+}
+.stampTarget {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  border-radius: 1rem;
+  cursor: pointer;
+  background: transparent;
+}
+.stampTarget:focus-visible {
+  outline: 3px solid white;
+  outline-offset: 0.5rem;
+}
+.rubberStamp {
+  position: absolute;
+  top: -2rem;
+  right: -1rem;
+  width: min(22%, 254px);
+  height: auto;
+  pointer-events: none;
+  transition: transform 200ms ease;
+}
+.passWrap:has(.stampTarget:hover) .rubberStamp {
+  transform: translate(-0.5rem, 0.5rem) rotate(-8deg);
+}
+.passWrap:has(.stampTarget:active) .rubberStamp {
+  transform: translate(-1rem, 1rem) rotate(-8deg) scale(0.94);
+}
+.reverse {
+  display: grid;
+  grid-template-columns: minmax(0, 3fr) minmax(0, 1fr);
+  max-width: var(--ticket-reverse-width);
+  margin: 0 auto;
+  min-height: var(--ticket-reverse-height);
+  border-radius: 1.5rem;
+  background: var(--ticket-paper);
+  color: var(--ticket-ink);
+  box-shadow:
+    0 7px 0 var(--ticket-edge),
+    0 28px 45px rgb(0 10 26 / 25%);
+  transform: rotate(-2deg);
+  animation: ticket-turn 300ms ease-out;
+}
+.reverse:focus {
+  outline: none;
+}
+.reverseMain {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.25rem;
+  min-width: 0;
+  padding: 2.25rem 3rem;
+}
+.confirmHeading {
+  font:
+    italic 400 clamp(2.25rem, 3.3vw, 3.875rem)/1.1 var(--font-instrument-serif),
+    serif;
+}
+.reverseMain > p:not(.eyebrow, .finePrint, .feedback) {
+  font-size: 1.3125rem;
+  line-height: 1.5;
+  white-space: pre-line;
+  overflow-wrap: anywhere;
+}
+.summary {
+  display: grid;
+  gap: 0.5rem;
+  font-size: 1.125rem;
+  line-height: 1.5;
+}
+.summary strong {
+  font-size: 1.4375rem;
+  overflow-wrap: anywhere;
+}
+.summary p {
+  color: var(--ticket-muted);
+}
+.actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.primary,
+.secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 3rem;
+  padding: 1rem 1.5rem;
+  border: 1px solid var(--ticket-ink);
+  border-radius: 999px;
+  font:
+    500 1.125rem/1.3 var(--font-red-hat),
+    sans-serif;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 200ms ease;
+}
+.primary {
+  background: var(--ticket-ink);
+  color: white;
+}
+.primary:hover {
+  background: var(--azure-12);
+}
+.secondary {
+  background: var(--ticket-soft);
+  color: var(--ticket-ink);
+}
+.secondary:hover {
+  background: white;
+}
+.primary:disabled,
+.secondary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.primary:focus-visible,
+.secondary:focus-visible,
+.textButton:focus-visible,
+.dismiss:focus-visible,
+.calendarMenu a:focus-visible {
+  outline: 3px solid var(--ticket-muted);
+  outline-offset: 4px;
+}
+.finePrint {
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: var(--ticket-muted);
+}
+.reverseStub {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
+  margin-block: 2rem;
+  padding-inline: 2rem;
+  border-left: 1px dashed var(--ticket-rule);
+}
+.reverseStub > p {
+  font:
+    italic 400 3rem/1.2 var(--font-instrument-serif),
+    serif;
+}
+.seal {
+  position: relative;
+  flex: 0 0 auto;
+  width: 180px;
+  height: 180px;
+  margin-block: 1rem;
+  transform: rotate(14deg);
+  color: var(--ticket-stamp);
+  opacity: 0.86;
+  font-family: var(--font-ticket-mono), monospace;
+}
+.sealOuter {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.sealInner {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+}
+.sealBrand,
+.sealDate,
+.sealLabel {
+  position: absolute;
+  left: 0;
+  width: 180px;
+  text-align: center;
+  font-size: 0.875rem;
+}
+.sealBrand {
+  top: 35px;
+}
+.sealLabel {
+  top: 63px;
+  font-size: 2.25rem;
+  line-height: 1.2;
+}
+.sealDate {
+  top: 115px;
+}
+.controls {
+  max-width: var(--ticket-front-width);
+  margin: 6rem auto 0;
+  text-align: center;
+  font-size: 1rem;
+}
+.controls > p {
+  margin-top: 1.5rem;
+}
+.textButton,
+.dismiss {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  padding: 0.5rem;
+  color: white;
+  cursor: pointer;
+  text-decoration: underline;
+}
+.dismiss {
+  display: flex;
+  margin: 5rem auto 0;
+  width: fit-content;
+  font-size: 1.375rem;
+  text-decoration: none;
+}
+.cancelForm {
+  margin-top: 1.5rem;
+}
+.cancelForm p {
+  margin-bottom: 1rem;
+}
+.calendarMenu {
+  position: relative;
+}
+.calendarMenu summary {
+  list-style: none;
+}
+.calendarMenu summary::-webkit-details-marker {
+  display: none;
+}
+.calendarMenu ul {
+  margin-top: 0.5rem;
+  border-radius: 0.75rem;
+  background: var(--ticket-paper);
+  color: var(--ticket-ink);
+  padding: 0.5rem;
+  box-shadow: 0 8px 24px rgb(0 36 63 / 20%);
+}
+.calendarMenu a {
+  display: flex;
+  min-height: 2.75rem;
+  align-items: center;
+  padding: 0.5rem;
+  text-decoration: underline;
+  font-size: 1rem;
+}
+.feedback {
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.5;
+}
+.ticketList {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+  gap: 1.5rem;
+  max-width: var(--ticket-front-width);
+  margin: 0 auto;
+}
+.ticketList a {
+  display: flex;
+  min-height: 10rem;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 2rem;
+  border-radius: 1rem;
+  background: var(--ticket-paper);
+  color: var(--ticket-ink);
+  text-decoration: none;
+  transition: transform 200ms ease;
+}
+.ticketList a:hover {
+  transform: translateY(-2px);
+}
+.ticketList a:focus-visible {
+  outline: 3px solid white;
+  outline-offset: 4px;
+}
+.ticketList strong {
+  font-size: 1.5rem;
+  overflow-wrap: anywhere;
+}
+@keyframes ticket-turn {
+  from {
+    opacity: 0;
+    transform: perspective(1000px) rotateY(-12deg) rotate(-2deg);
+  }
+  to {
+    opacity: 1;
+    transform: perspective(1000px) rotateY(0) rotate(-2deg);
+  }
+}
 @media (max-width: 1023px) {
-  .sceneContent { padding: max(4rem, calc(var(--page-top, 0px) + 1.5rem)) 2rem 4rem; }
-  .pass, .reverse { transform: none; }
-  .route { grid-template-columns: minmax(0, 1fr) 64px minmax(0, 1fr); gap: 1rem; }
-  .destination { grid-column: 1 / -1; }
-  .passMain { padding: 1.5rem; }
-  .stub { padding-inline: 1rem; }
-  .seal { transform: scale(0.8) rotate(14deg); margin-inline: -1rem; }
-  .memberFields { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .reverseMain { padding: 2rem; }
-  .reverseStub { padding-inline: 1rem; }
+  .sceneContent {
+    padding: max(4rem, calc(var(--page-top, 0px) + 1.5rem)) 2rem 4rem;
+  }
+  .pass,
+  .reverse {
+    transform: none;
+  }
+  .route {
+    grid-template-columns: minmax(0, 1fr) 64px minmax(0, 1fr);
+    gap: 1rem;
+  }
+  .destination {
+    grid-column: 1 / -1;
+  }
+  .passMain {
+    padding: 1.5rem;
+  }
+  .stub {
+    padding-inline: 1rem;
+  }
+  .seal {
+    transform: scale(0.8) rotate(14deg);
+    margin-inline: -1rem;
+  }
+  .memberFields {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .reverseMain {
+    padding: 2rem;
+  }
+  .reverseStub {
+    padding-inline: 1rem;
+  }
 }
 @media (max-width: 767px) {
-  .sceneContent { padding: max(4rem, calc(var(--page-top, 0px) + 1.5rem)) 1rem 4rem; }
-  .sceneHeading { margin-bottom: 3rem; }
-  .sceneMessage { margin: -1rem auto 3rem; }
-  .pass, .reverse { grid-template-columns: minmax(0, 1fr); }
-  .pass { filter: drop-shadow(0 20px 24px rgb(0 10 26 / 25%)); }
-  .paperArt { display: none; }
-  .passMain { padding: 1.5rem; background: var(--ticket-paper); border-radius: 1rem 1rem 0 0; mask-image: radial-gradient(circle at 0 100%, transparent 10px, black 11px), radial-gradient(circle at 100% 100%, transparent 10px, black 11px); mask-composite: intersect; }
-  .airline { align-items: flex-start; flex-direction: column; }
-  .airline strong { font-size: 1.125rem; }
-  .route { gap: 0.5rem; grid-template-columns: minmax(0, 1fr) 48px minmax(0, 1fr); }
-  .route .field dd { font-size: 2rem; }
-  .eventFields { grid-template-columns: minmax(0, 1fr); gap: 1rem; }
-  .notes p { font-size: 1rem; }
-  .stub { align-items: center; margin: 0; padding: 1.5rem; background: var(--ticket-paper); border-radius: 0 0 1rem 1rem; border-left: 0; border-top: 1px dashed var(--ticket-rule); mask-image: radial-gradient(circle at 0 0, transparent 10px, black 11px), radial-gradient(circle at 100% 0, transparent 10px, black 11px); mask-composite: intersect; }
-  .stubDay { font-size: 4rem; }
-  .seal { transform: rotate(14deg); margin-inline: 0; }
-  .rubberStamp { top: -1rem; right: -0.5rem; width: 112px; }
-  .reverseMain { padding: 1.5rem; }
-  .reverseStub { margin: 0 1.5rem 1.5rem; border-left: 0; border-top: 1px dashed var(--ticket-rule); padding-top: 1.5rem; }
-  .reverseStub > p br { display: none; }
-  .reverseStub > p { font-size: 2.25rem; }
-  .controls { margin-top: 4rem; }
-  .actions { align-items: stretch; }
-  .actions form { width: 100%; }
-  .actions .primary, .actions .secondary { width: 100%; }
-  .calendarMenu { width: 100%; }
+  .sceneContent {
+    padding: max(4rem, calc(var(--page-top, 0px) + 1.5rem)) 1rem 4rem;
+  }
+  .sceneHeading {
+    margin-bottom: 3rem;
+  }
+  .sceneMessage {
+    margin: -1rem auto 3rem;
+  }
+  .pass,
+  .reverse {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .pass {
+    filter: drop-shadow(0 20px 24px rgb(0 10 26 / 25%));
+  }
+  .paperArt {
+    display: none;
+  }
+  .passMain {
+    padding: 1.5rem;
+    background: var(--ticket-paper);
+    border-radius: 1rem 1rem 0 0;
+    mask-image:
+      radial-gradient(circle at 0 100%, transparent 10px, black 11px),
+      radial-gradient(circle at 100% 100%, transparent 10px, black 11px);
+    mask-composite: intersect;
+  }
+  .airline {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+  .airline strong {
+    font-size: 1.125rem;
+  }
+  .route {
+    gap: 0.5rem;
+    grid-template-columns: minmax(0, 1fr) 48px minmax(0, 1fr);
+  }
+  .route .field dd {
+    font-size: 2rem;
+  }
+  .eventFields {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1rem;
+  }
+  .notes p {
+    font-size: 1rem;
+  }
+  .stub {
+    align-items: center;
+    margin: 0;
+    padding: 1.5rem;
+    background: var(--ticket-paper);
+    border-radius: 0 0 1rem 1rem;
+    border-left: 0;
+    border-top: 1px dashed var(--ticket-rule);
+    mask-image:
+      radial-gradient(circle at 0 0, transparent 10px, black 11px),
+      radial-gradient(circle at 100% 0, transparent 10px, black 11px);
+    mask-composite: intersect;
+  }
+  .stubDay {
+    font-size: 4rem;
+  }
+  .seal {
+    transform: rotate(14deg);
+    margin-inline: 0;
+  }
+  .rubberStamp {
+    top: -1rem;
+    right: -0.5rem;
+    width: 112px;
+  }
+  .reverseMain {
+    padding: 1.5rem;
+  }
+  .reverseStub {
+    margin: 0 1.5rem 1.5rem;
+    border-left: 0;
+    border-top: 1px dashed var(--ticket-rule);
+    padding-top: 1.5rem;
+  }
+  .reverseStub > p br {
+    display: none;
+  }
+  .reverseStub > p {
+    font-size: 2.25rem;
+  }
+  .controls {
+    margin-top: 4rem;
+  }
+  .actions {
+    align-items: stretch;
+  }
+  .actions form {
+    width: 100%;
+  }
+  .actions .primary,
+  .actions .secondary {
+    width: 100%;
+  }
+  .calendarMenu {
+    width: 100%;
+  }
 }
 @media (prefers-reduced-motion: reduce) {
-  .reverse, .rubberStamp, .primary, .secondary, .ticketList a { animation: none; transition: none; }
+  .reverse,
+  .rubberStamp,
+  .primary,
+  .secondary,
+  .ticketList a {
+    animation: none;
+    transition: none;
+  }
 }

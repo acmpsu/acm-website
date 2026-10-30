@@ -29,7 +29,12 @@ export function CommitteesMenu() {
     return () => document.removeEventListener("pointerdown", onPointerDown);
   }, [open]);
 
-  const items = () => Array.from(rootRef.current?.querySelectorAll<HTMLAnchorElement>("[data-menu-item]") ?? []);
+  const items = () =>
+    Array.from(
+      rootRef.current?.querySelectorAll<HTMLAnchorElement>(
+        "[data-menu-item]",
+      ) ?? [],
+    );
 
   function onKeyDown(event: KeyboardEvent) {
     if (event.key === "Escape" && open) {
@@ -56,7 +61,8 @@ export function CommitteesMenu() {
       className={styles.menuRoot}
       onKeyDown={onKeyDown}
       onBlur={(event) => {
-        if (!rootRef.current?.contains(event.relatedTarget as Node)) setOpen(false);
+        if (!rootRef.current?.contains(event.relatedTarget as Node))
+          setOpen(false);
       }}
     >
       <button
@@ -68,7 +74,11 @@ export function CommitteesMenu() {
         className={buttonClass("pill")}
       >
         Committees
-        <ChevronDown size={16} aria-hidden="true" className={`${styles.chevron} ${open ? styles.chevronOpen : ""}`} />
+        <ChevronDown
+          size={16}
+          aria-hidden="true"
+          className={`${styles.chevron} ${open ? styles.chevronOpen : ""}`}
+        />
       </button>
 
       <AnimatePresence>

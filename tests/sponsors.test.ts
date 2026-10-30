@@ -3,8 +3,17 @@ import { test } from "node:test";
 
 import { activeSponsors, SPONSORS, type Sponsor } from "../src/lib/sponsors";
 
-const sponsor = (id: string, order: number, extra: Partial<Sponsor> = {}): Sponsor => ({
-  id, name: id, logoOnDark: `/${id}.png`, order, active: true, ...extra,
+const sponsor = (
+  id: string,
+  order: number,
+  extra: Partial<Sponsor> = {},
+): Sponsor => ({
+  id,
+  name: id,
+  logoOnDark: `/${id}.png`,
+  order,
+  active: true,
+  ...extra,
 });
 
 test("active sponsors are ordered by tier, then display order, and inactive ones are hidden", () => {
@@ -15,11 +24,17 @@ test("active sponsors are ordered by tier, then display order, and inactive ones
     sponsor("retired", 0, { active: false }),
     sponsor("untiered-second", 2),
   ]).map((s) => s.id);
-  assert.deepEqual(ids, ["platinum", "gold", "untiered-first", "untiered-second"]);
+  assert.deepEqual(ids, [
+    "platinum",
+    "gold",
+    "untiered-first",
+    "untiered-second",
+  ]);
 });
 
 test("sponsor data has unique ids and orders, and https websites", () => {
   assert.equal(new Set(SPONSORS.map((s) => s.id)).size, SPONSORS.length);
   assert.equal(new Set(SPONSORS.map((s) => s.order)).size, SPONSORS.length);
-  for (const s of SPONSORS) if (s.website) assert.match(s.website, /^https:\/\//);
+  for (const s of SPONSORS)
+    if (s.website) assert.match(s.website, /^https:\/\//);
 });

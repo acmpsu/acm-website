@@ -35,7 +35,14 @@ export function ForgotPasswordForm() {
   return (
     <div className="font-[family-name:var(--font-red-hat)] w-full max-w-[420px] overflow-hidden rounded-2xl border border-white/60 bg-[var(--auth-card)] px-5 py-6 shadow-[0px_12px_46px_0px_rgba(10,28,41,0.1)]">
       <div className="flex flex-col items-center gap-2">
-        <Image src="/logos/acm.png" alt="Penn State ACM" width={52} height={52} priority className="h-auto w-[52px]" />
+        <Image
+          src="/logos/acm.png"
+          alt="Penn State ACM"
+          width={52}
+          height={52}
+          priority
+          className="h-auto w-[52px]"
+        />
         <h1 className="font-[family-name:var(--font-instrument-serif)] text-[42px] italic leading-[50px] text-[var(--azure-12)]">
           Reset password
         </h1>
