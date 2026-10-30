@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Plus_Jakarta_Sans, Geist_Mono, Red_Hat_Display, Instrument_Serif, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
+import { ticketMono } from "@/components/tickets/typography";
 
 const plusJakarta = Plus_Jakarta_Sans({
   variable: "--font-sans",
@@ -47,7 +48,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${plusJakarta.variable} ${geistMono.variable} ${redHatDisplay.variable} ${instrumentSerif.variable} ${ibmPlexMono.variable} h-full antialiased`}
+      className={`${plusJakarta.variable} ${geistMono.variable} ${redHatDisplay.variable} ${instrumentSerif.variable} ${ibmPlexMono.variable} ${ticketMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">{children}</body>
     </html>

@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { Mail } from "lucide-react";
 
+import { Card } from "@/components/ui/Layout";
 import { GithubIcon, LinkedinIcon } from "@/components/ui/brand-icons";
 import { COMMITTEES } from "@/lib/constants";
 import { initials, type TeamMember } from "@/lib/team";
@@ -17,7 +18,7 @@ export function PersonCard({ member }: { member: TeamMember }) {
   ].filter((link) => !!link);
 
   return (
-    <article className={styles.card}>
+    <Card as="article" className={styles.card}>
       {photo ? (
         <Image src={photo} alt={`Headshot of ${name}`} width={64} height={64} sizes="64px" className={styles.avatar} />
       ) : (
@@ -43,6 +44,6 @@ export function PersonCard({ member }: { member: TeamMember }) {
           ))}
         </ul>
       ) : null}
-    </article>
+    </Card>
   );
 }

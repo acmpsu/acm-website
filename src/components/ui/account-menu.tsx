@@ -53,7 +53,7 @@ export function AccountMenu({ email, fullName }: AccountMenuProps) {
         aria-expanded={open}
         aria-label="Account menu"
         onClick={() => setOpen((prev) => !prev)}
-        className="flex h-9 w-9 items-center justify-center rounded-full bg-[var(--navy)] text-[12px] font-bold text-white transition hover:bg-[var(--navy-dk)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--navy)]"
+        className="flex size-11 items-center justify-center rounded-full bg-azure-12 font-body text-[14px] font-semibold text-white shadow-lift transition duration-200 ease-ds hover:bg-azure-25 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-azure-12 xl:size-[55px] xl:text-[16px]"
       >
         {initialsFor(fullName, email)}
       </button>
@@ -66,31 +66,29 @@ export function AccountMenu({ email, fullName }: AccountMenuProps) {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 4 }}
             transition={{ duration: 0.15, ease: "easeOut" }}
-            className="absolute right-0 top-[calc(100%+8px)] w-56 overflow-hidden rounded-lg border border-[var(--border)] bg-white shadow-lg"
+            className="absolute right-0 top-[calc(100%+12px)] w-64 overflow-hidden rounded-[20px] border border-azure-12/12 bg-grey-95-2 p-3 font-body text-azure-12 shadow-[var(--ds-shadow-menu)]"
           >
-            <div className="border-b border-[var(--border)] px-3 py-2.5">
-              {fullName && (
-                <p className="truncate text-[13px] font-semibold text-[var(--navy-dk)]">{fullName}</p>
-              )}
-              <p className="truncate text-[12px] text-[var(--slate)]">{email}</p>
+            <div className="mb-1 border-b border-azure-12/10 px-4 pb-3 pt-1">
+              {fullName && <p className="truncate text-[15px] font-semibold">{fullName}</p>}
+              <p className="truncate text-[13px] text-azure-36">{email}</p>
             </div>
 
             <Link
               href="/dashboard"
               role="menuitem"
               onClick={() => setOpen(false)}
-              className="block px-3 py-2.5 text-[13px] text-[var(--navy-dk)] transition hover:bg-[var(--bg-alt)]"
+              className="flex min-h-11 items-center rounded-xl px-4 text-[15px] font-medium transition duration-150 hover:bg-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-azure-12"
             >
               My membership
             </Link>
 
-            <Link href="/my-events" role="menuitem" onClick={() => setOpen(false)} className="block px-3 py-2.5 text-[13px] text-[var(--navy-dk)] transition hover:bg-[var(--bg-alt)]">My events</Link>
+            <Link href="/my-events" role="menuitem" onClick={() => setOpen(false)} className="flex min-h-11 items-center rounded-xl px-4 text-[15px] font-medium transition duration-150 hover:bg-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-azure-12">My events</Link>
 
-            <form action={signOut} className="border-t border-[var(--border)]">
+            <form action={signOut} className="mt-1 border-t border-azure-12/10 pt-1">
               <button
                 type="submit"
                 role="menuitem"
-                className="block w-full px-3 py-2.5 text-left text-[13px] text-[var(--navy-dk)] transition hover:bg-[var(--bg-alt)]"
+                className="flex min-h-11 w-full items-center rounded-xl px-4 text-left text-[15px] font-medium transition duration-150 hover:bg-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-azure-12"
               >
                 Sign out
               </button>

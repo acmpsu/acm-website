@@ -1,0 +1,12 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="220" height="70" viewBox="0 0 220 70" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Contact / plane and curved flight trail">
+<path id="Vector" opacity="0.85" d="M3 31C49 52 100 54 158 30" stroke-width="1.8" stroke-linecap="round" stroke="#D9DDF7"/>
+<g id="Group">
+<path id="Vector_2" d="M198.019 15.2535C198.832 17.0805 196.498 19.2143 192.844 20.8412L187.363 23.2817L185.342 38.4116L182.601 39.6319L180.968 26.1288L172.746 29.7895L170.719 35.0706L168.892 35.8841L168.785 28.269L163.197 23.0944L165.024 22.2809L170.305 24.3082L178.527 20.6475L169.586 10.3984L172.326 9.17819L184.922 17.8004L190.403 15.36C194.058 13.733 197.205 13.4264 198.019 15.2535Z" fill="#DACDF0"/>
+</g>
+<g id="Vector_3" opacity="0.85">
+<path d="M208 8L212 5ZM210 27L214 28ZM203 44L205 47Z" fill="black"/>
+<path d="M208 8L212 5M210 27L214 28M203 44L205 47" stroke-width="1.8" stroke-linecap="round" stroke="#DACDF0"/>
+</g>
+</g>
+</svg>

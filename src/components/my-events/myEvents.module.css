@@ -1,7 +1,7 @@
 .scene { position: relative; isolation: isolate; overflow: hidden; background: var(--events-sky); color: var(--events-heading); min-height: 100vh; }
 .scene::after { content: ""; position: absolute; inset: 0; background: var(--events-vignette); pointer-events: none; z-index: -1; }
 .clouds { position: absolute; z-index: -1; width: 100%; height: auto; min-width: 768px; top: 0; right: 0; opacity: .22; pointer-events: none; }
-.content { max-width: 1280px; margin: auto; padding: 64px 24px 32px; }
+.content { max-width: 1280px; margin: auto; padding: calc(var(--page-top, 0px) + 64px) 24px 32px; }
 .intro { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; }
 .eyebrow, .previewNotice span, .ticketTop, .ticketBottom, .stub, .closing > span { font: 400 14px/1.5 var(--font-ticket-mono), monospace; }
 .eyebrow { letter-spacing: .08em; margin: 0 0 24px; }

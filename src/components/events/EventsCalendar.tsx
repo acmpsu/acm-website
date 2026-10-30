@@ -37,11 +37,16 @@ function EventDayView({
   month,
   day,
   dayEvents,
+  nextEvent,
+  onJump,
 }: {
   year: number;
   month: number;
   day: number;
   dayEvents: CalendarEvent[];
+  /** The first event after this day, suggested when the day is empty. */
+  nextEvent: CalendarEvent | null;
+  onJump: (iso: string) => void;
 }) {
   const label = new Date(year, month, day).toLocaleDateString("en-US", {
     month: "long",
@@ -51,9 +56,29 @@ function EventDayView({
 
   return (
     <div className="space-y-4">
-      <h3 className="text-base font-semibold text-[var(--navy-dk)]">{label}</h3>
+      <p className="font-ds-mono text-[12px] uppercase tracking-[0.18em] text-[var(--slate)]">Your next stop</p>
+      <h3 className="text-xl font-semibold text-[var(--navy-dk)]">{label}</h3>
       {dayEvents.length === 0 ? (
-        <p className="text-base text-[var(--slate)]">No events scheduled for this day</p>
+        <div className="space-y-12">
+          <p className="text-base text-[var(--slate)]">No events scheduled for this day.</p>
+          <p className="text-base leading-relaxed text-[var(--slate-lt)]">
+            A little room for your next idea.
+            {nextEvent ? (
+              <>
+                <br />
+                Try{" "}
+                <button
+                  type="button"
+                  onClick={() => onJump(nextEvent.date)}
+                  className="underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-[var(--navy)]"
+                >
+                  {new Date(`${nextEvent.date}T12:00:00`).toLocaleDateString("en-US", { month: "long", day: "numeric" })}
+                </button>{" "}
+                for {nextEvent.title}.
+              </>
+            ) : null}
+          </p>
+        </div>
       ) : (
         <div className="space-y-3">
           {dayEvents.map((event) => {
@@ -89,8 +114,12 @@ export function EventsCalendar({ events }: { events: CalendarEvent[] }) {
   const [today] = useState(() => new Date());
   const [viewYear, setViewYear] = useState(today.getFullYear());
   const [viewMonth, setViewMonth] = useState(today.getMonth());
-  const [selectedDate, setSelectedDate] = useState(
-    toIsoDate(today.getFullYear(), today.getMonth(), today.getDate())
+  const todayIso = toIsoDate(today.getFullYear(), today.getMonth(), today.getDate());
+  const [selectedDate, setSelectedDate] = useState(todayIso);
+  const [filter, setFilter] = useState<EventCategory | "all">("all");
+  const visible = useMemo(
+    () => (filter === "all" ? events : events.filter((event) => event.category === filter)),
+    [events, filter]
   );
 
   const minIndex = monthIndex(today.getFullYear(), today.getMonth()) - 12;
@@ -103,20 +132,24 @@ export function EventsCalendar({ events }: { events: CalendarEvent[] }) {
   const monthLength = daysInMonth(viewYear, viewMonth);
   const selected = parseIsoDate(selectedDate);
 
-  const categoriesByDate = useMemo(() => {
-    const map = new Map<string, EventCategory[]>();
-    for (const event of events) {
-      const list = map.get(event.date) ?? [];
-      if (event.category && !list.includes(event.category)) list.push(event.category);
-      map.set(event.date, list);
-    }
+  const eventsByDate = useMemo(() => {
+    const map = new Map<string, CalendarEvent[]>();
+    for (const event of visible) map.set(event.date, [...(map.get(event.date) ?? []), event]);
     return map;
-  }, [events]);
+  }, [visible]);
 
-  const selectedDayEvents = useMemo(
-    () => events.filter((e) => e.date === selectedDate),
-    [events, selectedDate]
+  const selectedDayEvents = eventsByDate.get(selectedDate) ?? [];
+  const nextEvent = useMemo(
+    () => [...visible].filter((e) => e.date > selectedDate).sort((a, b) => a.date.localeCompare(b.date))[0] ?? null,
+    [visible, selectedDate]
   );
+
+  function jumpTo(iso: string) {
+    const { year, month } = parseIsoDate(iso);
+    setViewYear(year);
+    setViewMonth(month);
+    setSelectedDate(iso);
+  }
 
   const days: (number | null)[] = [];
   for (let i = 0; i < firstDay; i++) {
@@ -141,7 +174,7 @@ export function EventsCalendar({ events }: { events: CalendarEvent[] }) {
   }
 
   return (
-    <div className="grid gap-6 lg:grid-cols-3 lg:gap-[var(--events-calendar-gap)]">
+    <div className="grid gap-6 font-body lg:grid-cols-3 lg:gap-[var(--events-calendar-gap)]">
       <div className="lg:col-span-2">
         <div className="rounded-xl border border-[var(--border)] bg-white p-4 sm:p-8">
           <div className="mb-6 flex items-center justify-between">
@@ -158,6 +191,13 @@ export function EventsCalendar({ events }: { events: CalendarEvent[] }) {
               </button>
               <button
                 type="button"
+                onClick={() => jumpTo(todayIso)}
+                className="flex h-11 items-center justify-center rounded-xl border border-[var(--border)] px-4 text-sm font-medium text-[var(--navy-dk)] transition hover:bg-[var(--bg-alt)] focus-visible:outline-2 focus-visible:outline-[var(--navy)]"
+              >
+                Today
+              </button>
+              <button
+                type="button"
                 onClick={() => shiftMonth(1)}
                 disabled={!canGoNext}
                 aria-label="Next month"
@@ -168,12 +208,20 @@ export function EventsCalendar({ events }: { events: CalendarEvent[] }) {
             </div>
           </div>
 
-          <div className="mb-4 flex flex-wrap gap-x-4 gap-y-2">
-            {EVENT_CATEGORIES.map((category) => (
-              <div key={category} className="flex items-center gap-2 text-sm text-[var(--slate)] sm:text-base">
-                <span className={`h-1.5 w-1.5 rounded-full ${categoryStyles[category].dot}`} />
-                {categoryStyles[category].label}
-              </div>
+          <div className="mb-4 flex flex-wrap gap-1.5" role="group" aria-label="Filter events by type">
+            {(["all", ...EVENT_CATEGORIES] as const).map((value) => (
+              <button
+                key={value}
+                type="button"
+                aria-pressed={filter === value}
+                onClick={() => setFilter(value)}
+                className={`flex min-h-9 items-center gap-1.5 rounded-lg px-2.5 text-sm transition focus-visible:outline-2 focus-visible:outline-[var(--navy)] ${
+                  filter === value ? "bg-[#eef2f7] font-medium text-[var(--navy-dk)]" : "text-[var(--slate)] hover:bg-[var(--bg-alt)]"
+                }`}
+              >
+                {value !== "all" && <span className={`h-1.5 w-1.5 rounded-full ${categoryStyles[value].dot}`} />}
+                {value === "all" ? "All" : categoryStyles[value].label}
+              </button>
             ))}
           </div>
 
@@ -188,41 +236,45 @@ export function EventsCalendar({ events }: { events: CalendarEvent[] }) {
           <div className="grid grid-cols-7 sm:gap-2">
             {days.map((day, idx) => {
               if (day === null) {
-                return <div key={idx} className="aspect-square" />;
+                return <div key={idx} />;
               }
 
               const iso = toIsoDate(viewYear, viewMonth, day);
-              const dayCategories = categoriesByDate.get(iso) ?? [];
-              const hasEvent = categoriesByDate.has(iso);
+              const dayEvents = eventsByDate.get(iso) ?? [];
+              const hasEvent = dayEvents.length > 0;
               const isSelected = iso === selectedDate;
+              const isToday = iso === todayIso;
 
               return (
                 <button
                   key={idx}
                   type="button"
                   aria-pressed={isSelected}
-                  aria-label={`${new Date(viewYear, viewMonth, day).toLocaleDateString("en-US", { dateStyle: "full" })}${hasEvent ? ", events scheduled" : ""}`}
+                  aria-current={isToday ? "date" : undefined}
+                  aria-label={`${new Date(viewYear, viewMonth, day).toLocaleDateString("en-US", { dateStyle: "full" })}${hasEvent ? `, ${dayEvents.length} event${dayEvents.length > 1 ? "s" : ""}` : ""}`}
                   onClick={() => setSelectedDate(iso)}
-                  className={`relative aspect-square min-h-11 rounded-xl border py-2 text-sm font-medium transition focus-visible:outline-2 focus-visible:outline-[var(--navy)] sm:text-base ${
+                  className={`relative flex min-h-11 flex-col items-stretch rounded-lg border p-1.5 text-left transition focus-visible:outline-2 focus-visible:outline-[var(--navy)] sm:min-h-[92px] sm:p-2 ${
                     isSelected
-                      ? "border-[var(--navy)] bg-[#f0f4f8] text-[var(--navy-dk)]"
-                      : hasEvent
-                        ? "border-[var(--border)] bg-white text-[var(--navy-dk)] hover:bg-[#f0f4f8]"
-                        : "border-[var(--border)] bg-white text-[var(--slate)] hover:bg-[var(--bg-alt)]"
+                      ? "border-[var(--navy)] bg-[#eef2f7]"
+                      : "border-[var(--border)] bg-white hover:bg-[var(--bg-alt)]"
                   }`}
                 >
-                  {day}
+                  <span
+                    className={`ml-auto grid h-7 min-w-7 place-items-center rounded-full px-1 text-sm ${
+                      isToday ? "bg-[var(--navy-dk)] font-semibold text-white" : hasEvent ? "font-medium text-[var(--navy-dk)]" : "text-[var(--slate)]"
+                    }`}
+                  >
+                    {day}
+                  </span>
                   {hasEvent && (
-                    <div className="absolute bottom-1 left-1/2 flex -translate-x-1/2 gap-0.5">
-                      {(dayCategories.length > 0 ? dayCategories : [null]).map((category, i) => (
-                        <span
-                          key={category ?? i}
-                          className={`h-1.5 w-1.5 rounded-full ${
-                            category ? categoryStyles[category].dot : "bg-[var(--navy-lt)]"
-                          }`}
-                        />
+                    <span className="mt-auto flex flex-col gap-0.5 overflow-hidden" aria-hidden="true">
+                      {dayEvents.slice(0, 2).map((event) => (
+                        <span key={event.id} className="flex items-center gap-1 text-[10px] leading-tight text-[var(--navy-dk)]">
+                          <span className={`h-1.5 w-1.5 shrink-0 rounded-full ${event.category ? categoryStyles[event.category].dot : "bg-[var(--navy-lt)]"}`} />
+                          <span className="hidden truncate sm:inline">{event.title}</span>
+                        </span>
                       ))}
-                    </div>
+                    </span>
                   )}
                 </button>
               );
@@ -232,7 +284,14 @@ export function EventsCalendar({ events }: { events: CalendarEvent[] }) {
       </div>
 
       <div className="rounded-xl border border-[var(--border)] bg-[var(--bg-alt)] p-6 sm:p-8">
-        <EventDayView year={selected.year} month={selected.month} day={selected.day} dayEvents={selectedDayEvents} />
+        <EventDayView
+          year={selected.year}
+          month={selected.month}
+          day={selected.day}
+          dayEvents={selectedDayEvents}
+          nextEvent={nextEvent}
+          onJump={jumpTo}
+        />
       </div>
     </div>
   );

@@ -10,7 +10,7 @@ export async function UpcomingEvents({ headingLevel = "h2" }: { headingLevel?: "
   const { events, status } = await getCalendarEvents();
   const Heading = headingLevel;
   return (
-    <section id="upcoming-events" aria-labelledby="events-heading" className={styles.section}>
+    <section aria-labelledby="events-heading" className={styles.section}>
       <Image src="/resources/events/background.png" alt="" fill sizes="100vw" loading={headingLevel === "h1" ? "eager" : "lazy"} className={styles.background} />
       <Image src="/resources/events/clouds.png" alt="" width={907} height={302} sizes="48vw" loading={headingLevel === "h1" ? "eager" : "lazy"} className={styles.clouds} />
       <div className={styles.content}>

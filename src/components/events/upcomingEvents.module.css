@@ -7,6 +7,7 @@
   border-radius: var(--events-radius) var(--events-radius) 0 0;
   background-color: var(--events-sky);
   background-image: var(--events-vignette);
+  min-height: 100svh;
 }
 
 .background {
@@ -17,19 +18,33 @@
 
 .clouds {
   position: absolute;
-  top: var(--events-cloud-top);
+  top: calc(var(--site-header-height) * 0.55);
   left: 46.979%;
   width: 47.24%;
   height: auto;
   pointer-events: none;
-  animation: events-cloud-drift 40s infinite;
+  animation: events-cloud-drift 12s ease-in-out infinite;
 }
+/* Float on `translate`; travel right to left with scroll on `transform` (where supported). */
+@supports (animation-timeline: view()) {
+  .clouds {
+    animation: events-cloud-drift 12s ease-in-out infinite, events-cloud-scroll linear both;
+    animation-timeline: auto, view();
+  }
+}
+
+@keyframes events-cloud-scroll {
+  from { transform: translateX(14%); }
+  to { transform: translateX(-14%); }
+}
+
 
 .content {
   position: relative;
   margin-inline: auto;
   max-width: var(--events-content-width);
-  padding-block: clamp(4rem, 4.167vw, 5rem);
+  /* The heading always clears the floating nav (on /events it's the first block, on Home it pins). */
+  padding-block: calc(var(--site-header-height) + clamp(1rem, 2vw, 2.5rem)) clamp(4rem, 4.167vw, 5rem);
   width: 84%;
 }
 
@@ -64,8 +79,8 @@
 }
 
 @keyframes events-cloud-drift {
-  0%, 15.25%, 100% { transform: none; animation-timing-function: ease-in-out; }
-  7.63% { transform: translate(-10.584px, 3.969px) rotate(0.7deg); animation-timing-function: ease-in-out; }
+  0%, 100% { translate: 0 0; rotate: 0deg; }
+  50% { translate: 24px -8px; rotate: 0.7deg; }
 }
 
 @media (min-width: 1280px) {
@@ -79,5 +94,5 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .clouds { animation: none; }
+  .clouds { animation: none !important; }
 }

@@ -1,6 +1,7 @@
 import { PersonCard } from "@/components/team/PersonCard";
 import styles from "@/components/team/team.module.css";
 import { BackdropScene } from "@/components/ui/BackdropScene";
+import { PageHeading } from "@/components/ui/Layout";
 import { TEAM, TEAM_GROUPS } from "@/lib/team";
 
 export const metadata = { title: "Meet Us — Penn State ACM" };
@@ -11,10 +12,7 @@ export default function MeetUsPage() {
   return (
     // Same meadow fill as the GBM boarding pass (Figma "Meet Us — duplicated stationary background").
     <BackdropScene image="/resources/tickets/meadow.png" panelClassName={styles.directory}>
-      <header className={styles.intro}>
-        <h1 className={styles.title}>Meet Us</h1>
-        <p className={styles.subtitle}>The people behind ACM at Penn State.</p>
-      </header>
+      <PageHeading title="Meet Us" subtitle="The people behind ACM at Penn State." />
 
       <hr className={styles.divider} />
 

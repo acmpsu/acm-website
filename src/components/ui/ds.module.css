@@ -1,0 +1,211 @@
+/* Shared design-system components. Values come only from the --ds-* tokens in globals.css. */
+
+/* ===== Buttons (Figma 50:277, 50:317) ===== */
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.375rem;
+  min-height: 44px;
+  padding: 12px 24px;
+  border: 1px solid transparent;
+  border-radius: var(--ds-radius-sm);
+  font: 500 15px / 1.5 var(--ds-font-body);
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    background-color var(--ds-duration) var(--ds-ease),
+    color var(--ds-duration) var(--ds-ease),
+    box-shadow var(--ds-duration) var(--ds-ease),
+    transform var(--ds-duration) var(--ds-ease);
+}
+
+.button:focus-visible {
+  outline: 2px solid var(--ds-azure-12);
+  outline-offset: 3px;
+}
+
+.button:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.primary { background: var(--ds-azure-38); color: #fff; }
+.primary:hover:not(:disabled) { background: var(--ds-grey-95); color: var(--ds-azure-16); box-shadow: var(--ds-shadow-lift); transform: translateY(-2px); }
+
+.secondary { background: var(--ds-grey-95-2); color: var(--ds-azure-12); }
+.secondary:hover:not(:disabled) { background: #fff; box-shadow: var(--ds-shadow-lift); transform: translateY(-2px); }
+
+/* Nav pills: pale, fully rounded; current page shows as white. */
+.pill {
+  min-height: clamp(44px, 2.88vw, 55px);
+  padding-inline: clamp(18px, 1.47vw, 28px);
+  border-radius: var(--ds-radius-pill);
+  background: var(--ds-grey-95-2);
+  color: var(--ds-azure-12);
+  font-size: clamp(15px, 0.92vw, 17.7px);
+}
+
+.pill:hover,
+.pill[aria-current="page"],
+.pill[aria-expanded="true"] { background: #fff; box-shadow: var(--ds-shadow-lift); }
+
+.ghost,
+.onDark {
+  padding: 14px 16px 15px;
+  border-radius: var(--ds-radius-pill);
+  background: transparent;
+  font-size: 15px;
+}
+
+.ghost { color: var(--ds-azure-12); }
+.ghost:hover,
+.ghost[aria-current="page"] { background: #fff; }
+
+.onDark {
+  color: var(--ds-grey-92);
+  font-weight: 400;
+  text-shadow: 0 1px 12px rgb(0 36 63 / 0.45);
+}
+.onDark:hover,
+.onDark[aria-current="page"] { background: #fff; color: var(--ds-azure-12); text-shadow: none; }
+.onDark:focus-visible { outline-color: #fff; }
+
+/* ===== Icon button ===== */
+.iconButton {
+  display: inline-grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  flex: none;
+  border-radius: var(--ds-radius-pill);
+  cursor: pointer;
+  transition: background-color var(--ds-duration-micro) var(--ds-ease), box-shadow var(--ds-duration-micro) var(--ds-ease);
+}
+
+.light { background: var(--ds-grey-95-2); color: var(--ds-azure-12); }
+.light:hover,
+.light[aria-expanded="true"] { background: #fff; box-shadow: var(--ds-shadow-lift); }
+.dark { background: transparent; color: var(--ds-grey-92); }
+.dark:hover { background: rgb(255 255 255 / 0.12); }
+
+.iconButton:focus-visible {
+  outline: 2px solid var(--ds-azure-12);
+  outline-offset: 2px;
+}
+
+/* ===== Layout ===== */
+.container {
+  width: 84%;
+  max-width: var(--ds-container);
+  margin-inline: auto;
+}
+
+.section {
+  position: relative;
+  isolation: isolate;
+  padding-block: var(--ds-section-space);
+}
+
+.night { background: var(--ds-azure-16); color: var(--ds-grey-92); }
+.sky { background: var(--ds-azure-25); color: var(--ds-grey-92); }
+.plain { color: var(--ds-azure-12); }
+
+.rounded {
+  overflow: hidden;
+  border-radius: var(--ds-radius-section) var(--ds-radius-section) 0 0;
+}
+
+.sectionHeader {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-gap-sm);
+  margin-bottom: var(--ds-gap-lg);
+}
+
+.eyebrow {
+  font: 400 12px / 1.5 var(--ds-font-mono);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  opacity: 0.85;
+}
+
+.sectionTitle {
+  font: 400 clamp(2.25rem, 2.5vw, 3rem) / 1.05 var(--ds-font-display);
+  letter-spacing: -0.72px;
+}
+
+.sectionDescription {
+  max-width: 62ch;
+  font: 400 clamp(1rem, 0.94vw, 1.125rem) / 1.6 var(--ds-font-body);
+  opacity: 0.85;
+}
+
+.pageHeading {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.pageTitle {
+  font: italic 400 clamp(3rem, 5.83vw, 7rem) / 1.1 var(--ds-font-display);
+}
+
+.pageSubtitle {
+  font: 400 clamp(1rem, 1.094vw, 1.3125rem) / 1.4 var(--ds-font-body);
+  opacity: 0.8;
+}
+
+/* ===== Card ===== */
+.card {
+  border-radius: 14px;
+  background: #fff;
+  color: var(--ds-azure-25);
+}
+
+.outline { border: 1px solid var(--ds-azure-25); }
+.raised { box-shadow: var(--ds-shadow-panel); }
+
+/* ===== Decorative clouds ===== */
+.clouds {
+  height: auto;
+  pointer-events: none;
+  user-select: none;
+}
+
+.drift { animation: ds-cloud-drift 12s ease-in-out infinite; }
+
+/* Clouds float slowly sideways and bob. Uses `translate`, so it composes with any transform. */
+@keyframes ds-cloud-drift {
+  0%, 100% { translate: 0 0; rotate: 0deg; }
+  50% { translate: 28px -10px; rotate: -0.6deg; }
+}
+
+/* Clouds travel right to left as their section scrolls through the viewport. It animates
+   `transform`, so it composes with the `translate` float above. */
+@supports (animation-timeline: view()) {
+  .scrollDrift {
+    animation: ds-scroll-drift linear both;
+    animation-timeline: view();
+  }
+
+  .drift.scrollDrift {
+    animation: ds-scroll-drift linear both, ds-cloud-drift 12s ease-in-out infinite;
+    animation-timeline: view(), auto;
+  }
+}
+
+@keyframes ds-scroll-drift {
+  from { transform: translateX(14%); }
+  to { transform: translateX(-14%); }
+}
+
+@media (max-width: 639px) {
+  .container { width: auto; margin-inline: 1rem; }
+  .rounded { border-radius: 1.5rem 1.5rem 0 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .button,
+  .iconButton { transition: none; }
+  .button:hover { transform: none !important; }
+  .drift,
+  .scrollDrift { animation: none !important; }
+}

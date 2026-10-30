@@ -1,0 +1,225 @@
+/* Site shell: Figma "Sticky Site Navigation" (483:162), Committees dropdown (505:1178)
+   and footer (482:151). Values come from the --ds-* tokens in globals.css. */
+
+/* ===== Header =====
+   Sticky and transparent: it floats over the page and takes no layout space
+   (pages clear it with --site-header-height). Only the controls catch pointer events. */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  height: var(--site-header-height);
+  margin-bottom: calc(-1 * var(--site-header-height));
+  pointer-events: none;
+  font-family: var(--ds-font-body);
+}
+
+.bar {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  height: 100%;
+  padding: 8px 16px 0;
+}
+
+.bar > *,
+.sheet,
+.scrim { pointer-events: auto; }
+
+.brand {
+  flex: none;
+  border-radius: 14px;
+  filter: drop-shadow(0 1px 3px rgb(255 219 192 / 0.45));
+}
+
+.brand img {
+  display: block;
+  width: 52px;
+  height: auto;
+}
+
+.brand:focus-visible {
+  outline: 2px solid var(--ds-azure-12);
+  outline-offset: 4px;
+}
+
+.primary,
+.utility { display: none; }
+
+.compact {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+}
+
+/* Glass pill holding the primary links. */
+.glass {
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 4px clamp(12px, 1.25vw, 24px);
+  border: 1px solid var(--ds-glass-border);
+  border-radius: var(--ds-radius-pill);
+  background: var(--ds-glass);
+  box-shadow:
+    var(--ds-shadow-pill),
+    inset 0 -1px 1px rgb(0 36 63 / 0.16),
+    inset 0 1px 0 rgb(255 255 255 / 0.6);
+  backdrop-filter: blur(13px);
+}
+
+.glassLink {
+  min-height: 49px;
+  padding-inline: 8px;
+  font-size: clamp(15px, 0.875vw, 16.8px);
+}
+
+/* Inside the glass pill the current page or section is underlined, not filled. */
+.glass .glassLink:hover,
+.glass .glassLink[aria-current] { background: transparent; }
+
+.glass .glassLink[aria-current] {
+  text-decoration: underline;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 7px;
+}
+
+.glass .glassLink:hover { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 7px; }
+
+.utility .loginGap { width: clamp(8px, 2.08vw, 40px); }
+
+@media (min-width: 1280px) {
+  .bar {
+    gap: 0;
+    padding: 24px calc(15.5px + clamp(16px, 3.33vw, 64px)) 0;
+  }
+
+  .brand img { width: clamp(60px, 4.1vw, 79px); }
+
+  .primary {
+    display: flex;
+    flex: 1;
+    justify-content: center;
+  }
+
+  .utility {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .compact { display: none; }
+}
+
+/* ===== Committees dropdown ===== */
+.menuRoot { position: relative; }
+
+.chevron { transition: transform var(--ds-duration) var(--ds-ease); }
+.chevronOpen { transform: rotate(180deg); }
+
+.menu {
+  position: absolute;
+  top: calc(100% + 12px);
+  left: 0;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 248px;
+  padding: 12px;
+  border: 1px solid rgb(0 36 63 / 0.12);
+  border-radius: 20px;
+  background: var(--ds-grey-95-2);
+  box-shadow: var(--ds-shadow-menu);
+}
+
+.menuItem {
+  display: flex;
+  align-items: center;
+  min-height: 50px;
+  padding: 6px 16px;
+  border-radius: var(--ds-radius-md);
+  color: var(--ds-azure-12);
+  font-size: clamp(15px, 0.92vw, 17.7px);
+  font-weight: 500;
+  transition: background-color var(--ds-duration-micro) var(--ds-ease);
+}
+
+.menuItem:hover,
+.menuItem:focus-visible { background: #fff; }
+.menuItem:focus-visible { outline: 2px solid var(--ds-azure-12); outline-offset: -2px; }
+
+/* ===== Compact menu sheet ===== */
+.scrim {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: rgb(0 36 63 / 0.25);
+}
+
+.sheet {
+  position: absolute;
+  top: calc(var(--site-header-height) + 4px);
+  right: 16px;
+  left: 16px;
+  max-height: calc(100svh - var(--site-header-height) - 24px);
+  margin-left: auto;
+  max-width: 560px;
+  overflow-y: auto;
+  padding: 20px;
+  border: 1px solid var(--ds-glass-border);
+  border-radius: 24px;
+  background: rgb(232 242 250 / 0.94);
+  box-shadow: var(--ds-shadow-panel);
+  backdrop-filter: blur(16px);
+  color: var(--ds-azure-12);
+}
+
+.sheetGroup + .sheetGroup {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid rgb(0 36 63 / 0.1);
+}
+
+.sheetTitle {
+  margin-bottom: 8px;
+  padding-inline: 12px;
+  font: 400 12px / 1.5 var(--ds-font-mono);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--ds-azure-36);
+}
+
+.sheetList { display: flex; flex-direction: column; }
+
+.sheetGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 2px 8px;
+}
+
+.sheetLink {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  padding-inline: 12px;
+  border-radius: var(--ds-radius-md);
+  font-size: 16px;
+  font-weight: 500;
+  transition: background-color var(--ds-duration-micro) var(--ds-ease);
+}
+
+.sheetLink:hover,
+.sheetLink[aria-current="page"] { background: #fff; }
+.sheetLink:focus-visible { outline: 2px solid var(--ds-azure-12); outline-offset: -2px; }
+
+@media (max-width: 359px) {
+  .sheetGrid { grid-template-columns: 1fr; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chevron,
+  .menuItem,
+  .sheetLink { transition: none; }
+}

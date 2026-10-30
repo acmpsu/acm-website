@@ -1,25 +1,26 @@
-import { Header } from "@/components/Header";
-import { Hero } from "@/components/Hero";
-import { Committees } from "@/components/Committees";
-import { News } from "@/components/News";
-import { JoinUs } from "@/components/JoinUs";
-import { Footer } from "@/components/Footer";
-import { UpcomingEvents } from "@/components/events/UpcomingEvents";
+import { AboutSection } from "@/components/home/AboutSection";
+import { ContactSection } from "@/components/home/ContactSection";
+import { HomeHero } from "@/components/home/HomeHero";
+import { PartnersSection } from "@/components/home/PartnersSection";
+import { SiteShell } from "@/components/site/SiteShell";
 import { SponsorsSection } from "@/components/sponsors/SponsorsSection";
+import { ScrollStack, StackAnchor } from "@/components/ui/ScrollStack";
 
+// Section order follows the Figma "ACM 2026 Website Frame" (50:325); Events lives on /events.
 export default function Home() {
   return (
-    <div className="home-snap min-h-screen flex flex-col">
-      <Header />
-      <main className="flex-1">
-        <Hero />
+    <SiteShell layout="full-bleed" footerCredits>
+      <ScrollStack overlap="figma" fullScreen>
+        <HomeHero />
+        <StackAnchor id="about" />
+        <AboutSection />
+        <StackAnchor id="sponsors" />
         <SponsorsSection />
-        <Committees />
-        <UpcomingEvents />
-        <News />
-        <JoinUs />
-      </main>
-      <Footer />
-    </div>
+        <StackAnchor id="partners" />
+        <PartnersSection />
+        <StackAnchor id="contact" />
+        <ContactSection />
+      </ScrollStack>
+    </SiteShell>
   );
 }

@@ -1,0 +1,570 @@
+/* Home page sections from the Figma "ACM 2026 Website Frame" (50:325), 1920 wide.
+   Pixel values are converted to vw against 1920 so the composition scales. */
+
+.flourish {
+  margin-left: 0.25em;
+  font: 500 clamp(0.875rem, 1.05vw, 1.26rem) / 1 var(--ds-font-mono);
+  letter-spacing: 1.6px;
+  color: var(--ds-azure-36);
+  vertical-align: middle;
+}
+
+/* Section heights in screens: a little over one screen where the Figma runs long, so the
+   section scrolls briefly before it pins, without leaving empty space. Phones use one screen. */
+.hero { --pane-h: 1; }
+.about { --pane-h: 1.1; }
+.partners,
+.contact { --pane-h: 1.25; }
+
+@media (max-width: 767px) {
+  .hero,
+  .about,
+  .partners,
+  .contact { --pane-h: 1; }
+}
+
+/* ===== Hero (50:336) ===== */
+.hero {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  min-height: min(1471px, max(100svh, 76.6vw));
+  padding: calc(var(--page-top, 0px) + 1rem) 1rem 6rem;
+  background: var(--ds-azure-16);
+  color: #fff;
+}
+
+/* The design shows the painting softly blurred behind the title (matched to Figma's render). */
+.heroArt {
+  z-index: -4;
+  object-fit: cover;
+  object-position: center 40%;
+  filter: blur(6px);
+  transform: scale(1.03);
+}
+
+/* Radial top glow, top fade and the contrast gradient from the design, stacked. */
+.heroShade {
+  position: absolute;
+  inset: 0;
+  z-index: -3;
+  background:
+    radial-gradient(ellipse 120% 80% at 50% 0, rgb(0 36 63 / 0.2), transparent 55%),
+    linear-gradient(to bottom, rgb(0 0 0 / 0.15), transparent 40%),
+    linear-gradient(to bottom, rgb(0 32 82 / 0.09), rgb(0 32 82 / 0.16) 55%, rgb(0 36 63 / 0.24));
+}
+
+.heroGrain {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  /* The 3 × 3 tile repeats at its own size: a fine dot grain, as in Figma's render. */
+  background: url("/resources/home/hero-grain.png") top left / 3px 3px repeat;
+  image-rendering: pixelated;
+  mix-blend-mode: screen;
+  opacity: 0.68;
+}
+
+.sparkles {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  mix-blend-mode: screen;
+  opacity: 0.9;
+  pointer-events: none;
+}
+
+.sparkle { position: absolute; }
+
+.sparkle img {
+  position: absolute;
+  top: calc(-1 * var(--bleed));
+  left: calc(-1 * var(--bleed));
+  width: calc(100% + 2 * var(--bleed));
+  height: calc(100% + 2 * var(--bleed));
+  max-width: none;
+}
+
+.heroContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(0.5rem, 1.25vw, 24px);
+  padding-top: clamp(1rem, 3.33vw, 64px);
+  text-align: center;
+}
+
+.heroTitle {
+  font: italic 400 clamp(6rem, 13.02vw, 250px) / 0.9 var(--ds-font-display);
+  letter-spacing: -0.025em;
+  text-shadow: 0 6px 40px rgb(0 28 55 / 0.35);
+}
+
+.heroTagline {
+  max-width: 36ch;
+  font: 500 clamp(12px, 0.78vw, 15px) / 1.5 var(--ds-font-body);
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--ds-grey-92);
+  text-shadow: 0 1px 12px rgb(0 28 55 / 0.55);
+}
+
+@media (min-width: 768px) {
+  .heroTagline { max-width: none; }
+}
+
+.scrollCue {
+  position: absolute;
+  /* Clear the next section's rounded top, which overlaps the hero by --stack-overlap. */
+  bottom: calc(var(--stack-overlap, 0px) + clamp(1rem, 3vh, 2.5rem));
+  left: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  min-height: 44px;
+  transform: translateX(-50%);
+  font: 400 12px / 1 var(--ds-font-mono);
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: #fff;
+  text-shadow: 0 1px 12px rgb(0 28 55 / 0.55);
+}
+
+.scrollCue:focus-visible { outline: 2px solid #fff; outline-offset: 6px; }
+
+.scrollArrow { animation: cue-bob 2.4s ease-in-out infinite; }
+
+@keyframes cue-bob {
+  0%, 100% { translate: 0 0; }
+  50% { translate: 0 6px; }
+}
+
+/* ===== About (50:424) ===== */
+.about {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: clamp(2rem, 4vw, 72px);
+  /* The top band belongs to the vine; heading, copy and logos are centered below it. */
+  padding-block: clamp(9rem, 17vw, 320px) clamp(2.5rem, 4vw, 72px);
+  border-radius: var(--ds-radius-section) var(--ds-radius-section) 0 0;
+  background: linear-gradient(to bottom, var(--ds-grey-95), #fff);
+  color: var(--ds-azure-25);
+}
+
+/* Figma 462:85: hangs across the top of the section (top -133px at 1920). */
+.garland {
+  position: absolute;
+  z-index: -1;
+  top: -6.93vw;
+  left: -10.08vw;
+  width: 107.7vw;
+  max-width: none;
+  height: auto;
+  transform: rotate(0.19deg);
+  transform-origin: 50% 0;
+  pointer-events: none;
+  animation: garland-sway 9s ease-in-out infinite;
+}
+
+/* The vine sways gently on its anchor points. */
+@keyframes garland-sway {
+  0%, 100% { rotate: 0deg; translate: 0 0; }
+  50% { rotate: -0.6deg; translate: 0 8px; }
+}
+
+.aboutIntro {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(1.25rem, 2.6vw, 48px);
+  padding-inline: 1rem;
+  text-align: center;
+}
+
+.aboutTitle {
+  font: 400 clamp(2.5rem, 4.3vw, 5rem) / 1.05 var(--ds-font-display);
+  letter-spacing: -0.02em;
+}
+
+.aboutCopy {
+  max-width: 90rem;
+  font: 400 clamp(15px, 1.16vw, 19px) / 1.6 var(--ds-font-body);
+  color: #004775;
+}
+
+/* Three lines, as in the design, once there's room for them. */
+@media (min-width: 1024px) {
+  .aboutCopy > span { display: block; }
+}
+
+.carouselWrap { position: relative; }
+
+.logoCarousel { overflow: hidden; }
+
+.logoRail {
+  display: flex;
+  gap: clamp(24px, 4vw, 72px);
+  width: max-content;
+  will-change: transform;
+}
+
+.logoLink {
+  display: block;
+  width: clamp(150px, 18vw, 340px);
+  border-radius: var(--ds-radius-sm);
+}
+
+.logoLink img { display: block; width: 100%; height: auto; }
+
+.logoLink:focus-visible {
+  outline: 2px solid var(--ds-azure-25);
+  outline-offset: 4px;
+}
+
+.carouselControls {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: clamp(1rem, 2vw, 28px);
+  padding-inline: 8%;
+}
+
+.carouselButton {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid rgb(28 72 102 / 0.2);
+  border-radius: var(--ds-radius-pill);
+  background: rgb(255 255 255 / 0.7);
+  color: var(--ds-azure-25);
+  cursor: pointer;
+  transition: background-color var(--ds-duration-micro) var(--ds-ease);
+}
+
+.carouselButton:hover { background: #fff; }
+.carouselButton:focus-visible { outline: 2px solid var(--ds-azure-25); outline-offset: 2px; }
+
+/* ===== Partners (50:744) ===== */
+.partners {
+  /* Windmill: ~28vw wide at the left, grounded on the bottom edge (prototype proportions). */
+  --windmill-w: min(46vw, calc(100svh * 577 / 720));
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  padding: calc(var(--site-header-height) + clamp(1rem, 3vw, 56px)) 8% clamp(5rem, 8vw, 140px);
+  border-radius: var(--ds-radius-section) var(--ds-radius-section) 0 0;
+  background: linear-gradient(146.96deg, rgb(61 121 156) 8.63%, rgb(33 94 143) 43.17%, rgb(15 48 86) 80.58%);
+  color: #fff;
+}
+
+/* Figma "Windmill — freely move and resize" (395:585), turning, its base on the bottom edge. */
+.windmill {
+  position: absolute;
+  z-index: -1;
+  bottom: -1%;
+  left: 4vw;
+  width: var(--windmill-w);
+  aspect-ratio: 577 / 720;
+  pointer-events: none;
+}
+
+.windmill img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.partnersTitle {
+  font: 400 clamp(2.25rem, 2.9vw, 3.5rem) / 1.1 var(--ds-font-display);
+  letter-spacing: -0.02em;
+}
+
+/* Two columns of logos on the right; an odd last logo centers beneath them. */
+.partnerLogos {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  place-items: center;
+  gap: clamp(2rem, 4.5vw, 80px) clamp(1rem, 3vw, 56px);
+  margin-top: 2rem;
+}
+
+.partnerLogos > li:last-child:nth-child(odd) { grid-column: 1 / -1; }
+
+.partnerLogo {
+  position: relative;
+  width: clamp(calc(var(--logo-w) * 0.45px), calc(var(--logo-w) / 2100 * 100vw), calc(var(--logo-w) * 0.9px));
+  height: clamp(calc(var(--logo-h) * 0.45px), calc(var(--logo-h) / 2100 * 100vw), calc(var(--logo-h) * 0.9px));
+}
+
+.partnerLogo img { object-fit: contain; }
+
+.partnersNote {
+  position: absolute;
+  right: max(1rem, 1.9vw);
+  bottom: clamp(1.5rem, 3vw, 48px);
+  max-width: 340px;
+  font: 400 15px / 24px var(--ds-font-body);
+  text-align: right;
+  color: rgb(255 255 255 / 0.7);
+}
+
+.partnersNote a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.partnersNote a:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+
+@media (min-width: 1024px) {
+  /* Logos in a centered block on the right half, vertically centered under the title. */
+  .partnerLogos {
+    align-self: flex-end;
+    width: min(44vw, 720px);
+    margin-block: auto;
+  }
+}
+
+/* ===== Contact (50:649) ===== */
+.contact {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(2.5rem, 3.33vw, 64px);
+  min-height: min(1101px, max(40rem, 57.3vw));
+  padding: clamp(4rem, 6.67vw, 128px) 5% clamp(8rem, 10vw, 192px);
+  border-radius: var(--ds-radius-section) var(--ds-radius-section) 0 0;
+  background: #1c4376;
+  color: #fff;
+}
+
+/* 84px sky grid at 5% white (Figma "subtle sky grid"). */
+.skyGrid {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  background:
+    linear-gradient(to right, rgb(255 255 255 / 0.05) 1px, transparent 1px) 48px 0 / 84px 84px,
+    linear-gradient(to bottom, rgb(255 255 255 / 0.05) 1px, transparent 1px) 0 0 / 84px 84px;
+  pointer-events: none;
+}
+
+/* Cloud banks sit in the bottom corners (Figma: their bases just below the section edge). */
+.cloudsLeft,
+.cloudsRight {
+  position: absolute;
+  bottom: -4%;
+  width: max(37.5vw, 16rem);
+  height: auto;
+  pointer-events: none;
+}
+
+.cloudsLeft { z-index: 3; left: -5.2vw; }
+.cloudsRight { z-index: 4; left: 70.6vw; }
+
+.cloudsLeft,
+.cloudsRight { animation: cloud-float 11s ease-in-out infinite; }
+.cloudsRight { animation-delay: -5s; }
+
+@keyframes cloud-float {
+  0%, 100% { translate: 0 0; }
+  50% { translate: 24px -10px; }
+}
+
+/* Cloud banks drift in from the edges while the section scrolls into view (where supported). */
+@supports (animation-timeline: view()) {
+  .cloudsLeft,
+  .cloudsRight {
+    animation-timeline: view(), auto;
+    animation-range: entry 10% cover 45%, normal;
+  }
+
+  /* Slide in on scroll (transform) and keep floating (translate). */
+  .cloudsLeft { animation: clouds-from-left linear both, cloud-float 11s ease-in-out infinite; }
+  .cloudsRight { animation: clouds-from-right linear both, cloud-float 11s ease-in-out -5s infinite; }
+}
+
+@keyframes clouds-from-left {
+  from { transform: translateX(-70%); opacity: 0; }
+  to { transform: none; opacity: 1; }
+}
+
+@keyframes clouds-from-right {
+  from { transform: translateX(70%); opacity: 0; }
+  to { transform: none; opacity: 1; }
+}
+
+.contactHeader {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  text-align: center;
+}
+
+.contactTitle {
+  position: relative;
+  font: 400 clamp(2.5rem, 4.2vw, 5rem) / 1.15 var(--ds-font-display);
+  letter-spacing: -0.02em;
+}
+
+.planeTrail {
+  position: absolute;
+  top: 40%;
+  left: calc(100% - 8px);
+  width: clamp(120px, 11.46vw, 220px);
+  height: auto;
+  pointer-events: none;
+}
+
+.windows {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.5rem;
+  width: 100%;
+  max-width: 1728px;
+}
+
+@media (min-width: 1024px) {
+  .windows {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .windows > li { width: 23%; }
+}
+
+/* Window: Figma "Contact / … Cloud Window" (358:66), 430 × 640 artboard. */
+.window {
+  position: relative;
+  display: block;
+  aspect-ratio: 430 / 640;
+  border-radius: 40%;
+  transition: transform var(--ds-duration-layout) ease-out, filter var(--ds-duration-layout) ease-out;
+}
+
+.windowSky {
+  position: absolute;
+  inset: 4.38% 7.44% 4.84%;
+  overflow: hidden;
+  border-radius: 49.2% / 31%;
+  background: #cfdef5;
+}
+
+.windowSkyArt { object-fit: cover; }
+
+/* The little bleed hole at the bottom of the pane, cropped from the original window art. */
+.bleedHole {
+  position: absolute;
+  left: 46.51%;
+  top: 82.03%;
+  width: 6.74%;
+  height: 4.22%;
+  background: url("/resources/home/contact/window-hole.png") 49.88% 85.64% / 1482.8% 2370.4% no-repeat;
+}
+
+.cloudLogo {
+  position: absolute;
+  top: 33.42%;
+  left: 32%;
+  width: 36%;
+  height: auto;
+  opacity: 0.95;
+  transform: rotate(-9deg) scale(0.877);
+  transition: transform var(--ds-duration-layout) ease-out;
+}
+
+/* Shade over the opening; it slides up to reveal the sky. */
+.aperture {
+  position: absolute;
+  top: 9.37%;
+  left: 13.95%;
+  width: 72.09%;
+  height: 76.56%;
+  overflow: hidden;
+  border-radius: 50% / 31.6%;
+}
+
+.shade {
+  position: absolute;
+  top: -12.24%;
+  left: -19.35%;
+  width: 138.71%;
+  max-width: none;
+  height: auto;
+  transition: transform 600ms var(--ds-ease);
+}
+
+.windowFrame {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 8px 14px rgb(6 23 51 / 0.15));
+  pointer-events: none;
+}
+
+.window:hover,
+.window:focus-visible {
+  transform: translateY(-6px) scale(1.04);
+  filter: drop-shadow(0 18px 24px rgb(6 23 51 / 0.25));
+}
+
+.window:hover .cloudLogo,
+.window:focus-visible .cloudLogo { transform: translateY(-2%) rotate(-9deg) scale(0.92); }
+
+.window:hover .shade,
+.window:focus-visible .shade { transform: translateY(-77%); }
+
+.window:focus-visible {
+  outline: 3px solid #fff;
+  outline-offset: 6px;
+}
+
+/* Touch screens can't hover, so their shades start open. */
+@media (hover: none) {
+  .shade { transform: translateY(-77%); }
+}
+
+@media (max-width: 1023px) {
+  .partnersNote { position: static; margin-top: 2.5rem; text-align: center; max-width: none; }
+  .windmill { opacity: 0.5; }
+}
+
+@media (max-width: 639px) {
+  .about,
+  .partners,
+  .contact { border-radius: 1.5rem 1.5rem 0 0; }
+  .partners { padding-inline: 1rem; }
+  .windows { gap: 1rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scrollArrow { animation: none; }
+  .window,
+  .cloudLogo,
+  .shade { transition: none; }
+  .cloudsLeft,
+  .cloudsRight,
+  .garland { animation: none; }
+  .window:hover,
+  .window:focus-visible { transform: none; }
+}

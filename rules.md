@@ -1,7 +1,8 @@
 # ACM Website Rules (AI Prompt)
 
 Penn State ACM site. Next.js App Router, TypeScript, Tailwind.
-Tokens: `src/app/globals.css` · Constants: `src/lib/constants.ts` · Components: `src/components/`, `src/components/ui/`
+Design source: Figma `HFRT30R89UUHyUL5GaTfSh` ("ACM — New Page"). Where this file and the Figma disagree, the Figma wins.
+Tokens: `--ds-*` in `src/app/globals.css` · Constants: `src/lib/constants.ts` · Shared components: `src/components/ui/` · Shell: `src/components/site/`
 
 ## Laws
 1. Reuse before create. Search codebase first.
@@ -12,38 +13,51 @@ Tokens: `src/app/globals.css` · Constants: `src/lib/constants.ts` · Components
 
 ## Tokens
 
-**Colors:** `--acm-blue-600` (primary), `--acm-blue-800` (hover), `--acm-blue-100` (soft bg), `--slate-900` (text), `--slate-600` (muted), `--slate-200` (border), `--slate-50`/`--white` (surface). Status: `--emerald-600`, `--amber-500`, `--rose-600`. No new colors.
+Use the `--ds-*` variables (or their Tailwind utilities: `bg-azure-25`, `text-grey-92`, `font-display`, `rounded-pill`, `shadow-lift`, `ease-ds`). Don't add page-local copies.
 
-**Spacing:** Tailwind `1,2,3,4,6,8,12,16,20,24,32` only. Section padding `py-16 md:py-24`. Container `max-w-6xl` (content), `max-w-7xl` (hero).
+**Colors (Figma azure scale):** `--ds-azure-12` #00243f (text, dark buttons), `--ds-azure-16` #002052 (night sections), `--ds-azure-25` #1c4866 (panel text, borders), `--ds-azure-36` #1f6a9b (muted labels), `--ds-azure-38` #1077b1 (primary button), `--ds-azure-75` #80c8fe (accent on dark), `--ds-grey-92` #e1eaf2 (text on dark), `--ds-grey-95` #e8f4fa (panels), `--ds-grey-95-2` #e8f2fa (pills, secondary button). Status: `--emerald-600`, `--amber-500`, `--rose-600`. Committee pane palettes live in `committees.module.css`.
 
-**Radius:** `rounded-md` (inputs), `rounded-xl` (buttons/cards), `rounded-2xl` (panels/modals), `rounded-full` (pills/avatars). Max two per group.
+**Fonts:** `--ds-font-display` (Instrument Serif: headings), `--ds-font-body` (Red Hat Display: UI and copy), `--ds-font-mono` (Red Hat Mono: eyebrows, labels).
 
-**Motion:** `150ms` micro, `200ms` standard, `300ms` layout. Easing `cubic-bezier(0.4,0,0.2,1)`. Hover lift max `translateY(-2px)`. Respect `prefers-reduced-motion`.
+**Layout:** container `--ds-container` (1612.8px = 84% of 1920; `<Container>`), panels `--ds-panel`, section spacing `--ds-section-space`, gaps `--ds-gap-sm|md|lg`. Clear the floating header with `--site-header-height` (contained pages get it from `SiteShell`; full-bleed first blocks add `var(--page-top, 0px)`).
+
+**Radius:** `--ds-radius-sm` 8 (buttons), `-md` 12 (inputs, menu items), `-lg` 16 (windows), `-xl` 28 (panels), `-section` 48 (stacked section tops), `-pill`.
+
+**Shadows:** `--ds-shadow-pill`, `-lift` (hover), `-menu`, `-panel`. Glass: `--ds-glass` + `--ds-glass-border` + 13px backdrop blur.
+
+**Motion:** `--ds-duration-micro` 150ms, `--ds-duration` 200ms, `--ds-duration-layout` 300ms, `--ds-ease`. Hover lift max `translateY(-2px)`. Respect `prefers-reduced-motion`. Write `backdrop-filter` without the `-webkit-` copy (the build adds it; listing both drops the standard one).
 
 ## Typography
 
 One H1 per page. Never skip levels.
 
-| Level | Mobile | Desktop | Weight |
-|---|---|---|---|
-| Display | 36px | 56px | 700 |
-| H1 | 30px | 40px | 700 |
-| H2 | 24px | 30px | 600 |
-| H3 | 20px | 22px | 600 |
-| Body | 16px | 16px | 400 |
-| Small | 14px | 14px | 400 |
+| Level | Font | Mobile | Desktop (1920) | Weight |
+|---|---|---|---|---|
+| Page title (H1) | Instrument Serif italic | 48px | 112px | 400 |
+| Section title (H2) | Instrument Serif | 36px | 48px | 400 |
+| Card/window title (H3) | Instrument Serif or Red Hat Display | 20px | 24–40px | 400–500 |
+| Body | Red Hat Display | 16px | 18–21px | 400 |
+| Small | Red Hat Display | 14px | 14–15px | 400 |
+| Eyebrow / label | Red Hat Mono, uppercase | 12px | 12px | 400 |
 
-Body line-height ≥1.5, heading ≥1.2. Line length 45–75ch (`max-w-prose`). No text <14px. No new font families.
+Use `clamp()` between the mobile and 1920 sizes. Mono labels may go to 11–12px as in the Figma; keep running text at 14px or more.
 
-## Buttons — 3 variants only
+Body line-height ≥1.5, heading ≥1.2. Line length 45–75ch (`max-w-prose`). No text <14px. No font families beyond the three above.
 
-- **Primary:** solid `--acm-blue-600`, white text. Max one per section.
-- **Secondary:** white bg, blue border, blue text.
-- **Ghost:** no bg, slate text, underline on hover.
+## Buttons — use `<Button>` / `<IconButton>` from `src/components/ui/`
 
-Shared: `rounded-xl`, heights `h-9`/`h-11`/`h-12`, transition `200ms`, focus `ring-2 ring-offset-2 ring-acm-blue-600`. Labels verb-first, ≤3 words. Disabled: `opacity-50 cursor-not-allowed`. Loading: spinner, fixed width.
+- **primary:** denim, white text; hovers pale with a lift. Max one per section.
+- **secondary:** pale blue; hovers white with a lift.
+- **pill:** nav pill (header utilities, dropdown triggers); white when current or open.
+- **ghost / onDark:** transparent pill links for glass/light and dark surfaces (header center pill, footer).
+
+Shared: 44px minimum height, 200ms transitions, visible focus outline. Labels verb-first, ≤3 words where possible. Disabled: `opacity-50 cursor-not-allowed`.
 
 ## Components
+
+**Shell:** every route group renders `SiteShell` (floating `Header` + `Footer`). Nav links come from `PRIMARY_NAV` and `FOOTER_NAV` in `constants.ts`; the home sections are anchors (`/#about`, `/#contact`, …).
+
+**Building blocks:** `Container`, `Section`, `SectionHeader`, `PageHeading`, `Card` (`Layout.tsx`), `Clouds`, `BackdropScene`, `ScrollStack` + `StackAnchor` (the stacked "scrolling panes" used on Home and Committees; put anchors on `StackAnchor`, never on a stacked section).
 
 **Cards:** border OR shadow, not both. `p-6` standard, `p-8` feature. Hover only if interactive: `translateY(-2px)` + `shadow-md`.
 

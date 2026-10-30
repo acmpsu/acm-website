@@ -2,7 +2,7 @@
 .scene { position: relative; isolation: isolate; overflow: hidden; min-height: calc(100svh - 4rem); background: var(--ticket-ink); color: white; font-family: var(--font-red-hat), sans-serif; }
 .meadow { z-index: -2; object-fit: cover; filter: blur(14px); transform: scale(1.04); }
 .veil { position: absolute; inset: 0; z-index: -1; background: var(--ticket-scrim); }
-.sceneContent { max-width: var(--ticket-scene-width); margin-inline: auto; padding: 6rem 4rem; }
+.sceneContent { max-width: var(--ticket-scene-width); margin-inline: auto; padding: max(6rem, calc(var(--page-top, 0px) + 2rem)) 4rem 6rem; }
 .sceneHeading { margin: 0 auto 6rem; max-width: var(--ticket-scene-width); text-align: center; font: italic 400 clamp(2rem, 3vw, 3.5rem)/1.2 var(--font-instrument-serif), serif; text-wrap: balance; }
 .sceneMessage { max-width: 48rem; margin: -3rem auto 6rem; text-align: center; font-size: 1rem; line-height: 1.6; }
 .passWrap { position: relative; max-width: var(--ticket-front-width); margin: 0 auto; padding-block: 2rem; }
@@ -80,7 +80,7 @@
 .ticketList strong { font-size: 1.5rem; overflow-wrap: anywhere; }
 @keyframes ticket-turn { from { opacity: 0; transform: perspective(1000px) rotateY(-12deg) rotate(-2deg); } to { opacity: 1; transform: perspective(1000px) rotateY(0) rotate(-2deg); } }
 @media (max-width: 1023px) {
-  .sceneContent { padding: 4rem 2rem; }
+  .sceneContent { padding: max(4rem, calc(var(--page-top, 0px) + 1.5rem)) 2rem 4rem; }
   .pass, .reverse { transform: none; }
   .route { grid-template-columns: minmax(0, 1fr) 64px minmax(0, 1fr); gap: 1rem; }
   .destination { grid-column: 1 / -1; }
@@ -92,7 +92,7 @@
   .reverseStub { padding-inline: 1rem; }
 }
 @media (max-width: 767px) {
-  .sceneContent { padding: 4rem 1rem; }
+  .sceneContent { padding: max(4rem, calc(var(--page-top, 0px) + 1.5rem)) 1rem 4rem; }
   .sceneHeading { margin-bottom: 3rem; }
   .sceneMessage { margin: -1rem auto 3rem; }
   .pass, .reverse { grid-template-columns: minmax(0, 1fr); }

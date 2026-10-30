@@ -1,5 +1,5 @@
-import Image from "next/image";
-
+import { Clouds } from "@/components/ui/Clouds";
+import { StackAnchor } from "@/components/ui/ScrollStack";
 import type { Committee } from "@/lib/constants";
 import { committeeDirector } from "@/lib/team";
 import { CommitteePreview } from "./CommitteePreview";
@@ -19,7 +19,7 @@ export function CommitteePane({ committee, next }: CommitteePaneProps) {
   return (
     <>
       {/* The anchor stays in normal flow: a pinned (sticky) pane would be the wrong scroll target. */}
-      <span id={id} className={styles.anchor} />
+      <StackAnchor id={id} />
       <section aria-labelledby={`${id}-title`} className={`${styles.pane} ${styles[committee.theme]}`}>
         <div className={styles.atmosphere} aria-hidden="true">
           <span className={styles.aurora} />
@@ -40,7 +40,7 @@ export function CommitteePane({ committee, next }: CommitteePaneProps) {
 
             <div className={styles.projectColumn}>
               <div className={styles.clouds} aria-hidden="true">
-                <Image src="/resources/committees/clouds.png" alt="" width={2172} height={724} sizes="(min-width: 1024px) 21vw, 60vw" />
+                <Clouds drift sizes="(min-width: 1024px) 21vw, 60vw" />
               </div>
               {project ? (
                 <figure className={styles.window}>

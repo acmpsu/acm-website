@@ -1,14 +1,17 @@
 /* Home sponsors band: Figma 50:493 (1920 wide). Motion from 406:70 (clouds) and 406:73 (rail). */
+/* One screen on the home stack, content centered (taller would tuck the heading under the nav). */
 .section {
+  --pane-h: 1.1;
   --sponsor-blue: #004175;
+  display: flex;
+  flex-direction: column;
   --sponsor-accent: #80c8fe;
-  --sponsor-button: #e6eefb;
-  --logo-width: clamp(240px, 28.125vw, 540px);
+  --logo-width: clamp(170px, 19vw, 360px);
   --logo-gap: 20px;
   position: relative;
   isolation: isolate;
   overflow: hidden;
-  padding-block: clamp(4rem, 10.7vw, 205px);
+  padding-block: calc(var(--site-header-height) + clamp(1rem, 3vw, 56px)) clamp(2.5rem, 4vw, 72px);
   border-radius: var(--events-radius) var(--events-radius) 0 0;
   background: url("/resources/sponsor/section-texture.png") top left / 96px 96px, var(--sponsor-blue);
   color: var(--events-heading);
@@ -24,17 +27,16 @@
 .clouds {
   position: absolute;
   z-index: -1;
-  top: clamp(0.5rem, 2.2vw, 42px);
-  left: 31.67%;
-  width: 64.17%;
+  /* Large ribbon to the right of the heading (it also drifts right to left on scroll). */
+  top: calc(var(--site-header-height) + clamp(0rem, 2vw, 40px));
+  left: 34%;
+  width: 72%;
   height: auto;
   opacity: 0.95;
-  pointer-events: none;
-  animation: sponsor-cloud-drift 40s infinite;
 }
 
 .heading {
-  font: 400 clamp(2.25rem, 2.5vw, 3rem) / 1.05 var(--font-instrument-serif), serif;
+  font: 400 clamp(2.25rem, 2.9vw, 3.5rem) / 1.05 var(--font-instrument-serif), serif;
   letter-spacing: -0.72px;
 }
 
@@ -48,7 +50,8 @@
 
 /* ===== Logo carousel ===== */
 .carousel {
-  margin-block: clamp(3rem, 13.5vw, 260px) clamp(3rem, 8.4vw, 161px);
+  margin-block: auto; /* centered between the heading and the call to action */
+  padding-block: clamp(2rem, 4vw, 64px);
   overflow: hidden;
 }
 
@@ -83,70 +86,38 @@ a.logo:focus-visible {
   align-items: center;
   justify-content: space-between;
   gap: 1.5rem 2rem;
-  padding: 36px 35px;
+  padding: clamp(28px, 3.2vw, 56px) clamp(24px, 3.2vw, 48px);
   border: 1px solid rgb(225 234 242 / 0.25);
   border-radius: 8px;
   background: rgb(0 36 63 / 0.25);
 }
 
 .ctaHeading {
-  font: italic 400 2rem / 1.1 var(--font-instrument-serif), serif;
+  font: italic 400 clamp(2rem, 2.9vw, 3.25rem) / 1.1 var(--font-instrument-serif), serif;
   letter-spacing: -0.32px;
 }
 
 .ctaText {
-  margin-top: 0.5rem;
-  font-size: 0.875rem;
+  margin-top: clamp(0.75rem, 1.6vw, 1.75rem);
+  font-size: clamp(0.875rem, 1vw, 1rem);
   line-height: 1.5;
   color: var(--sponsor-accent);
-}
-
-.ctaButton {
-  display: inline-flex;
-  align-items: center;
-  min-height: 44px;
-  padding: 12px 24px;
-  border-radius: 8px;
-  background: var(--sponsor-button);
-  color: var(--ticket-ink);
-  font-size: 0.9375rem;
-  font-weight: 500;
-  line-height: 1.5;
-  transition: transform 200ms cubic-bezier(0.4, 0, 0.2, 1), box-shadow 200ms cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.ctaButton:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgb(0 0 0 / 0.2);
-}
-
-.ctaButton:focus-visible {
-  outline: 2px solid var(--events-heading);
-  outline-offset: 3px;
 }
 
 @keyframes sponsor-rail {
   to { transform: translateX(-50%); }
 }
 
-@keyframes sponsor-cloud-drift {
-  0%, 15.25%, 100% { transform: none; animation-timing-function: ease-in-out; }
-  7.63% { transform: translate(18px, -7px) rotate(-0.8deg); animation-timing-function: ease-in-out; }
-}
-
 @media (max-width: 639px) {
   .section { border-radius: 1.5rem 1.5rem 0 0; }
   .content { width: auto; margin-inline: 1rem; }
   .cta { padding: 24px 20px; }
-  .ctaButton { justify-content: center; width: 100%; }
+  .ctaButton { width: 100%; }
 }
 
 /* Without motion the rail becomes a plain horizontal scroller with a single set. */
 @media (prefers-reduced-motion: reduce) {
-  .clouds,
   .rail { animation: none; }
   .carousel { overflow-x: auto; }
   .loopCopy { display: none; }
-  .ctaButton { transition: none; }
-  .ctaButton:hover { transform: none; }
 }

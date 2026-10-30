@@ -1,7 +1,7 @@
 import { CommitteePane } from "@/components/committees/CommitteePane";
-import { CommitteeStack } from "@/components/committees/CommitteeStack";
 import styles from "@/components/committees/committees.module.css";
 import { ticketMono } from "@/components/tickets/typography";
+import { ScrollStack } from "@/components/ui/ScrollStack";
 import { COMMITTEES } from "@/lib/constants";
 
 export const metadata = { title: "Committees — Penn State ACM" };
@@ -10,7 +10,7 @@ export default function CommitteesPage() {
   return (
     <div className={`${styles.page} ${ticketMono.variable}`}>
       <h1 className="sr-only">Committees</h1>
-      <CommitteeStack>
+      <ScrollStack fullScreen>
         {COMMITTEES.map((committee, index) => {
           const next = COMMITTEES[index + 1];
           return (
@@ -23,7 +23,7 @@ export default function CommitteesPage() {
             />
           );
         })}
-      </CommitteeStack>
+      </ScrollStack>
     </div>
   );
 }

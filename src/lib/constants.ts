@@ -1,15 +1,27 @@
-export const NAV_ITEMS = [
-  { label: "About", href: "/about" },
-  { label: "Committees", href: "/committees" },
-  { label: "Initiatives", href: "/dev-team" },
-  { label: "ICPC", href: "/icpc" },
-  { label: "Resources", href: "/resources" },
+export type NavLink = { label: string; href: string };
+
+// Site navigation from the Figma "Sticky Site Navigation" (483:162) and footer (50:815).
+// Home-page sections are linked by anchor; every page carries the same header and footer.
+/** Center glass pill on desktop. */
+export const PRIMARY_NAV: NavLink[] = [
+  { label: "About", href: "/#about" },
+  { label: "Sponsors", href: "/#sponsors" },
   { label: "Events", href: "/events" },
+  { label: "Partners", href: "/#partners" },
+  { label: "Contact", href: "/#contact" },
 ];
 
-export const HERO_TITLE = "Excellence in Computing, Together.";
-export const HERO_DESCRIPTION =
-  "ACM at Penn State is the largest computer science and engineering student organization on campus. We welcome all majors and experience levels to learn, build, and connect through workshops, projects, and events.";
+/** Right-hand pills on desktop (the Committees dropdown sits between them). */
+export const MEET_US_LINK: NavLink = { label: "Meet Us", href: "/meet-us" };
+export const SPONSOR_US_LINK: NavLink = { label: "Sponsor us", href: "/sponsor" };
+
+export const FOOTER_NAV: NavLink[] = [
+  { label: "About ACM", href: "/#about" },
+  { label: "Sponsors", href: "/#sponsors" },
+  { label: "Events", href: "/events" },
+  { label: "Partners", href: "/#partners" },
+  { label: "Contact Us", href: "/#contact" },
+];
 
 /** Color palette for a committee's pane on /committees (see committees.module.css). */
 export type CommitteeTheme = "icpc" | "web" | "ai" | "quantum" | "dev" | "data";
@@ -157,12 +169,10 @@ export const COMMITTEES: Committee[] = [
   },
 ];
 
-export const INITIATIVES = [{ label: "Dev Team", href: "/dev-team" }];
-
 export type ContactLink = {
   label: string;
   href: string;
-  /** Shown on /resources#contact; the footer renders labels only. */
+  /** Shown in the home Contact windows (LinkedIn, GroupMe, Instagram, Discord) and footer icons. */
   description: string;
   group: "social" | "official";
 };
@@ -200,4 +210,3 @@ export const CONTACT_LINKS: ContactLink[] = [
   },
 ];
 
-export const NEWS_COUNT = 4;

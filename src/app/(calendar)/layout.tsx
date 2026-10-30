@@ -1,6 +1,5 @@
-import { Header } from "@/components/Header";
-import { Footer } from "@/components/Footer";
+import { SiteShell } from "@/components/site/SiteShell";
 
 export default function CalendarLayout({ children }: { children: React.ReactNode }) {
-  return <div className="flex min-h-screen flex-col"><Header /><main className="flex-1">{children}</main><Footer /></div>;
+  return <SiteShell layout="full-bleed">{children}</SiteShell>;
 }

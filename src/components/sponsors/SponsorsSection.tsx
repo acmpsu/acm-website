@@ -1,7 +1,7 @@
-import Image from "next/image";
-import Link from "next/link";
+import { ArrowUpRight } from "lucide-react";
 
-import { ticketMono } from "@/components/tickets/typography";
+import { Button } from "@/components/ui/Button";
+import { Clouds } from "@/components/ui/Clouds";
 import { activeSponsors } from "@/lib/sponsors";
 import { SponsorLogo } from "./SponsorLogo";
 import styles from "./sponsors.module.css";
@@ -11,8 +11,8 @@ export function SponsorsSection() {
   const sponsors = activeSponsors();
 
   return (
-    <section id="sponsors" aria-labelledby="sponsors-heading" className={`${styles.section} ${ticketMono.variable}`}>
-      <Image src="/resources/committees/clouds.png" alt="" width={2172} height={724} sizes="64vw" className={styles.clouds} />
+    <section aria-labelledby="sponsors-heading" className={styles.section}>
+      <Clouds drift scroll sizes="72vw" className={styles.clouds} />
 
       <div className={styles.content}>
         <h2 id="sponsors-heading" className={styles.heading}>
@@ -40,9 +40,11 @@ export function SponsorsSection() {
         <div className={styles.cta}>
           <div>
             <p className={styles.ctaHeading}>Sponsor ACM 2026.</p>
-            <p className={styles.ctaText}>Get in touch with 1,000+ technical students from across the country</p>
+            <p className={styles.ctaText}>Build connections with the next generation of technical talent.</p>
           </div>
-          <Link href="/sponsor" className={styles.ctaButton}>Interested in sponsoring? Contact us</Link>
+          <Button variant="secondary" href="/sponsor" className={styles.ctaButton}>
+            Interested in sponsoring? Contact us <ArrowUpRight size={18} strokeWidth={1.5} aria-hidden="true" />
+          </Button>
         </div>
       </div>
     </section>
