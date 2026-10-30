@@ -65,6 +65,8 @@ function useActiveSection(enabled: boolean) {
 export function SiteNav({ account }: { account: NavAccount | null }) {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
+  // Once the page scrolls, the compact (phone/tablet) bar gets a frosted backing so
+  // content passing underneath doesn't collide with the logo and buttons.
   const toggleRef = useRef<HTMLButtonElement>(null);
   const sheetRef = useRef<HTMLDivElement>(null);
   const reduceMotion = useReducedMotion();
@@ -131,7 +133,9 @@ export function SiteNav({ account }: { account: NavAccount | null }) {
   );
 
   return (
-    <header className={styles.header}>
+    <header
+      className={styles.header}
+    >
       <div className={styles.bar}>
         <Link
           href="/"
